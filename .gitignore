@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# Apple Garbage
+*.DS_Store
