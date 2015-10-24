@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>1024</width>
+      <height>650</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string notr="true">Program:</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Acedemic Year:</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Hours:</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Students:</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>PME</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string>1620</string>
+     </property>
+     <property name="text">
+      <string>808</string>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2012-2013</string>
+      </property>
+      <property name="text">
+       <string>500</string>
+      </property>
+      <property name="text">
+       <string>250</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 1</string>
+       </property>
+       <property name="text">
+        <string>125</string>
+       </property>
+       <property name="text">
+        <string>120</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 2</string>
+       </property>
+       <property name="text">
+        <string>125</string>
+       </property>
+       <property name="text">
+        <string>80</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 3</string>
+       </property>
+       <property name="text">
+        <string>250</string>
+       </property>
+       <property name="text">
+        <string>50</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2013-2014</string>
+      </property>
+      <property name="text">
+       <string>480</string>
+      </property>
+      <property name="text">
+       <string>258</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 1</string>
+       </property>
+       <property name="text">
+        <string>480</string>
+       </property>
+       <property name="text">
+        <string>258</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2014-2015</string>
+      </property>
+      <property name="text">
+       <string>640</string>
+      </property>
+      <property name="text">
+       <string>300</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 1</string>
+       </property>
+       <property name="text">
+        <string>640</string>
+       </property>
+       <property name="text">
+        <string>300</string>
+       </property>
+      </item>
+     </item>
+    </item>
+    <item>
+     <property name="text">
+      <string>UME</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string>1500</string>
+     </property>
+     <property name="text">
+      <string>498</string>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2013-2014</string>
+      </property>
+      <property name="text">
+       <string>1500</string>
+      </property>
+      <property name="text">
+       <string>498</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 3</string>
+       </property>
+       <property name="text">
+        <string>1500</string>
+       </property>
+       <property name="text">
+        <string>498</string>
+       </property>
+      </item>
+     </item>
+    </item>
+    <item>
+     <property name="text">
+      <string>CME</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string>1200</string>
+     </property>
+     <property name="text">
+      <string>300</string>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2012-2013</string>
+      </property>
+      <property name="text">
+       <string>1200</string>
+      </property>
+      <property name="text">
+       <string>300</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 1</string>
+       </property>
+       <property name="text">
+        <string>1200</string>
+       </property>
+       <property name="text">
+        <string>300</string>
+       </property>
+      </item>
+     </item>
+    </item>
+    <item>
+     <property name="text">
+      <string>Other</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string>800</string>
+     </property>
+     <property name="text">
+      <string>121</string>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>2014-2015</string>
+      </property>
+      <property name="text">
+       <string>800</string>
+      </property>
+      <property name="text">
+       <string>121</string>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Faculty 4</string>
+       </property>
+       <property name="text">
+        <string>800</string>
+       </property>
+       <property name="text">
+        <string>121</string>
+       </property>
+      </item>
+     </item>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Teaching Summary</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Department of Medicine</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>398</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Date Range:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <property name="duplicatesEnabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>2009</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2010</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2011</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2012</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2013</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2014</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>to</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_2">
+       <property name="duplicatesEnabled">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>2010</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2011</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2012</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2013</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2014</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2015</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Graph</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
