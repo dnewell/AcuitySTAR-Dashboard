@@ -30,14 +30,16 @@ void dbTest(){
 void testSummaryClass(){
     Summary* sum = new Summary();
     QVector<Year> vector;
-    vector.append(sum->summaryFill("Postgraduate Medical Education", 1999, 1999));
-    cout<< "A" <<vector[0].date<<endl;
-    cout<< "B" <<vector[0].tothours<<endl;
-    cout<< "C" <<vector[0].totstudents<<endl;
-    for(int i=0; i<vector[0].list.size(); i++){
-        cout<< "d" <<vector[0].list[i].faculty.toStdString()<<endl;
-        cout<< "e" <<vector[0].list[i].hours<<endl;
-        cout<< "f" <<vector[0].list[i].students<<endl;
+    vector.append(sum->summaryFill("Postgraduate Medical Education", 2012, 2015));
+    for(int n=0; n<vector.size(); n++){
+    cout<< "A" <<vector[n].date<<endl;
+    cout<< "B" <<vector[n].tothours<<endl;
+    cout<< "C" <<vector[n].totstudents<<endl;
+    for(int i=0; i<vector[n].list.size(); i++){
+        cout<< "d" <<vector[n].list[i].faculty.toStdString()<<endl;
+        cout<< "e" <<vector[n].list[i].hours<<endl;
+        cout<< "f" <<vector[n].list[i].students<<endl;
+    }
     }
 }
 

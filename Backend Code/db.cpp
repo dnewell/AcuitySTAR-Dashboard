@@ -115,4 +115,14 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
 
         query.exec(qstr);                                                       // executes the database query, inserting one row into the table
     }
+
+
+
 }
+
+/*void DB::cleanDatabase(){
+    QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");
+    QSqlQuery query(sqlDatabase);
+
+    query.prepare("SELECT STARTDATE FROM TEACHING")
+}*/

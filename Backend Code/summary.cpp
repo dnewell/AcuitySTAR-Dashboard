@@ -29,11 +29,11 @@ QVector<Year> Summary::summaryFill(QString program, int start, int end){
         qstr=QString::number(yearcount);
 
         if(program.compare("Other")!=0){
-            qry.prepare("SELECT FACULTY, HOURSPERTEACHINGSESSIONORWEEKS, NUMBEROFTRAINEES FROM TEACHING WHERE STARTDATE = '"+qstr+"' AND PROGRAM = '"+program+"'");
+            qry.prepare("SELECT FACULTY, HOURSPERTEACHINGSESSIONORWEEKS, NUMBEROFTRAINEES FROM TEACHING WHERE STARTDATE LIKE '"+qstr+"%' AND PROGRAM = '"+program+"'");
             qry.exec();
         }
         else{
-            qry.prepare("SELECT FACULTY, HOURSPERTEACHINGSESSIONORWEEKS, NUMBEROFTRAINEES FROM TEACHING WHERE STARTDATE = '"+qstr+"' AND PROGRAM NOT IN ('Postgraduate Medical Education', 'Continuing Medical Education', 'Undergraduate Medical Education')");
+            qry.prepare("SELECT FACULTY, HOURSPERTEACHINGSESSIONORWEEKS, NUMBEROFTRAINEES FROM TEACHING WHERE STARTDATE LIKE '"+qstr+"%' AND PROGRAM NOT IN ('Postgraduate Medical Education', 'Continuing Medical Education', 'Undergraduate Medical Education')");
             qry.exec();
         }
         if(qry.next()){
