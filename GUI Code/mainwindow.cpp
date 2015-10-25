@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
             int continHourTot = 0;
             int otherHourTot = 0;
 
-            for (int curYear = 0; curYear < 2015; curYear++){
+            for (int curYear = 2010; curYear < 2015; curYear++){
 
                 postHourTot+= postVec[curYear].tothours;
                 underHourTot+= underVec[curYear].tothours;
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
             int continStudTot = 0;
             int otherStudTot = 0;
 
-            for (int curYear = 0; curYear < 2015; curYear++){
+            for (int curYear = 2010; curYear < 2015; curYear++){
 
                 postStudTot+= postVec[curYear].totstudents;
                 underStudTot+= underVec[curYear].totstudents;
@@ -79,8 +79,10 @@ MainWindow::MainWindow(QWidget *parent) :
                 otherStudTot+= otherVec[curYear].totstudents;
 
             }
+            QString qRoot = QString::number(postHourTot);
+            QString qPost = QString::number(postStudTot);
 
-            QTreeWidgetItem *pme = root("Postgraduate Education", postHourTot, postStudTot);
+            QTreeWidgetItem *pme = root("Postgraduate Education", qRoot, qPost);
 
             for(int i=0; i < (int)postVec.size(); i++) {
 
@@ -88,13 +90,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
                 for(int j = 0; j < (int)postVec[i].list.size(); j++){
 
-                    facultyChild(postWidget, QString::fromStdString(postVec[i].list[j].faculty),QString::number(postVec[i].list[j].hours),QString::number(postVec[i].list[j].students));
+                    facultyChild(postWidget, postVec[i].list[j].faculty,QString::number(postVec[i].list[j].hours),QString::number(postVec[i].list[j].students));
 
                 }
 
             }
 
-            QTreeWidgetItem *ume = root("Undergraduate Education", underHourTot, underStudTot);
+            qRoot = QString::number(underHourTot);
+            qPost = QString::number(underStudTot);
+
+            QTreeWidgetItem *ume = root("Undergraduate Education", qRoot, qPost);
 
             for(int i=0; i < (int)underVec.size(); i++) {
 
@@ -102,13 +107,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
                 for(int j = 0; j < (int)underVec[i].list.size(); j++){
 
-                    facultyChild(postWidget, QString::fromStdString(underVec[i].list[j].faculty),QString::number(underVec[i].list[j].hours),QString::number(underVec[i].list[j].students));
+                    facultyChild(postWidget, underVec[i].list[j].faculty,QString::number(underVec[i].list[j].hours),QString::number(underVec[i].list[j].students));
 
                 }
 
             }
-
-            QTreeWidgetItem *cme = root("Continuing Education", continHourTot, continStudTot);
+            qRoot = QString::number(continHourTot);
+            qPost = QString::number(continStudTot);
+            QTreeWidgetItem *cme = root("Continuing Education", qRoot, qPost);
 
             for(int i=0; i < (int)continuingVec.size(); i++) {
 
@@ -116,13 +122,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
                 for(int j = 0; j < (int)continuingVec[i].list.size(); j++){
 
-                    facultyChild(continWidget, QString::fromStdString(continuingVec[i].list[j].faculty),QString::number(continuingVec[i].list[j].hours),QString::number(continuingVec[i].list[j].students));
+                    facultyChild(continWidget, continuingVec[i].list[j].faculty,QString::number(continuingVec[i].list[j].hours),QString::number(continuingVec[i].list[j].students));
 
                 }
 
             }
-
-            QTreeWidgetItem *other = root("Other", otherHourTot, otherStudTot);
+            qRoot = QString::number(otherHourTot);
+            qPost = QString::number(otherStudTot);
+            QTreeWidgetItem *other = root("Other", qRoot, qPost);
 
             for(int i=0; i < (int)otherVec.size(); i++) {
 
@@ -130,7 +137,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
                 for(int j = 0; j < (int)otherVec[i].list.size(); j++){
 
-                    facultyChild(otherWidget, QString::fromStdString(otherVec[i].list[j].faculty),QString::number(otherVec[i].list[j].hours),QString::number(otherVec[i].list[j].students));
+                    facultyChild(otherWidget, otherVec[i].list[j].faculty,QString::number(otherVec[i].list[j].hours),QString::number(otherVec[i].list[j].students));
 
                 }
 
