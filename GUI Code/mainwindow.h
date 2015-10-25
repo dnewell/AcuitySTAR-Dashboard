@@ -20,8 +20,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-void root(QString title, QString total);
-void child(QTreeWidgetItem *parent, QString name, QString total);
+QTreeWidgetItem* root(QString title, QString totalHours, QString totalStudents);
+QTreeWidgetItem* yearChild(QTreeWidgetItem *parent, QString yearRange, QString totalHours, QString totalStudents);
+void facultyChild(QTreeWidgetItem *parent, QString faculty, QString totalHours, QString totalStudents);
 
 private slots:
 void on_pushButton_clicked();
