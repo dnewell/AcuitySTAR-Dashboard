@@ -5,7 +5,7 @@
 
 Year::Year(){}
 
-Year::Year(int d, int h, int s){
+Year::Year(int d, double h, int s){
     date=d;
     tothours=h;
     totstudents=s;

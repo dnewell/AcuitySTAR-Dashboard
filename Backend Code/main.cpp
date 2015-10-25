@@ -45,7 +45,7 @@ int main()
 {
     DB* db = new DB();
     db->createDatabase();
-    db->teachingCsvIntoDb("C:/Users/David/Documents/DatabaseCore/Teaching_sample.csv");
-    dbTest();
-
+    db->teachingCsvIntoDb("C:/Users/David/OneDrive/Documents/3307_git/Backend Code/Teaching_sample.csv");
+//    dbTest();
+    testSummaryClass();
 }

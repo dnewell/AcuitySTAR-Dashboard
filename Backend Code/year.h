@@ -8,12 +8,12 @@ class Year
 public:
 
     int date;
-    int tothours;
+    double tothours;
     int totstudents;
     QVector<Entry> list;
 
     Year();
-    Year(int, int, int);
+    Year(int, double, int);
 };
 
 #endif // YEAR_H

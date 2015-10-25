@@ -8,11 +8,11 @@ class Entry
 public:
 
     QString faculty;
-    int hours;
+    double hours;
     int students;
 
     Entry();
-    Entry(QString, int, int);
+    Entry(QString, double, int);
 };
 
 #endif // ENTRY_H
