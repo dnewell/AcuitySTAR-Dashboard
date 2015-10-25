@@ -8,7 +8,7 @@ class DB
 public:
     DB();
     void createDatabase();
-    void parseCSV(std::string);
+    void teachingCsvIntoDb(std::string);
 };
 
 #endif // DB_H
