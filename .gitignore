@@ -28,4 +28,4 @@
 *.app
 
 # Apple Garbage
-*.DS_Store
+.DS_Store
