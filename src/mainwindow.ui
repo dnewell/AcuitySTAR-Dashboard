@@ -10,18 +10,39 @@
     <height>768</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Acuity STAR Dashboard - Team Canteloupe</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>64</width>
+    <height>64</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
-      <width>131</width>
-      <height>21</height>
+      <y>0</y>
+      <width>171</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Historic</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Teaching Summary</string>
@@ -31,10 +52,16 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>25</y>
       <width>161</width>
-      <height>16</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Light</family>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Department of Medicine</string>
@@ -96,8 +123,11 @@
      </item>
      <item>
       <widget class="QLabel" name="label_4">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
-        <string>to</string>
+        <string>        to</string>
        </property>
       </widget>
      </item>
@@ -154,8 +184,14 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Browse</string>
+        <string> Load  Teaching *.CSV </string>
        </property>
       </widget>
      </item>
@@ -165,10 +201,19 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
-      <width>1004</width>
-      <height>668</height>
+      <y>97</y>
+      <width>990</width>
+      <height>660</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::WinPanel</enum>
+    </property>
+    <property name="animated">
+     <bool>true</bool>
     </property>
     <column>
      <property name="text">
@@ -176,6 +221,11 @@
      </property>
     </column>
    </widget>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>treeWidget</zorder>
+   <zorder>pushButton_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -183,7 +233,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

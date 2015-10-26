@@ -10,9 +10,10 @@ QMAKE_CXXFLAGS += -std=gnu++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-TARGET = 3307_GUI
+TARGET = AcuitySTAR_Dashboard
 TEMPLATE = app
 CONFIG += c++11
+RC_FILE = icon_resource_file.rc
 SOURCES += main.cpp\
         mainwindow.cpp \
     dialog.cpp \
@@ -1685,3 +1686,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     dialog.ui
+
+DISTFILES += \
+    icon_resource_file.rc

@@ -19,8 +19,14 @@
      <x>-1</x>
      <y>-1</y>
      <width>651</width>
-     <height>491</height>
+     <height>475</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI Light</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
   </widget>
  </widget>

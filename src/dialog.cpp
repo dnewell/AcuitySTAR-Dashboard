@@ -14,6 +14,7 @@ Dialog::Dialog(QWidget *parent, int startDate, int endDate) :
     ui->setupUi(this);
    Dialog::make_graph1(startDate,endDate);
     Dialog::make_graph2(startDate,endDate);
+    this->setWindowTitle("Pretty Graph");
 }
 
 Dialog::~Dialog()

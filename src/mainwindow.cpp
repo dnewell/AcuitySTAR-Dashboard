@@ -35,7 +35,7 @@ void MainWindow::makeTree(int startDate, int endDate){
     ui->treeWidget->setColumnCount(4);
     ui->treeWidget->headerItem()->setText(0,"");
     ui->treeWidget->headerItem()->setText(1,"Academic Year");
-    ui->treeWidget->headerItem()->setText(2,"Hour");
+    ui->treeWidget->headerItem()->setText(2,"Hours");
     ui->treeWidget->headerItem()->setText(3,"Students");
 
 
