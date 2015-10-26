@@ -54,7 +54,7 @@ void DB::createDatabase(){
                "ACTIVITY TEXT,  GEOGRAPHICALSCOPE TEXT, INSTITUTION TEXT, FACULTY TEXT,  DEPARTMENT TEXT,  DIVISION TEXT,  "
                "LOCATION TEXT,  HOURSPERTEACHINGSESSIONORWEEKS TEXT,  NUMBEROFTEACHINGSESSIONSORWEEKS TEXT,  "
                "FACULTYMEMBERADDITIONALCOMMENTS TEXT,  NUMBEROFTRAINEES TEXT,  STUDENTNAMEORNAMES TEXT,  INITIALLECTURE TEXT,  "
-               "FACULTYDEVELOPMENT TEXT,  STIPENDRECEIVED TEXT,  COMMENT TEXT, OTHERDETAILS TEXT,  TOTALHOURS TEXT)  ");
+               "FACULTYDEVELOPMENT TEXT,  STIPENDRECEIVED TEXT,  COMMENT TEXT, OTHERDETAILS TEXT,  TOTALHOURS TEXT);  ");
 
 }
 
@@ -83,6 +83,7 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
 
     // open input file stream
     ifstream inputfile(fullPathToFile);
+    query.exec("DELETE FROM TEACHING;");
     if(!inputfile.is_open()){
         cout << "Error: the CSV file cannot be found. Check the path and filename." << endl;
         system("exit");

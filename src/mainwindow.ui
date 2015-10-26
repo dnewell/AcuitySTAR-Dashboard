@@ -45,7 +45,7 @@
      <rect>
       <x>20</x>
       <y>60</y>
-      <width>398</width>
+      <width>564</width>
       <height>32</height>
      </rect>
     </property>
@@ -139,9 +139,23 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Filter</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Graph</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Browse</string>
        </property>
       </widget>
      </item>
@@ -169,7 +183,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
