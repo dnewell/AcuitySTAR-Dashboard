@@ -8,7 +8,6 @@
 *.la
 *.lai
 *.so
-*.dll
 *.dylib
 
 # Qt-es
@@ -44,12 +43,10 @@ Makefile*
 
 # Precompiled Headers
 *.gch
-*.pch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -61,7 +58,6 @@ Makefile*
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 
