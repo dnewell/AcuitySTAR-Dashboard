@@ -1,20 +1,20 @@
 Hello!
 
-Team Cantaloupe is excited to share our first prototype with you!  Keep in mind, we still have a long way 
+Team Canteloupe is excited to share our first prototype with you!  Keep in mind, we still have a long way 
 to go with our development of a user-friendly workflow for the application, so for now, a few quick notes 
 might be helpful to get you up and running with our Stage 1 Demo:
 
 1) Upon first loading the program, please click "Load Teaching *.csv" and browse to a CSV file
 containing teaching data. Select the file, and then click on the "Open" button.
 
-2) Select a date range which you wish to view with the 2 drop down menus, and then click the "Filter" button.
+2) Select the date range that you wish to view with the 2 drop down menus, and then click the "Filter" button.
 The collapsible/expandable lists are now populated with the data from your file, and you can browse the stats
 at your leisure.
 
 3) If you wish to view a graph of the data, click on the "Graph" button.
 
-4) At any time, you may select a new date range, and view a summary and/or visualization of that new range.
+4) At any time, you may select a new date range, and view the updated summary and/or visualization for that new range.
 
-Thanks, and we hope you enjoyed the small sample of things to come!
+Thanks, and we hope you enjoy this small sample of things yet to come!  
 
-- Team Cantaloupe
+- Team Canteloupe
