@@ -20,6 +20,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 #include <QtSql/QtSql>
 #include <boost/tokenizer.hpp>
 
@@ -35,7 +36,7 @@ DB::DB()
 /**
  * This method creates a new SQLite 3 database and sets the attributes (column/heading names)
  *
- * TO DO: modularize. move the CSV parsing logic into another class
+ * TO DO: modularize.
  * @brief DB::createDatabase
  */
 
@@ -48,14 +49,6 @@ void DB::createDatabase(){
 
     db.open();
 
-    QSqlQuery query(db);
-    query.exec("CREATE TABLE TEACHING(RECORDINFO TEXT,  LASTMODIFIEDUSER TEXT,  LASTMODIFIEDDATE TEXT,  ID TEXT, "
-               "MEMBERNAME TEXT,  PRIMARYDOMAIN TEXT,  STARTDATE TEXT,  ENDDATE TEXT,  PROGRAM TEXT,  ACTIVITYTYPE TEXT,  "
-               "ACTIVITY TEXT,  GEOGRAPHICALSCOPE TEXT, INSTITUTION TEXT, FACULTY TEXT,  DEPARTMENT TEXT,  DIVISION TEXT,  "
-               "LOCATION TEXT,  HOURSPERTEACHINGSESSIONORWEEKS TEXT,  NUMBEROFTEACHINGSESSIONSORWEEKS TEXT,  "
-               "FACULTYMEMBERADDITIONALCOMMENTS TEXT,  NUMBEROFTRAINEES TEXT,  STUDENTNAMEORNAMES TEXT,  INITIALLECTURE TEXT,  "
-               "FACULTYDEVELOPMENT TEXT,  STIPENDRECEIVED TEXT,  COMMENT TEXT, OTHERDETAILS TEXT,  TOTALHOURS TEXT);  ");
-
 }
 
 /**
@@ -65,7 +58,7 @@ void DB::createDatabase(){
  * For details on how the tokenizer functor is working,
  * see: http://www.boost.org/doc/libs/1_42_0/libs/tokenizer/escaped_list_separator.htm
  *
- * TO DO: modularize.  make somewhat less cryptic.
+ * TO DO: modularize.
  *
  *  @brief DB::parseCSV
  */
@@ -73,8 +66,10 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
     string currentLine      = "";
     string headings         = "";
     string builtValueQuery  = "";
+    string builtHeaderQuery = "";
     string finalQuery       = "";
     QString qstr            = "";
+    list<string> headingList;
 
     // database driver guts
 
@@ -83,7 +78,6 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
 
     // open input file stream
     ifstream inputfile(fullPathToFile);
-    query.exec("DELETE FROM TEACHING;");
     if(!inputfile.is_open()){
         cout << "Error: the CSV file cannot be found. Check the path and filename." << endl;
         system("exit");
@@ -92,38 +86,84 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
     // deal with first line of CSV, which contains the headings
     getline(inputfile, headings);                                               // get first line of csv file, which contains the column headers
 
-//// This code tokenizes the headings of the CSV file: it's only needed if we want to autopopulate the headings of the SQL table down the road
-//    tokenizer<escaped_list_separator<char> > tok(headings);                     // parse heading line token by token
-//    for(tokenizer<escaped_list_separator<char> >::iterator beg=tok.begin(); beg!=tok.end();++beg)
-//    {   //cout << "*****HEADINGS*****" << endl;
-//        //cout << *beg << "\n";
-//    }
-//       // cout << "*****LINES*****" << endl;
+// Tokenizes the headings of the CSV file
+    tokenizer<escaped_list_separator<char> > tok(headings);                     // parse heading line token by token
 
-    while (getline(inputfile, currentLine))                                     // process the remaining rows line by line
+
+    for(tokenizer<escaped_list_separator<char> >::iterator beg=tok.begin(); beg!=tok.end();++beg)
     {
+
+        string currentItem = *beg;
+
+        // remove all white space in current heading, effectively converting to camelcase.
+
+        for(int i=0; i< currentItem.length(); i++)
+        {
+            if(currentItem[i] == ' ') currentItem.erase(i,1);      // Change to ...currentItem.replace(i,1,"_"), to replace all whitespace with underscores
+        }
+
+        // remove all non alphanumeric characters - not doing may result in malformed SQL queries
+
+        currentItem.erase( std::remove_if( currentItem.begin(), currentItem.end(), []( char c ) { return !std::isalnum(c) ; } ), currentItem.end() ) ;
+
+        builtHeaderQuery = builtHeaderQuery + currentItem + " TEXT, ";
+
+        headingList.push_back(currentItem);
+    }
+    builtHeaderQuery = builtHeaderQuery.substr(0, builtHeaderQuery.length()-2);
+
+    // Creates new table with the appropriate name
+
+    string tableName = getTypeFromHeadingList(headingList.size());
+    // drop table if it already exists, then insert new table
+    finalQuery = "DROP TABLE " + tableName + ";";
+    qstr = QString::fromStdString(finalQuery);
+    query.exec(qstr);
+    // create new table, with name to match type of csv
+    finalQuery = "CREATE TABLE " + tableName + "(" + builtHeaderQuery + ");";
+    qstr = QString::fromStdString(finalQuery);
+    query.exec(qstr);
+
+
+    while (getline(inputfile, currentLine))                                             // process the remaining rows line by line
+    {
+        finalQuery = "";
         builtValueQuery = "";
 
-        tokenizer<escaped_list_separator<char> > tok(currentLine);              // give boost tokenizer the currentline
+        tokenizer<escaped_list_separator<char> > tok(currentLine);                      // give boost tokenizer the currentline
         for(tokenizer<escaped_list_separator<char> >::iterator beg=tok.begin(); beg!=tok.end();++beg){
            builtValueQuery = builtValueQuery + " '" + (string)*beg + "',";
         }
 
         builtValueQuery = builtValueQuery.substr(0, builtValueQuery.length()-1) +" ";
-        finalQuery = "INSERT INTO TEACHING VALUES(" + builtValueQuery + ")";    // builds the query from the 28 values in a single row
+        string tableName = getTypeFromHeadingList(headingList.size());                  // decides the type of CSV file from the number of the headings, names table appropriately
+        finalQuery = "INSERT INTO " + tableName + " VALUES(" + builtValueQuery + ")";   // builds the query from the 28 values in a single row
 
-        qstr = QString::fromStdString(finalQuery);                              // cast to QString
+        qstr = QString::fromStdString(finalQuery);                                      // cast to QString
 
-        query.exec(qstr);                                                       // executes the database query, inserting one row into the table
+        query.exec(qstr);                                                               // executes the database query, inserting one row into the table
     }
-
-
-
 }
 
-/*void DB::cleanDatabase(){
-    QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");
-    QSqlQuery query(sqlDatabase);
+/**
+ * This helper function decides from an integer representing the number of elements in a std::list containing
+ * heading names which type of CSV file the headings correspond to.
+ * @brief getTypeFromHeadingList
+ * @return string with type of csv file (i.e. the SQL table name)
+ */
+string DB::getTypeFromHeadingList(int numHeadings){
+    if (numHeadings == 28){
+        return "Teaching";
+    }
+    if (numHeadings == 38){
+        return "Grants";
+    }
+    if (numHeadings == 30){
+        return "Presentations";
+    }
+    if (numHeadings == 44){
+        return "Publications";
+    }
+    return "Unexpected CSV type";
+}
 
-    query.prepare("SELECT STARTDATE FROM TEACHING")
-}*/

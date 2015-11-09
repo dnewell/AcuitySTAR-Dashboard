@@ -9,6 +9,7 @@ public:
     DB();
     void createDatabase();
     void teachingCsvIntoDb(string);
+    string getTypeFromHeadingList(int);
 };
 
 #endif // DB_H
