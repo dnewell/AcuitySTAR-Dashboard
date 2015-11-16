@@ -158,3 +158,8 @@ void MainWindow::on_pushButton_3_clicked()
 {
     makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
 }
+
+void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
+{
+
+}
