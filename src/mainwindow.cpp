@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <summary.h>
 #include <db.h>
+#include "about_canteloupe.h"
 
 using namespace std;
 
@@ -162,4 +163,14 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
 {
 
+}
+
+void MainWindow::on_actionAbout_Canteloupe_triggered()
+{
+    canteHelp = new About_Canteloupe(this);
+    canteHelp -> show();
+
+//    about_canteloupe canteHelp;
+//    canteHelp.setModal(true);
+//    canteHelp.exec();
 }

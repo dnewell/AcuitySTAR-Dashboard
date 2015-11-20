@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     db.cpp \
     entry.cpp \
     summary.cpp \
-    year.cpp
+    year.cpp \
+    about_canteloupe.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1682,10 +1683,12 @@ HEADERS  += mainwindow.h \
     boost/version.hpp \
     boost/visit_each.hpp \
     ui_dialog.h \
-    ui_mainwindow.h
+    ui_mainwindow.h \
+    about_canteloupe.h
 
 FORMS    += mainwindow.ui \
-    dialog.ui
+    dialog.ui \
+    about_canteloupe.ui
 
 DISTFILES += \
     icon_resource_file.rc
