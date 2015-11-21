@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <summary.h>
 #include <db.h>
+#include <filter.h>
 #include "about_canteloupe.h"
 
 using namespace std;
@@ -139,8 +140,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    dialog = new Dialog(this,ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
-    dialog->show();
+    filterWindow = new filter(this, ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
+    filterWindow->show();
 }
 
 

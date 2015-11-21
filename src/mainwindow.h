@@ -40,7 +40,7 @@ void on_actionAbout_Canteloupe_triggered();
 
 private:
     Ui::MainWindow *ui;
-    QDialog *dialog;
+    QDialog *filterWindow;
     About_Canteloupe *canteHelp;
 };
 
