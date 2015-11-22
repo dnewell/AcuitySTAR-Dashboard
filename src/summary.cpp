@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <iostream>
 #include "summary.h"
+#include "QDebug"
 using namespace std;
 
 
@@ -14,6 +15,7 @@ QVector<Year> Summary::summaryFill(QString program, int start, int end){
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");  //without all the QDir stuff, will only look in current working directory
+    qDebug()<<(QDir::homePath() + QDir::separator() + "database.sqlite");
     db.open();
     QSqlQuery qry(db);
 

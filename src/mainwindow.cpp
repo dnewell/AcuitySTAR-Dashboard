@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <summary.h>
 #include <db.h>
+#include <filter.h>
+#include "about_canteloupe.h"
 
 using namespace std;
 
@@ -138,8 +140,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    dialog = new Dialog(this,ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
-    dialog->show();
+    filterWindow = new filter(this, ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
+    filterWindow->show();
 }
 
 
@@ -162,4 +164,14 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
 {
 
+}
+
+void MainWindow::on_actionAbout_Canteloupe_triggered()
+{
+    canteHelp = new About_Canteloupe(this);
+    canteHelp -> show();
+
+//    about_canteloupe canteHelp;
+//    canteHelp.setModal(true);
+//    canteHelp.exec();
 }

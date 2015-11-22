@@ -7,6 +7,7 @@
 #include <QtGui>
 #include <QTreeWidget>
 #include <QPushButton>
+#include "about_canteloupe.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,9 +36,12 @@ void on_pushButton_3_clicked();
 
 void on_treeWidget_itemActivated(QTreeWidgetItem *item, int column);
 
+void on_actionAbout_Canteloupe_triggered();
+
 private:
     Ui::MainWindow *ui;
-    QDialog *dialog;
+    QDialog *filterWindow;
+    About_Canteloupe *canteHelp;
 };
 
 #endif // MAINWINDOW_H

@@ -200,7 +200,7 @@
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>90</y>
       <width>781</width>
       <height>451</height>
@@ -245,7 +245,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="tabsClosable">
      <bool>true</bool>
@@ -254,11 +254,6 @@
      <attribute name="title">
       <string>Teaching</string>
      </attribute>
-     <zorder>treeWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>treeWidget</zorder>
-     <zorder>treeWidget</zorder>
-     <zorder>treeWidget</zorder>
     </widget>
     <widget class="QWidget" name="publicationsTab">
      <attribute name="title">
@@ -283,11 +278,41 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout_Canteloupe"/>
+    <addaction name="actionContext_Help"/>
+    <addaction name="actionReport_Bugs"/>
+    <addaction name="actionTechnical_Support"/>
+   </widget>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionContext_Help">
+   <property name="text">
+    <string>Context Help</string>
+   </property>
+  </action>
+  <action name="actionReport_Bugs">
+   <property name="text">
+    <string>Report Bugs</string>
+   </property>
+  </action>
+  <action name="actionTechnical_Support">
+   <property name="text">
+    <string>Technical Support</string>
+   </property>
+  </action>
+  <action name="actionAbout_Canteloupe">
+   <property name="text">
+    <string>About Canteloupe</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>

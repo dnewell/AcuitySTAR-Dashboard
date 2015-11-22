@@ -7,13 +7,13 @@
 
 //This code actually generates the graph, look at this
 //qcustomplot.cpp is supplied by qcustomplot, do not touch that
-Dialog::Dialog(QWidget *parent, int startDate, int endDate) :
+Dialog::Dialog(QModelIndexList selectedItems, QWidget *parent, int startDate, int endDate) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-   Dialog::make_graph1(startDate,endDate);
-    Dialog::make_graph2(startDate,endDate);
+   Dialog::make_graph1(startDate,endDate, selectedItems);
+    Dialog::make_graph2(startDate,endDate, selectedItems);
     this->setWindowTitle("Pretty Graph");
 }
 
@@ -23,8 +23,9 @@ Dialog::~Dialog()
 }
 
 //draws graph 1
-void Dialog::make_graph1(int startDate,int endDate)
+void Dialog::make_graph1(int startDate,int endDate, QModelIndexList selectedItems)
 {
+
     //get data for graph
     Summary* grabber = new Summary();
 
@@ -115,13 +116,21 @@ void Dialog::make_graph1(int startDate,int endDate)
 
    QVector<double> graphData;
 
-   graphData << totStudentsP << totStudentsU << totStudentsC << totStudentsO;
+   //Right here we loop through our array of selected items and append to graphdate before displaying it.
+   QModelIndex index;
 
+   foreach(index, selectedItems) {
 
-   postBar->setData(ticks, graphData);
+          if(index.row() == 2){
+              graphData << totStudentsP << totStudentsU << totStudentsC << totStudentsO;
+              postBar->setData(ticks, graphData);
+          }
+
+    }
+
 }
 
-void Dialog::make_graph2(int startDate,int endDate)
+void Dialog::make_graph2(int startDate,int endDate, QModelIndexList selectedItems)
 {
     //get data for graph
     Summary* grabber = new Summary();
@@ -212,9 +221,15 @@ void Dialog::make_graph2(int startDate,int endDate)
     ui->bar_graph->yAxis->grid()->setSubGridPen(gridPen);
 
    QVector<double> graphData;
+   QModelIndex index;
 
-   graphData << totHoursP << totHoursU << totHoursC << totHoursO;
+   foreach(index, selectedItems) {
 
+          if(index.row() == 3){
+              qDebug()<<("here");
+              graphData << totHoursP << totHoursU << totHoursC << totHoursO;
+              postBar->setData(ticks, graphData);
+          }
 
-   postBar->setData(ticks, graphData);
+        }
 }

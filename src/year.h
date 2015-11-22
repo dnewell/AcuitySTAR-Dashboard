@@ -10,6 +10,7 @@ public:
     int date;
     double tothours;
     int totstudents;
+
     QVector<Entry> list;
 
     Year();
