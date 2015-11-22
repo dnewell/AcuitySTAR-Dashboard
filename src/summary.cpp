@@ -80,6 +80,9 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
         field="Program";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
         field="Type";
@@ -144,6 +147,9 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
         field="Type";
@@ -213,6 +219,9 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
         field="Type";
@@ -280,6 +289,9 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     if(csvtype=="Teaching"){
         field="Program";
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
         field="Type";
