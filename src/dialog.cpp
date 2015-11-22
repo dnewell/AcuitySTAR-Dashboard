@@ -12,11 +12,24 @@ Dialog::Dialog(QWidget *parent):
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+//    Dialog::make_graph1(2009,2015);
+//     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
+//     this->setWindowTitle("Pretty Graph");
+
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+}
+
+void Dialog::on_graphBtn_clicked()
+{
+    ui->bar_graph->clearPlottables();
+    Dialog::make_graph1(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
+     Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
+     ui->bar_graph->replot();
+     this->setWindowTitle("Pretty Graph");
 }
 
 //draws graph 1
@@ -124,6 +137,7 @@ void Dialog::make_graph1(int startDate,int endDate)
 
 //    }
 
+   qDebug()<< totStudentsP << totStudentsU << totStudentsC << totStudentsO;
    graphData << totStudentsP << totStudentsU << totStudentsC << totStudentsO;
    postBar->setData(ticks, graphData);
 
@@ -235,9 +249,4 @@ void Dialog::make_graph2(int startDate,int endDate)
    postBar->setData(ticks, graphData);
 }
 
-void Dialog::on_graphBtn_clicked()
-{
-    Dialog::make_graph1(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
-     Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
-     this->setWindowTitle("Pretty Graph");
-}
+

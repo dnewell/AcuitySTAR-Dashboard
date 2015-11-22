@@ -8,7 +8,7 @@ class DB
 public:
     DB();
     void createDatabase();
-    void teachingCsvIntoDb(string);
+    string teachingCsvIntoDb(string);
     string getTypeFromHeadingList(int);
 };
 

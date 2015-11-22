@@ -62,7 +62,7 @@ void DB::createDatabase(){
  *
  *  @brief DB::parseCSV
  */
-void DB::teachingCsvIntoDb(string fullPathToFile){
+string DB::teachingCsvIntoDb(string fullPathToFile){
     string currentLine      = "";
     string headings         = "";
     string builtValueQuery  = "";
@@ -143,6 +143,7 @@ void DB::teachingCsvIntoDb(string fullPathToFile){
 
         query.exec(qstr);                                                               // executes the database query, inserting one row into the table
     }
+    return tableName;
 }
 
 /**
@@ -166,4 +167,6 @@ string DB::getTypeFromHeadingList(int numHeadings){
     }
     return "Unexpected CSV type";
 }
+
+
 

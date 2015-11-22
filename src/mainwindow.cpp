@@ -153,7 +153,8 @@ void MainWindow::on_pushButton_2_clicked()
     string filePath = fileName.toStdString();
     DB* db = new DB();
     db->createDatabase();
-    db->teachingCsvIntoDb(filePath);
+    string tableName = db->teachingCsvIntoDb(filePath);
+    cout << tableName << endl;
     }
 }
 
