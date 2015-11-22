@@ -8,10 +8,10 @@ DialogForError::DialogForError(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void DialogForError::on_pushButton_clicked()
-{
-    teachingTable = new TeachingTable("Teaching","RemoveError","(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
-}
+//void DialogForError::on_pushButton_clicked()
+//{
+//    teachingTable = new TeachingTable("Teaching","RemoveError","(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
+//}
 
 void DialogForError::on_pushButton_2_clicked()
 {
