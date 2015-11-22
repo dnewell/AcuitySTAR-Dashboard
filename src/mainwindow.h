@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <dialog.h>
 #include <QtCore>
 #include <QtGui>
 #include <QTreeWidget>
@@ -40,7 +39,7 @@ void on_actionAbout_Canteloupe_triggered();
 
 private:
     Ui::MainWindow *ui;
-    QDialog *filterWindow;
+    QDialog *dialogWindow;
     About_Canteloupe *canteHelp;
 };
 

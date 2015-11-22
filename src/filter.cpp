@@ -12,13 +12,13 @@ filter::filter(QWidget *parent, int strtDate, int endDte) :
 {
     ui->setupUi(this);
     //Build list items
-    ui->listWidget->addItem("Total Hours");
-    ui->listWidget->addItem("Number of Teaching Sessions or Week");
-    ui->listWidget->addItem("Number of trainees");
-    ui->listWidget->addItem("Hours per Teaching Sessions or Week");
-    //save our startDate and endDate to global
-    startDate = strtDate;
-    endDate = endDte;
+//    ui->listWidget->addItem("Total Hours");
+//    ui->listWidget->addItem("Number of Teaching Sessions or Week");
+//    ui->listWidget->addItem("Number of trainees");
+//    ui->listWidget->addItem("Hours per Teaching Sessions or Week");
+//    //save our startDate and endDate to global
+//    startDate = strtDate;
+//    endDate = endDte;
 }
 
 filter::~filter()
@@ -29,10 +29,10 @@ filter::~filter()
 void filter::on_pushButton_clicked()
 {
     //Get selected filters
-    QItemSelectionModel * selections = ui->listWidget->selectionModel();
-    QModelIndexList indexes = selections->selectedIndexes();
+//    QItemSelectionModel * selections = ui->listWidget->selectionModel();
+//    QModelIndexList indexes = selections->selectedIndexes();
 
 
-    dialog = new Dialog(indexes, this, startDate, endDate);
-    dialog->show();
+//    dialog = new Dialog(indexes, this, startDate, endDate);
+//    dialog->show();
 }
