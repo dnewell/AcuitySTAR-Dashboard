@@ -13,11 +13,11 @@ class DialogForError : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogForError(QWidget *parent = 0);
+    explicit DialogForError(const QString &table,const QString &tableFilter,QWidget *parent = 0);
     ~DialogForError();
 
 private slots:
-//    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
 
@@ -26,6 +26,7 @@ private slots:
 private:
     Ui::DialogForError *ui;
     QDialog *teachingTable;
+    QDialog *fullTeachingTable;
 };
 
 #endif // DIALOGFORERROR_H

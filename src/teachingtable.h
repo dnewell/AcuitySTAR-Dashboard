@@ -21,17 +21,17 @@ class TeachingTable : public QDialog
 
 public:
     //explicit TeachingTable(QWidget *parent = 0);
-    explicit TeachingTable(const QString &tableName,const QString &deleteAction,const QString &filter,QWidget *parent = 0);
+    explicit TeachingTable(const QString &tableName,const QString &filter,QWidget *parent = 0);
     ~TeachingTable();
 
 private slots:
    void submit();
-   //void remove();
+   void remove();
 
 private:
     QPushButton *submitButton;
     QPushButton *revertButton;
-    //QPushButton *deleteButton;
+    QPushButton *deleteButton;
     QPushButton *quitButton;
     QDialogButtonBox *buttonBox;
     QSqlTableModel *model;

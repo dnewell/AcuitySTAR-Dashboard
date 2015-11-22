@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Error &amp; Data Validation</string>
+   <string>Dialog</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -39,9 +39,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>90</y>
-     <width>211</width>
-     <height>41</height>
+     <y>70</y>
+     <width>181</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -52,9 +52,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>130</y>
-     <width>211</width>
-     <height>41</height>
+     <y>110</y>
+     <width>121</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">

@@ -154,7 +154,13 @@ void MainWindow::on_pushButton_2_clicked()
     DB* db = new DB();
     db->createDatabase();
     string tableName = db->teachingCsvIntoDb(filePath);
-    dialogForError = new DialogForError(this);
+    QString table = QString::fromStdString(tableName);
+    QString tableFilter = "";
+    if (tableName == "Teaching"){
+        tableFilter = "(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')";
+    }
+
+    dialogForError = new DialogForError(table,tableFilter);
     dialogForError->show();
     cout << tableName << endl;
     }
@@ -163,6 +169,12 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    table = new TeachingTable("Teaching","");
+    table->showMaximized();
 }
 
 void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)

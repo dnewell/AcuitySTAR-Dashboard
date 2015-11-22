@@ -1,28 +1,28 @@
 #include "dialogforerror.h"
 #include "ui_dialogforerror.h"
-
-DialogForError::DialogForError(QWidget *parent) :
+QString a = "";
+QString b = "";
+DialogForError::DialogForError(const QString &table,const QString &tableFilter,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogForError)
 {
-    ui->setupUi(this);
-}
+    a = table;
+    b = tableFilter;
 
-//void DialogForError::on_pushButton_clicked()
-//{
-//    teachingTable = new TeachingTable("Teaching","RemoveError","(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
-//}
+    ui->setupUi(this);
+
+}
 
 void DialogForError::on_pushButton_2_clicked()
 {
-    teachingTable = new TeachingTable("Teaching","","(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
+    teachingTable = new TeachingTable(a,b);
     teachingTable->showMaximized();
 }
 
 void DialogForError::on_pushButton_3_clicked()
 {
-    teachingTable = new TeachingTable("Teaching","","");
-    teachingTable->showMaximized();
+    fullTeachingTable = new TeachingTable(a,"");
+    fullTeachingTable->showMaximized();
 }
 
 DialogForError::~DialogForError()

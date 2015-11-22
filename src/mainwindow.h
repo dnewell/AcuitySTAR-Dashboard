@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <dialogforerror.h>
 #include <dialog.h>
+#include <teachingtable.h>
 #include "about_canteloupe.h"
 
 namespace Ui {
@@ -34,6 +35,7 @@ void on_pushButton_clicked();
 void on_pushButton_2_clicked();
 
 void on_pushButton_3_clicked();
+void on_pushButton_4_clicked();
 
 void on_treeWidget_itemActivated(QTreeWidgetItem *item, int column);
 
@@ -44,6 +46,7 @@ private:
     QDialog *dialogWindow;
     About_Canteloupe *canteHelp;
     QDialog *dialogForError;
+    QDialog *table;
 };
 
 #endif // MAINWINDOW_H
