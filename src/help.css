@@ -1,0 +1,15 @@
+body {
+    background-color: whitesmoke;
+
+}
+
+h1 {
+    color: darkorange;
+    margin-left: 20px;
+}
+
+h2,h3,p {
+    font-family: sans-serif;
+    padding-left: 5%;
+    padding-right: 5%;
+}
