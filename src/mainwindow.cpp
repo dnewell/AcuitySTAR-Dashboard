@@ -154,6 +154,8 @@ void MainWindow::on_pushButton_2_clicked()
     DB* db = new DB();
     db->createDatabase();
     string tableName = db->teachingCsvIntoDb(filePath);
+    dialogForError = new DialogForError(this);
+    dialogForError->show();
     cout << tableName << endl;
     }
 }

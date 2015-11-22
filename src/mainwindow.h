@@ -6,6 +6,8 @@
 #include <QtGui>
 #include <QTreeWidget>
 #include <QPushButton>
+#include <dialogforerror.h>
+#include <dialog.h>
 #include "about_canteloupe.h"
 
 namespace Ui {
@@ -41,6 +43,7 @@ private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;
     About_Canteloupe *canteHelp;
+    QDialog *dialogForError;
 };
 
 #endif // MAINWINDOW_H

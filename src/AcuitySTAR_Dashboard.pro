@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     summary.cpp \
     year.cpp \
     about_canteloupe.cpp \
-    filter.cpp
+    filter.cpp \
+    teachingtable.cpp \
+    dialogforerror.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1686,12 +1688,16 @@ HEADERS  += mainwindow.h \
     ui_dialog.h \
     ui_mainwindow.h \
     about_canteloupe.h \
-    filter.h
+    filter.h \
+    teachingtable.h \
+    dialogforerror.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
     about_canteloupe.ui \
-    filter.ui
+    filter.ui \
+    teachingtable.ui \
+    dialogforerror.ui
 
 DISTFILES += \
     icon_resource_file.rc
