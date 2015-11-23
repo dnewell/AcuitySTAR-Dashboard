@@ -3,6 +3,7 @@
 # Project created by QtCreator 2015-10-19T20:25:08
 #
 #-------------------------------------------------
+include("C:/Users/a5w1tzz/Desktop/nightcharts-master/nightcharts.pri")
 
 QT       += core gui sql
 QMAKE_CXXFLAGS += -std=gnu++11
@@ -16,14 +17,14 @@ CONFIG += c++11
 RC_FILE = icon_resource_file.rc
 SOURCES += main.cpp\
         mainwindow.cpp \
-    dialog.cpp \
     qcustomplot.cpp \
     db.cpp \
-    entry.cpp \
     summary.cpp \
     year.cpp \
     about_canteloupe.cpp \
-    filter.cpp
+    entry.cpp \
+    dialog.cpp \
+    piechart.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1686,12 +1687,12 @@ HEADERS  += mainwindow.h \
     ui_dialog.h \
     ui_mainwindow.h \
     about_canteloupe.h \
-    filter.h
+    piechart.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
     about_canteloupe.ui \
-    filter.ui
+    piechart.ui
 
 DISTFILES += \
     icon_resource_file.rc

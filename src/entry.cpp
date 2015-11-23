@@ -8,9 +8,3 @@ Entry::Entry(QString fac, double h, int s){
     hours=h;
     students=s;
 }
-
-
-
-
-
-

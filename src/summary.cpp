@@ -82,6 +82,9 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
         field="Program";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
         field="Type";
@@ -125,7 +128,7 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
-    if(qry.next()){
+    while(qry.next()){
         facultys.append(qry.value(0).toString());
     }
     db.close();
@@ -140,20 +143,27 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     QSqlQuery qry(db);
     QVector<double> facultys;
     QString field, source, data;
+    int values;
 
     if(csvtype=="Teaching"){
+        values=2;
         field="Program";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
+        values=1;
         field="Type";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="COUNT(*)";
     }
     else if(csvtype=="Publications"){
+        values=1;
         field="Type";
         if(tier2 == "Published Abstracts") tier2="Published Abstract";
         else if(tier2 == "Journal Articles") tier2="Journal Article";
@@ -161,6 +171,7 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
         data="COUNT(*)";
     }
     else if(csvtype=="Grants"){
+        values=2;
         field="FundingType";
         if(tier2=="Peer Reviewed")
             source="PeerReviewed?";
@@ -194,8 +205,10 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
-    if(qry.next()){
-        facultys.append(qry.value(0).toDouble());
+    while(qry.next()){
+        for(int n=0; n<values; n++){
+            facultys.append(qry.value(n).toDouble());
+        }
     }
     db.close();
     return facultys;
@@ -209,20 +222,27 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     QSqlQuery qry(db);
     QVector<double> facultys;
     QString field, source, data;
+    int values;
 
     if(csvtype=="Teaching"){
+        values=2;
         field="Program";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
+        values=1;
         field="Type";
         startDate=tier2.toInt();
         endDate=tier2.toInt();
         data="COUNT(*)";
     }
     else if(csvtype=="Publications"){
+        values=1;
         field="Type";
         if(tier2 == "Published Abstracts") tier2="Published Abstract";
         else if(tier2 == "Journal Articles") tier2="Journal Article";
@@ -230,6 +250,7 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
         data="COUNT(*)";
     }
     else if(csvtype=="Grants"){
+        values=2;
         field="FundingType";
         if(tier2=="Peer Reviewed")
             source="PeerReviewed?";
@@ -263,8 +284,10 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
-    if(qry.next()){
-        facultys.append(qry.value(0).toDouble());
+    while(qry.next()){
+        for(int n=0; n<values; n++){
+            facultys.append(qry.value(n).toDouble());
+        }
     }
     db.close();
     return facultys;
@@ -278,20 +301,28 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     QSqlQuery qry(db);
     QVector<double> facultys;
     QString field, data;
+    int values;
 
     if(csvtype=="Teaching"){
+        values=2;
         field="Program";
         data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
     }
     else if(csvtype=="Presentations"){
+        values=1;
         field="Type";
         data="COUNT(*)";
     }
     else if(csvtype=="Publications"){
+        values=1;
         field="Type";
         data="COUNT(*)";
     }
     else if(csvtype=="Grants"){
+        values=2;
         field="FundingType";
         data="COUNT(*), SUM(TotalAmount)";
     }
@@ -319,8 +350,10 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
-    if(qry.next()){
-        facultys.append(qry.value(0).toDouble());
+    while(qry.next()){
+        for(int n=0; n<values; n++){
+            facultys.append(qry.value(n).toDouble());
+        }
     }
     db.close();
     return facultys;
