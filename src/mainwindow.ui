@@ -70,9 +70,9 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>180</x>
       <y>30</y>
-      <width>771</width>
+      <width>619</width>
       <height>32</height>
      </rect>
     </property>
@@ -285,7 +285,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help">

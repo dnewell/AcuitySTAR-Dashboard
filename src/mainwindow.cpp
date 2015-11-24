@@ -12,6 +12,10 @@
 #include <filter.h>
 #include "about_canteloupe.h"
 #include <dialog.h>
+#include "bug_report.h"
+#include "tech_support.h"
+#include <QMessageBox>
+//#include <QtNetwork/qnetworkaccessmanager.h>
 
 using namespace std;
 
@@ -187,25 +191,31 @@ void MainWindow::on_actionAbout_Canteloupe_triggered()
 {
     canteHelp = new About_Canteloupe(this);
     canteHelp -> show();
-
-//    about_canteloupe canteHelp;
-//    canteHelp.setModal(true);
-//    canteHelp.exec();
 }
-
-
-
 
 void MainWindow::on_actionOpen_triggered()
 {
-
     on_pushButton_2_clicked();
-
-
 }
 
 void MainWindow::on_actionExit_triggered()
 {
-
     QApplication::quit();
+}
+
+void MainWindow::on_actionReport_Bugs_triggered()
+{
+    bug = new Bug_Report(this);
+    bug -> show();
+}
+
+void MainWindow::on_actionTechnical_Support_triggered()
+{
+    tech = new Tech_Support(this);
+    tech -> show();
+}
+
+void MainWindow::on_actionContext_Help_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
 }

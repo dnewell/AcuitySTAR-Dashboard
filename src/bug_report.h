@@ -16,7 +16,7 @@ public:
     ~Bug_Report();
 
 private slots:
-    void on_pushButton_2_customContextMenuRequested(const QPoint &pos);
+//    void on_pushButton_2_customContextMenuRequested(const QPoint &pos);
 
     void on_pushButton_2_clicked();
 

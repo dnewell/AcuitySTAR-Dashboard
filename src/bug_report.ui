@@ -87,5 +87,21 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Bug_Report</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>419</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
