@@ -3,7 +3,7 @@
 # Project created by QtCreator 2015-10-19T20:25:08
 #
 #-------------------------------------------------
-include("C:/Users/a5w1tzz/Desktop/nightcharts-master/nightcharts.pri")
+include("nightcharts.pri")
 
 QT       += core gui sql
 QMAKE_CXXFLAGS += -std=gnu++11
