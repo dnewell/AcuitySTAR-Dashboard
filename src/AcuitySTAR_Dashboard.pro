@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     entry.cpp \
     dialog.cpp \
     piechart.cpp \
-    publicationgraphdash.cpp
+    publicationgraphdash.cpp \
+    presentationgraphdash.cpp \
+    grantsfundinggraphdash.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1689,13 +1691,17 @@ HEADERS  += mainwindow.h \
     ui_mainwindow.h \
     about_canteloupe.h \
     piechart.h \
-    publicationgraphdash.h
+    publicationgraphdash.h \
+    presentationgraphdash.h \
+    grantsfundinggraphdash.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
     about_canteloupe.ui \
     piechart.ui \
-    publicationgraphdash.ui
+    publicationgraphdash.ui \
+    presentationgraphdash.ui \
+    grantsfundinggraphdash.ui
 
 DISTFILES += \
     icon_resource_file.rc

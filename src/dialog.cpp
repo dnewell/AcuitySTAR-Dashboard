@@ -44,7 +44,7 @@ void Dialog::on_graphBtn_clicked()
      this->setWindowTitle("Pretty Graph");
 }
 
-//draws graph 1
+//draws bar graph
 void Dialog::make_graph1(int startDate,int endDate)
 {
 
@@ -52,11 +52,6 @@ void Dialog::make_graph1(int startDate,int endDate)
     db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
     db.open();
     QSqlQuery qry(db);
-    QString matchTeaching = QString("Teaching");
-    QString matchPublications = QString("Publications");
-    QString matchFunding = QString("Presentations");
-    QString matchPrezz = QString("GrantsClinicalFunding");
-
     QString professor =ui->searchIn->text();
     QString progLevel = ui->progLevel->currentText();
     QString strtDate=QString::number(ui->fromCB->currentText().toInt());
