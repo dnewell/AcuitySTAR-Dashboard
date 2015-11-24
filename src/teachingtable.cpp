@@ -41,7 +41,7 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
       deleteButton = new QPushButton(tr("&Ignore All Errors"));
     }
     //deleteButton = new QPushButton(tr("&Delete"));
-    quitButton = new QPushButton(tr("Accept Changes and Close"));
+    quitButton = new QPushButton(tr("Close"));
     buttonBox = new QDialogButtonBox(Qt::Vertical);
     buttonBox->addButton(submitButton, QDialogButtonBox::ActionRole);
     if (filter  != ""){
@@ -65,6 +65,7 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
 
 }
 
+
 void TeachingTable::submit()
 {
     model->database().transaction();
@@ -80,25 +81,46 @@ void TeachingTable::submit()
 
 void TeachingTable::remove()
 {
-    /***
-    model->setFilter("(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");  //without all the QDir stuff, will only look in current working directory
-    db.open();
-    QSqlQuery qry(db);
-    qry.prepare("SELECT rowid FROM Teaching WHERE (MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
-    qry.exec();
-    while(qry.next()){
-      //model->selectRow(qry.value(0).toInt()-3);
-     //model->selectRow(qry.value(0).toInt()-3);
-     model->removeRow(qry.value(0).toInt()-3);
-    }
-    ***/
-
 
     model->removeRows(0,model->rowCount());
-    model->database().commit();
+    //model->database().commit();
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.setInformativeText("Do you want to delete all the error rows?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int ret = msgBox.exec();
+    switch (ret) {
+      case QMessageBox::Save:
+        model->database().transaction();
+        if (model->submitAll()) {
+            model->database().commit();
+        } else {
+            model->database().rollback();
+            QMessageBox::warning(this, tr("Teaching Table"),
+                                 tr("The database reported an error: %1")
+                                 .arg(model->lastError().text()));
+        }
+       this->close();
+          break;
+      case QMessageBox::Discard:
+          model->revertAll();
+          // Don't Save was clicked
+          break;
+      case QMessageBox::Cancel:
+          // Cancel was clicked
+          break;
+      default:
+          // should never be reached
+          break;
+    }
 }
+
+int TeachingTable::getRowNumbers()
+{
+    return model->rowCount();
+}
+
 
 TeachingTable::~TeachingTable()
 {
