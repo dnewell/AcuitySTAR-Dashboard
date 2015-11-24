@@ -12,6 +12,7 @@
 #include <filter.h>
 #include "about_canteloupe.h"
 #include <dialog.h>
+#include <publicationgraphdash.h>
 
 using namespace std;
 
@@ -141,8 +142,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+  if(filePath.contains("Teaching")){
    dialogWindow = new Dialog(filePath, this);
    dialogWindow->show();
+  }else if(filePath.contains("Publications")){
+
+      QDialog *pubDash = new publicationGraphDash(this);
+      pubDash->show();
+  }
 }
 
 

@@ -10,9 +10,11 @@ INPUT(
 ./release\entry.o
 ./release\dialog.o
 ./release\piechart.o
+./release\publicationgraphdash.o
 ./release\moc_mainwindow.o
 ./release\moc_dialog.o
 ./release\moc_qcustomplot.o
 ./release\moc_about_canteloupe.o
 ./release\moc_piechart.o
+./release\moc_publicationgraphdash.o
 );

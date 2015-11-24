@@ -12,13 +12,18 @@ class PieChart : public QDialog
     Q_OBJECT
 
 public:
-    explicit PieChart(QWidget *parent = 0);
+    explicit PieChart(QString labels[], double values[], int valLength, int labLength, QWidget *parent = 0);
     void paintEvent(QPaintEvent *e);
 
     ~PieChart();
 
 private:
     Ui::PieChart *ui;
+    double *vals;
+    QString *labs;
+    int valsLength;
+    int labsLength;
+
 };
 
 #endif // PIECHART_H

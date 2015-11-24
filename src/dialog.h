@@ -29,6 +29,8 @@ private:
     Ui::Dialog *ui;
     bool pie = false;
     QDialog *pieWindow;
+    double totals[16];
+    QString labels[16];
 };
 
 #endif // DIALOG_H

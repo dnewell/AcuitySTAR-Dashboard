@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>publicationGraphDash</class>
+ <widget class="QDialog" name="publicationGraphDash">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>630</width>
+    <height>410</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>320</y>
+     <width>611</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="searchIn">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Search Name</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="pubType">
+      <item>
+       <property name="text">
+        <string>Journal Article</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Books</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Newspapers</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Working Papers</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="fromCB">
+      <item>
+       <property name="text">
+        <string>1999</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2000</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2001</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2002</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2003</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2004</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2005</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2006</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2007</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2008</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2009</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2010</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2011</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2012</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2013</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2014</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2015</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="toCB">
+      <item>
+       <property name="text">
+        <string>1999</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2000</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2001</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2002</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2003</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2004</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2005</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2006</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2007</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2008</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2009</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2010</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2011</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2012</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2013</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2014</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2015</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QCustomPlot" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>611</width>
+     <height>301</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
