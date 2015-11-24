@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>813</height>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,23 +38,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Search:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QLineEdit" name="searchIn">
      <property name="text">
       <string>Faculty Member Name</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Date Range Filter:</string>
      </property>
     </widget>
    </item>
@@ -75,6 +61,56 @@
      </item>
      <item>
       <widget class="QComboBox" name="fromCB">
+       <item>
+        <property name="text">
+         <string>1999</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2000</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2001</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2002</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2003</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2004</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2005</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2006</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2007</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2008</string>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>2009</string>
@@ -129,6 +165,56 @@
       <widget class="QComboBox" name="toCB">
        <item>
         <property name="text">
+         <string>1999</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2000</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2001</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2002</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2003</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2004</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2005</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2006</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2007</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2008</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>2009</string>
         </property>
        </item>
@@ -162,6 +248,48 @@
          <string>2015</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="progLevel">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Undergraduate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Postgraduate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Continuing</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Other</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pieChart">
+       <property name="text">
+        <string>Pie</string>
+       </property>
       </widget>
      </item>
      <item>

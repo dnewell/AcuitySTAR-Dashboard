@@ -3,6 +3,7 @@
 # Project created by QtCreator 2015-10-19T20:25:08
 #
 #-------------------------------------------------
+include("C:/Users/a5w1tzz/Desktop/nightcharts-master/nightcharts.pri")
 
 QT       += core gui sql
 QMAKE_CXXFLAGS += -std=gnu++11
@@ -29,7 +30,9 @@ SOURCES += main.cpp\
     bug_report.cpp \
     tech_support.cpp \
     message.cpp \
-    window.cpp
+    window.cpp \
+    piechart.cpp \
+    publicationgraphdash.cpp 
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1698,7 +1701,9 @@ HEADERS  += mainwindow.h \
     bug_report.h \
     tech_support.h \
     message.h \
-    window.h
+    window.h \
+    piechart.h \
+    publicationgraphdash.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
@@ -1707,7 +1712,9 @@ FORMS    += mainwindow.ui \
     teachingtable.ui \
     dialogforerror.ui \
     bug_report.ui \
-    tech_support.ui
+    tech_support.ui \
+    piechart.ui \
+    publicationgraphdash.ui
 
 DISTFILES += \
     icon_resource_file.rc
