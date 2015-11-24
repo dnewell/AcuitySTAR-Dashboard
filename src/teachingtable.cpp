@@ -41,7 +41,7 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
       deleteButton = new QPushButton(tr("&Ignore All Errors"));
     }
     //deleteButton = new QPushButton(tr("&Delete"));
-    quitButton = new QPushButton(tr("Quit"));
+    quitButton = new QPushButton(tr("Accept Changes and Close"));
     buttonBox = new QDialogButtonBox(Qt::Vertical);
     buttonBox->addButton(submitButton, QDialogButtonBox::ActionRole);
     if (filter  != ""){
