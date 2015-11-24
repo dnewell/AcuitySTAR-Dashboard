@@ -138,6 +138,10 @@ string DB::teachingCsvIntoDb(string fullPathToFile){
 
         query.exec(qstr);                                                               // executes the database query, inserting one row into the table
     }
+    if (tableName == "Grants"){
+        qstr = QString::fromStdString("UPDATE GRANTS SET TotalAmount= Replace(replace(TotalAmount, '$', ''), ',', '');");
+        query.exec(qstr);
+    }
     return tableName;
 }
 
