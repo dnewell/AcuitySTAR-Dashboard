@@ -10,8 +10,6 @@
 #include <dialog.h>
 #include <teachingtable.h>
 #include "about_canteloupe.h"
-#include "bug_report.h"
-#include "tech_support.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,20 +45,12 @@ void on_actionOpen_triggered();
 
 void on_actionExit_triggered();
 
-void on_actionReport_Bugs_triggered();
-
-void on_actionTechnical_Support_triggered();
-
-void on_actionContext_Help_triggered();
-
 private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;
     About_Canteloupe *canteHelp;
     QDialog *dialogForError;
     QDialog *table;
-    Bug_Report *bug;
-    Tech_Support *tech;
 
 };
 
