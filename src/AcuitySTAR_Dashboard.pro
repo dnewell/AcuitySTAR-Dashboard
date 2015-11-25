@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include("nightcharts.pri")
 
-QT       += core gui sql
+QT       += core gui sql printsupport
 QMAKE_CXXFLAGS += -std=gnu++11
 
 
