@@ -45,12 +45,25 @@ void PieChart::paintEvent(QPaintEvent *e)
         vals-=valsLength;
 
         for(int i =0; i<valsLength;i++){
-            QColor color = QColor(color3, color4, color2);
+            QColor color;
+            if(i==0){
+             color = QColor("Green");
 
+            }else if(i==1){
+                 color = QColor("Blue");
 
-            color4+=5;
-            color2+=5;
-            color3+=5;
+            }else if(i==2){
+             color = QColor("Orange");
+
+            }else if(i==3){
+             color = QColor("Red");
+
+            } else if(i==4){
+             color = QColor("Purple");
+
+            }else{
+                color = QColor("Green");
+            }
 
 
             double portion = *vals / sum;

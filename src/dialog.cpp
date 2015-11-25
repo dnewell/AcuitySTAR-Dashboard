@@ -22,7 +22,6 @@ Dialog::Dialog(QString filePath, QWidget *parent):
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    FILE_PATH = "Teaching";
 
 //    Dialog::make_graph1(2009,2015);
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
@@ -84,7 +83,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[0] = qry.record().value(0).toInt();
-    labels[0] = "HoursperTeachingSessionorWeek";
+    labels[0] = "Hours Per Teaching Session Or Weeks";
 
 
     /*Populate UME Totals and Labels for NumberofTeachingSessionsorWeeks*/
@@ -95,7 +94,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[1] = qry.record().value(0).toInt();
-    labels[1] = "NumberofTeachingSessionsorWeeks";
+    labels[1] = "Number Of Teaching Sessions Or Weeks";
 
 
     /*Populate UME Totals and Labels for NumberOfTrainees*/
@@ -303,7 +302,7 @@ void Dialog::on_pieChart_clicked()
 {
 
    pieWindow = new PieChart(labels, totals, 4, 4, this);
-   pieWindow->show();
+   pieWindow->showMaximized();
 
 }
 

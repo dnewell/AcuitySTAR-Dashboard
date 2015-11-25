@@ -7,93 +7,105 @@
     <x>0</x>
     <y>0</y>
     <width>634</width>
-    <height>458</height>
+    <height>580</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>3000</width>
+    <height>3000</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QCustomPlot" name="bar_graphPres" native="true">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>0</y>
-     <width>621</width>
-     <height>371</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>390</y>
-     <width>611</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Search</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="searchInPres"/>
-    </item>
-    <item>
-     <widget class="QComboBox" name="presType">
-      <item>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCustomPlot" name="bar_graphPres" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1000</width>
+       <height>1000</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Visiting Professorship</string>
+        <string>Search</string>
        </property>
-      </item>
-      <item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="searchInPres"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="presType">
+       <item>
+        <property name="text">
+         <string>Visiting Professorship</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Invited Lectures</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Poster Presentation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Abstract Presented</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Plenary Presentation</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="fromCBPres"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="toCBPres"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="barBtn">
        <property name="text">
-        <string>Invited Lectures</string>
+        <string>Bar Graph</string>
        </property>
-      </item>
-      <item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pieBtn">
        <property name="text">
-        <string>Poster Presentation</string>
+        <string>Pie Graph</string>
        </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Abstract Presented</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Plenary Presentation</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="fromCBPres"/>
-    </item>
-    <item>
-     <widget class="QComboBox" name="toCBPres"/>
-    </item>
-    <item>
-     <widget class="QPushButton" name="barBtn">
-      <property name="text">
-       <string>Bar Graph</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pieBtn">
-      <property name="text">
-       <string>Pie Graph</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <customwidgets>
   <customwidget>

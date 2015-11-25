@@ -37,6 +37,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_tabWidget_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;

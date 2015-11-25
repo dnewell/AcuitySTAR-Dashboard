@@ -81,7 +81,7 @@ void PresentationGraphDash::make_graph1(int startDate,int endDate)
     result = qry.record().value(0).toInt();
 
     totalsPres[0] = result;
-    labelsPres[0] = "NumberofAttendees";
+    labelsPres[0] = "Number Of Attendees";
 
     qry.prepare("SELECT SUM(Hours) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
@@ -164,5 +164,5 @@ void PresentationGraphDash::on_barBtn_clicked()
 void PresentationGraphDash::on_pieBtn_clicked()
 {
     pieWindow = new PieChart(labelsPres, totalsPres, 2, 2, this);
-    pieWindow->show();
+    pieWindow->showMaximized();
 }

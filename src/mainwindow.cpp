@@ -144,21 +144,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-  if(filePath.contains("Teaching")){
+  if(ui->tabWidget->currentIndex() == 0){
    dialogWindow = new Dialog(filePath, this);
-   dialogWindow->show();
-  }else if(filePath.contains("Publications")){
+   dialogWindow->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 1){
 
       QDialog *pubDash = new publicationGraphDash(this);
-      pubDash->show();
-  }else if(filePath.contains("Presentations")){
+      pubDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 3){
 
       QDialog *presDash = new PresentationGraphDash(this);
-      presDash->show();
-  }else if(filePath.contains("Grants")){
+      presDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 2){
 
       QDialog *grantsDash = new GrantsFundingGraphDash(this);
-      grantsDash->show();
+      grantsDash->showMaximized();
   }
 }
 
@@ -315,6 +315,11 @@ void MainWindow::on_actionAbout_Canteloupe_triggered()
 
 
 void MainWindow::on_pushButton_4_clicked()
+{
+
+}
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
 
 }

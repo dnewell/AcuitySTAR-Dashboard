@@ -75,7 +75,7 @@ void GrantsFundingGraphDash::make_graph1(int startDate,int endDate)
     result = qry.record().value(0).toInt();
 
     totalsGrants[0] = result;
-    labelsGrants[0] = "TotalAmount";
+    labelsGrants[0] = "Total Amount";
 
     qry.prepare("SELECT SUM(ltrim(ProratedAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
@@ -156,6 +156,47 @@ void GrantsFundingGraphDash::on_graphBtn_clicked()
 
 void GrantsFundingGraphDash::on_pieBtn_clicked()
 {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    QString professor =ui->searchInGrants->text();
+    QString strtDate=QString::number(ui->fromCBGrants->currentText().toInt());
+    QString edDate=QString::number(ui->fromCBGrants->currentText().toInt());
+
+
+    /*Populate totals for Number of Attendees*/
+
+    qry.prepare("SELECT SUM(ltrim(TotalAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+
+    int result;
+
+    qry.next();
+    result = qry.record().value(0).toInt();
+    qDebug()<<qry.record();
+    totalsGrants[0] = result;
+    labelsGrants[0] = "Total Amount";
+
+    qry.prepare("SELECT SUM(ltrim(ProratedAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+    qry.next();
+    result = qry.record().value(0).toInt();
+    totalsGrants[1] = qry.record().value(0).toInt();
+    labelsGrants[1] = "Hours";
+
+    /*GET MAX TOTAL FOR Y AXIS*/
+
+    double max=0;
+    for(int i=0;i<2; i++){
+        if(totalsGrants[i] > max){
+
+            max = totalsGrants[i];
+        }
+
+    }
+
     QDialog *pieWindow = new PieChart(labelsGrants, totalsGrants, 2, 2, this);
-    pieWindow->show();
+    pieWindow->showMaximized();
 }
