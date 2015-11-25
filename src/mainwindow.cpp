@@ -218,4 +218,5 @@ void MainWindow::on_actionTechnical_Support_triggered()
 void MainWindow::on_actionContext_Help_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
+
 }
