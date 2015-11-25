@@ -20,7 +20,7 @@ Bug_Report::~Bug_Report()
 
 void Bug_Report::on_pushButton_2_clicked()
 {
-    QMessageBox::information(this, "Message sent", "Thanks for your valuable comments!");
+    QMessageBox::information(this, "Message sent", "Thank you for your feedback!");
 
 //    Window window1;
 //    QStringList headers;

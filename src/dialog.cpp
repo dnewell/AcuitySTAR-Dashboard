@@ -17,7 +17,7 @@ using namespace std;
 
 //This code actually generates the graph, look at this
 //qcustomplot.cpp is supplied by qcustomplot, do not touch that
-Dialog::Dialog(QString filePath, QWidget *parent):
+Dialog::Dialog(QString file_path, QWidget *parent):
     QDialog(parent),
     ui(new Ui::Dialog)
 {

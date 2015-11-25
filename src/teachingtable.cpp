@@ -85,8 +85,8 @@ void TeachingTable::remove()
     model->removeRows(0,model->rowCount());
     //model->database().commit();
     QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.setInformativeText("Do you want to delete all the error rows?");
+    msgBox.setText("All rows which contained errors have been removed.");
+    msgBox.setInformativeText("Do you wish to save this change?");
     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
@@ -105,12 +105,14 @@ void TeachingTable::remove()
           break;
       case QMessageBox::Discard:
           model->revertAll();
-          // Don't Save was clicked
+          this->close();
           break;
       case QMessageBox::Cancel:
           // Cancel was clicked
+          this->close();
           break;
       default:
+          this->close();
           // should never be reached
           break;
     }
