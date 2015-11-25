@@ -24,17 +24,15 @@ PieChart::~PieChart()
 
 void PieChart::paintEvent(QPaintEvent *e)
 {
+    double portion;
     QWidget::paintEvent(e);
         QPainter painter;
-        QFont font;
         painter.begin(this);
         Nightcharts PieChart;
         PieChart.setType(Nightcharts::Pie);
         PieChart.setLegendType(Nightcharts::Round);
         PieChart.setCords(200,200,this->width()/1.5,this->height()/1.5);
-        int color4 = 50;
-        int color2 = 0;
-        int color3 = 0;
+
 
         double sum =0;
         for(int i =0; i<valsLength;i++){
@@ -66,7 +64,7 @@ void PieChart::paintEvent(QPaintEvent *e)
             }
 
 
-            double portion = *vals / sum;
+            portion = *vals / sum;
             portion *= 100;
             PieChart.addPiece(*labs,color,portion);
             vals++;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>575</height>
+    <width>927</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="font">
@@ -29,7 +29,7 @@
    </size>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="main_window_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -72,7 +72,7 @@
      <rect>
       <x>180</x>
       <y>30</y>
-      <width>619</width>
+      <width>748</width>
       <height>32</height>
      </rect>
     </property>
@@ -176,16 +176,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Filter</string>
+        <string>Graph</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>Graph</string>
+        <string>Print</string>
        </property>
       </widget>
      </item>
@@ -198,7 +198,7 @@
         </font>
        </property>
        <property name="text">
-        <string> Load  Teaching *.CSV </string>
+        <string>Load CSV</string>
        </property>
       </widget>
      </item>
@@ -209,7 +209,7 @@
      <rect>
       <x>0</x>
       <y>90</y>
-      <width>781</width>
+      <width>911</width>
       <height>451</height>
      </rect>
     </property>
@@ -220,7 +220,7 @@
      <enum>QFrame::WinPanel</enum>
     </property>
     <property name="animated">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <column>
      <property name="text">
@@ -255,7 +255,7 @@
      <number>0</number>
     </property>
     <property name="tabsClosable">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <widget class="QWidget" name="teachingTab">
      <attribute name="title">
@@ -284,8 +284,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>927</width>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help">
@@ -342,7 +342,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>pushButton_2</tabstop>
-  <tabstop>pushButton_3</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>comboBox_2</tabstop>
   <tabstop>treeWidget</tabstop>

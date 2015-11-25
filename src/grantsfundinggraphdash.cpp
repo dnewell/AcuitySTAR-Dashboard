@@ -69,19 +69,20 @@ void GrantsFundingGraphDash::make_graph1(int startDate,int endDate)
     qry.prepare("SELECT SUM(ltrim(TotalAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
 
-    int result;
+    double result;
 
     qry.next();
-    result = qry.record().value(0).toInt();
-
+    result = qry.record().value(0).toDouble();
+    qDebug()<<qry.lastQuery();
+    qDebug()<<qry.record();
     totalsGrants[0] = result;
     labelsGrants[0] = "Total Amount";
 
     qry.prepare("SELECT SUM(ltrim(ProratedAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
     qry.next();
-    result = qry.record().value(0).toInt();
-    totalsGrants[1] = qry.record().value(0).toInt();
+    result = qry.record().value(0).toDouble();
+    totalsGrants[1] = result;
     labelsGrants[1] = "Hours";
 
     /*GET MAX TOTAL FOR Y AXIS*/
@@ -163,7 +164,7 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
 
     QString professor =ui->searchInGrants->text();
     QString strtDate=QString::number(ui->fromCBGrants->currentText().toInt());
-    QString edDate=QString::number(ui->fromCBGrants->currentText().toInt());
+    QString edDate=QString::number(ui->toCBGrants->currentText().toInt());
 
 
     /*Populate totals for Number of Attendees*/
@@ -171,32 +172,31 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
     qry.prepare("SELECT SUM(ltrim(TotalAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
 
-    int result;
-
-    qry.next();
-    result = qry.record().value(0).toInt();
+    double result;
+    qDebug()<<qry.lastQuery();
     qDebug()<<qry.record();
-    totalsGrants[0] = result;
-    labelsGrants[0] = "Total Amount";
+
+
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+    totalsGrantsPie[0] = result;
+    labelsGrantsPie[0] = "Total Amount";
 
     qry.prepare("SELECT SUM(ltrim(ProratedAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
-    qry.next();
+    if(qry.next()){
     result = qry.record().value(0).toInt();
-    totalsGrants[1] = qry.record().value(0).toInt();
-    labelsGrants[1] = "Hours";
-
-    /*GET MAX TOTAL FOR Y AXIS*/
-
-    double max=0;
-    for(int i=0;i<2; i++){
-        if(totalsGrants[i] > max){
-
-            max = totalsGrants[i];
-        }
-
+    }else{
+        result = 0;
     }
 
-    QDialog *pieWindow = new PieChart(labelsGrants, totalsGrants, 2, 2, this);
+    totalsGrantsPie[1] = qry.record().value(0).toDouble();
+    labelsGrantsPie[1] = "Hours";
+
+
+    QDialog *pieWindow = new PieChart(labelsGrantsPie, totalsGrantsPie, 2, 2, this);
     pieWindow->showMaximized();
 }

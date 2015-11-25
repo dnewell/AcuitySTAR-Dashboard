@@ -10,8 +10,6 @@
  * DB class handles the SQLite database guts: intial creation/naming,
  * parsing a CSV file, and inserting the tokenized data into the database
  *
- * TO DO:
- * Refactor. Perhaps move the CSV parser/tokenizer into another class?
  *
  * Author: David Newell
  **/
@@ -36,7 +34,6 @@ DB::DB()
 /**
  * This method creates a new SQLite 3 database and sets the attributes (column/heading names)
  *
- * TO DO: modularize.
  * @brief DB::createDatabase
  */
 
@@ -57,8 +54,6 @@ void DB::createDatabase(){
  *
  * For details on how the tokenizer functor is working,
  * see: http://www.boost.org/doc/libs/1_42_0/libs/tokenizer/escaped_list_separator.htm
- *
- * TO DO: modularize.
  *
  *  @brief DB::parseCSV
  */
@@ -143,6 +138,10 @@ string DB::teachingCsvIntoDb(string fullPathToFile){
 
         query.exec(qstr);                                                               // executes the database query, inserting one row into the table
     }
+    if (tableName == "Grants"){
+        qstr = QString::fromStdString("UPDATE GRANTS SET TotalAmount= Replace(replace(TotalAmount, '$', ''), ',', '');");
+        query.exec(qstr);
+    }
     return tableName;
 }
 
@@ -153,16 +152,16 @@ string DB::teachingCsvIntoDb(string fullPathToFile){
  * @return string with type of csv file (i.e. the SQL table name)
  */
 string DB::getTypeFromHeadingList(int numHeadings){
-    if (numHeadings == 28){
+    if (numHeadings == 28 || numHeadings == 29){
         return "Teaching";
     }
-    if (numHeadings == 38){
+    if (numHeadings == 37 || numHeadings == 38 || numHeadings == 39){
         return "Grants";
     }
-    if (numHeadings == 30){
+    if (numHeadings == 30 || numHeadings == 31){
         return "Presentations";
     }
-    if (numHeadings == 44){
+    if (numHeadings == 43 || numHeadings == 44 || numHeadings == 45){
         return "Publications";
     }
     return "Unexpected CSV type";

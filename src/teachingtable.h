@@ -23,6 +23,7 @@ public:
     //explicit TeachingTable(QWidget *parent = 0);
     explicit TeachingTable(const QString &tableName,const QString &filter,QWidget *parent = 0);
     ~TeachingTable();
+    int getRowNumbers();
 
 private slots:
    void submit();
