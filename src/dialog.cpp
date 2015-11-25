@@ -17,12 +17,11 @@ using namespace std;
 
 //This code actually generates the graph, look at this
 //qcustomplot.cpp is supplied by qcustomplot, do not touch that
-Dialog::Dialog(QString file_path, QWidget *parent):
+Dialog::Dialog(QWidget *parent):
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    FILE_PATH = "Teaching";
 
 //    Dialog::make_graph1(2009,2015);
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
@@ -84,7 +83,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[0] = qry.record().value(0).toInt();
-    labels[0] = "HoursperTeachingSessionorWeek";
+    labels[0] = "Hours Per Teaching Session Or Weeks";
 
 
     /*Populate UME Totals and Labels for NumberofTeachingSessionsorWeeks*/
@@ -95,7 +94,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[1] = qry.record().value(0).toInt();
-    labels[1] = "NumberofTeachingSessionsorWeeks";
+    labels[1] = "Number Of Teaching Sessions Or Weeks";
 
 
     /*Populate UME Totals and Labels for NumberOfTrainees*/
@@ -106,7 +105,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[2] = qry.record().value(0).toInt();
-    labels[2] = "NumberOfTrainees";
+    labels[2] = "Number Of Trainees";
 
 
     /*Populate UME Totals and Labels for TotalHours*/
@@ -117,7 +116,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     qry.next();
     qDebug()<< qry.lastQuery();
     totals[3] = qry.record().value(0).toInt();
-    labels[3] = "TotalHours";
+    labels[3] = "Total Hours";
 
 
     /*GET MAX TOTAL FOR Y AXIS*/
@@ -301,9 +300,62 @@ void Dialog::make_graph2(int startDate,int endDate)
 
 void Dialog::on_pieChart_clicked()
 {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+    QString professor =ui->searchIn->text();
+    QString progLevel = ui->progLevel->currentText();
+    QString strtDate=QString::number(ui->fromCB->currentText().toInt());
+    QString edDate=QString::number(ui->toCB->currentText().toInt());
 
-   pieWindow = new PieChart(labels, totals, 4, 4, this);
-   pieWindow->show();
+
+    /*Populate UME Totals and Labels for HoursperTeachingSessionorWeek*/
+
+    qry.prepare("SELECT SUM(HoursperTeachingSessionorWeek) FROM Teaching WHERE MemberName LIKE '"+professor+"%' AND Program LIKE '"+progLevel+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    qDebug()<< qry.lastQuery();
+    totals[0] = qry.record().value(0).toInt();
+    labels[0] = "Hours Per Teaching Session Or Weeks";
+
+
+    /*Populate UME Totals and Labels for NumberofTeachingSessionsorWeeks*/
+
+    qry.prepare("SELECT SUM(NumberofTeachingSessionsorWeeks) FROM Teaching WHERE MemberName LIKE '"+professor+"%' AND Program LIKE '"+progLevel+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    qDebug()<< qry.lastQuery();
+    totals[1] = qry.record().value(0).toInt();
+    labels[1] = "Number Of Teaching Sessions Or Weeks";
+
+
+    /*Populate UME Totals and Labels for NumberOfTrainees*/
+
+    qry.prepare("SELECT SUM(NumberOfTrainees) FROM Teaching WHERE MemberName LIKE '"+professor+"%' AND Program LIKE '"+progLevel+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    qDebug()<< qry.lastQuery();
+    totals[2] = qry.record().value(0).toInt();
+    labels[2] = "Number Of Trainees";
+
+
+    /*Populate UME Totals and Labels for TotalHours*/
+
+    qry.prepare("SELECT SUM(TotalHours) FROM Teaching WHERE MemberName LIKE '"+professor+"%' AND Program LIKE '"+progLevel+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    qDebug()<< qry.lastQuery();
+    totals[3] = qry.record().value(0).toInt();
+    labels[3] = "Total Hours";
+
+
+    QDialog *pieWindow = new PieChart(labels, totals, 4, 4, this);
+    pieWindow->showMaximized();
 
 }
 

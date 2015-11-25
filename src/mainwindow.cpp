@@ -25,7 +25,9 @@
 #include "progressindicator.h"
 
 using namespace std;
-static string tab_focus;
+
+extern string tab_focus = "Teaching";
+
 QString file_path;
 
 //teaching
@@ -321,26 +323,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-  if(file_path.contains("Teaching"))
-  {
-   dialogWindow = new Dialog(file_path, this);
-   dialogWindow->setWindowTitle("Teaching Graphs");
-   dialogWindow->show();
-  }else if(file_path.contains("Publications"))
-  {
+  if(ui->tabWidget->currentIndex() == 0){
+   dialogWindow = new Dialog(this);
+   dialogWindow->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 1){
+
       QDialog *pubDash = new publicationGraphDash(this);
-      pubDash->setWindowTitle("Publications Graphs");
-      pubDash->show();
-  }else if(file_path.contains("Presentations"))
-  {
+      pubDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 3){
+
       QDialog *presDash = new PresentationGraphDash(this);
-      presDash->setWindowTitle("Presentations Graphs");
-      presDash->show();
-  }else if(file_path.contains("Grants"))
-  {
+      presDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 2){
+
       QDialog *grantsDash = new GrantsFundingGraphDash(this);
-      grantsDash->setWindowTitle("Grants Graphs");
-      grantsDash->show();
+      grantsDash->showMaximized();
   }
 }
 
@@ -620,12 +617,10 @@ void MainWindow::makeEmptyTree(){
 //print
 void MainWindow::on_pushButton_4_clicked()
 {
-    table = new TeachingTable("Teaching","");
+    QString tableName = QString::fromStdString(tab_focus);
+    table = new TeachingTable(tableName,"");
     table->showMaximized();
 }
-
-
-
 
 //tabs
 void MainWindow::on_tabWidget_tabBarClicked(int index)
@@ -817,3 +812,4 @@ void MainWindow::on_pushButton_5_clicked()
     ui->treeWidget->collapseAll();
     painter.end();
 }
+

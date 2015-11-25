@@ -101,7 +101,7 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
     result = qry.record().value(0).toInt();
 
     totalsPub[0] = result;
-    labelsPub[0] = "NumberOfContributors";
+    labelsPub[0] = "Number Of Contributors";
 
     qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     //qry.prepare("SELECT * FROM Teaching");
@@ -109,7 +109,7 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
     qry.next();
     result = qry.record().value(0).toInt();
     totalsPub[1] = qry.record().value(0).toInt();
-    labelsPub[1] = "NumberofCitations";
+    labelsPub[1] = "Number Of Citations";
 
     /*GET MAX TOTAL FOR Y AXIS*/
 
@@ -174,6 +174,37 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
 
 void publicationGraphDash::on_pieBtn_clicked()
 {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+    QString professor =ui->searchInPub->text();
+    QString pubType = ui->pubType->currentText();
+    QString strtDate=QString::number(ui->fromCBPub->currentText().toInt());
+    QString edDate=QString::number(ui->toCBPub->currentText().toInt());
+
+
+    /*Populate totals for Number of Contributors*/
+
+    qry.prepare("SELECT SUM(NumberOfContributors) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+
+    int result;
+
+    qry.next();
+    result = qry.record().value(0).toInt();
+
+    totalsPub[0] = result;
+    labelsPub[0] = "Number Of Contributors";
+
+    qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    result = qry.record().value(0).toInt();
+    totalsPub[1] = qry.record().value(0).toInt();
+    labelsPub[1] = "Number Of Citations";
     pieWindow = new PieChart(labelsPub, totalsPub, 2, 2, this);
-    pieWindow->show();
+    pieWindow->showMaximized();
 }

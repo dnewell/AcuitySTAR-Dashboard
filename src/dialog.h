@@ -15,8 +15,9 @@ class Dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog(QString file_path, QWidget *parent = 0);
-    QString FILE_PATH;
+
+    explicit Dialog(QWidget *parent = 0);
+
     ~Dialog();
 
 private slots:

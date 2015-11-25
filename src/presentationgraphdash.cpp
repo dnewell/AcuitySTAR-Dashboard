@@ -81,7 +81,7 @@ void PresentationGraphDash::make_graph1(int startDate,int endDate)
     result = qry.record().value(0).toInt();
 
     totalsPres[0] = result;
-    labelsPres[0] = "NumberofAttendees";
+    labelsPres[0] = "Number Of Attendees";
 
     qry.prepare("SELECT SUM(Hours) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
     qry.exec();
@@ -163,6 +163,42 @@ void PresentationGraphDash::on_barBtn_clicked()
 
 void PresentationGraphDash::on_pieBtn_clicked()
 {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    QString professor =ui->searchInPres->text();
+    QString strtDate=QString::number(ui->fromCBPres->currentText().toInt());
+    QString edDate=QString::number(ui->toCBPres->currentText().toInt());
+    QString presType = ui->presType->currentText();
+
+
+    /*Populate totals for Number of Attendees*/
+
+    qry.prepare("SELECT SUM(NumberofAttendees) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    qry.exec();
+
+    double result;
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+    totalsPres[0] = result;
+    labelsPres[0] = "Number Of Attendees";
+
+    qry.prepare("SELECT SUM(Hours) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+
+    totalsPres[1] = qry.record().value(0).toDouble();
+    labelsPres[1] = "Hours";
+
     pieWindow = new PieChart(labelsPres, totalsPres, 2, 2, this);
-    pieWindow->show();
+    pieWindow->showMaximized();
 }

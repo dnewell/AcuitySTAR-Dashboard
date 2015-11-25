@@ -380,3 +380,74 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     db.close();
     return facultys;
 }
+
+
+QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startDate, int endDate, QString csvtype){
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+    QVector<double> facultys;
+    QString field, data, date;
+    int values;
+
+    if(csvtype=="Teaching"){
+        date="StartDate";
+        values=2;
+        field="Program";
+        data="SUM(TotalHours), SUM(NumberOfTrainees)";
+        if(tier1=="PME") tier1="Postgraduate Medical Education";
+        else if(tier1=="CME") tier1="Continuing Medical Education";
+        else if(tier1=="UME") tier1="Undergraduate Medical Education";
+    }
+    else if(csvtype=="Presentations"){
+        date="Date";
+        values=1;
+        field="Type";
+        data="COUNT(*)";
+        if(tier1=="Abstracts Presented") tier1="Abstract Presented";
+    }
+    else if(csvtype=="Publications"){
+        date="StatusDate";
+        values=1;
+        field="Type";
+        data="COUNT(*)";
+    }
+    else if(csvtype=="Grants"){
+        date="StartDate";
+        values=2;
+        field="FundingType";
+        data="COUNT(*), SUM(TotalAmount)";
+    }
+
+    if (tier1 == "Other" && csvtype == "Teaching"){
+        tier1 = "NOT IN ('Postgraduate Medical Education', 'Continuing Medical Education', 'Undergraduate Medical Education')";
+    }
+    else if (tier1 == "Other" && csvtype == "Presentations"){
+        tier1 = "NOT IN ('Invited Lectures', 'Abstracts Presented')";
+    }
+    else if (csvtype == "Publications"){
+        tier1 = "IN ('Journal Article', 'Published Abstract', 'Books', 'Book Chapters', 'Letters to Editor')";
+    }
+    else{
+        tier1  = "= '" + tier1 + "'";
+    }
+    QString q = "SELECT "+data+" FROM "+csvtype+" WHERE (";
+    for( int a = startDate; a < endDate; a = a + 1 )
+    {
+        QString qstr=QString::number(a);
+        q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
+    }
+    QString qstr1=QString::number(endDate);
+    q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1 + " AND MemberName = " + "'" + tier3 + "'";
+    cout<<q.toStdString()<<endl;
+    qry.prepare(q);
+    qry.exec();
+    while(qry.next()){
+        for(int n=0; n<values; n++){
+            facultys.append(qry.value(n).toDouble());
+        }
+    }
+    db.close();
+    return facultys;
+}
