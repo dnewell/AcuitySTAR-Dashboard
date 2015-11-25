@@ -25,7 +25,7 @@
 #include "progressindicator.h"
 
 using namespace std;
-extern string tab_focus;
+extern string tab_focus = "Teaching";
 QString file_path;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -541,10 +541,10 @@ void MainWindow::makeEmptyTree(){
 void MainWindow::on_pushButton_4_clicked()
 {
 
-
-
-    table = new TeachingTable("Teaching","");
+    QString tableName = QString::fromStdString(tab_focus);
+    table = new TeachingTable(tableName,"");
     table->showMaximized();
+
 
 
 }
