@@ -21,6 +21,9 @@ private slots:
 
      void on_pieBtn_clicked();
 
+     void printPieButton();
+     void printBarButton();
+
 private:
     Ui::PresentationGraphDash *ui;
     double totalsPres[2];

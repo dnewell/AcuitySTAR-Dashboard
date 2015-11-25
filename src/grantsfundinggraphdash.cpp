@@ -153,6 +153,7 @@ void GrantsFundingGraphDash::on_graphBtn_clicked()
     // Dialog::make_graph2(ui->fromCBPub->currentText().toInt(),ui->toCBPub->currentText().toInt());
     ui->bar_graphGrants->replot();
     this->setWindowTitle("Pretty Graph");
+
 }
 
 void GrantsFundingGraphDash::on_pieBtn_clicked()
@@ -199,4 +200,89 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
 
     QDialog *pieWindow = new PieChart(labelsGrantsPie, totalsGrantsPie, 2, 2, this);
     pieWindow->showMaximized();
+}
+
+
+void GrantsFundingGraphDash::printBarButton(){
+    QPrinter printer;
+    QPainter painter;
+    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+
+    dialog->setWindowTitle("Print Bar Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    ui->bar_graphGrants->render(&painter);
+    painter.end();
+
+
+}
+
+
+
+
+
+
+void GrantsFundingGraphDash::printPieButton(){
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    QString professor =ui->searchInGrants->text();
+    QString strtDate=QString::number(ui->fromCBGrants->currentText().toInt());
+    QString edDate=QString::number(ui->toCBGrants->currentText().toInt());
+
+
+    /*Populate totals for Number of Attendees*/
+
+    qry.prepare("SELECT SUM(ltrim(TotalAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+
+    double result;
+    qDebug()<<qry.lastQuery();
+    qDebug()<<qry.record();
+
+
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+    totalsGrantsPie[0] = result;
+    labelsGrantsPie[0] = "Total Amount";
+
+    qry.prepare("SELECT SUM(ltrim(ProratedAmount, '$')) FROM Grants WHERE MemberName LIKE '"+professor+"%' AND StartDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' AND EndDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+
+    totalsGrantsPie[1] = qry.record().value(0).toDouble();
+    labelsGrantsPie[1] = "Hours";
+
+
+    QDialog *pieWindow = new PieChart(labelsGrantsPie, totalsGrantsPie, 2, 2, this);
+
+
+
+    QPrinter printer;
+    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
+    QPainter painter;
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print Pie Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    pieWindow->render(&painter);
+    painter.end();
+
+
+
+
 }

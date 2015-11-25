@@ -159,6 +159,7 @@ void PresentationGraphDash::on_barBtn_clicked()
     // Dialog::make_graph2(ui->fromCBPres->currentText().toInt(),ui->toCBPres->currentText().toInt());
     ui->bar_graphPres->replot();
     this->setWindowTitle("Pretty Graph");
+
 }
 
 void PresentationGraphDash::on_pieBtn_clicked()
@@ -201,4 +202,90 @@ void PresentationGraphDash::on_pieBtn_clicked()
 
     pieWindow = new PieChart(labelsPres, totalsPres, 2, 2, this);
     pieWindow->showMaximized();
+
+
+
+
 }
+
+void PresentationGraphDash::printBarButton(){
+    QPrinter printer;
+    QPainter painter;
+   //printer.setOutputFileName("/Users/Anoop/Filenamecena");
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+
+    dialog->setWindowTitle("Print Bar Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    ui->bar_graphPres->render(&painter);
+    painter.end();
+
+
+}
+
+
+
+
+
+
+void PresentationGraphDash::printPieButton(){
+
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    QString professor =ui->searchInPres->text();
+    QString strtDate=QString::number(ui->fromCBPres->currentText().toInt());
+    QString edDate=QString::number(ui->toCBPres->currentText().toInt());
+    QString presType = ui->presType->currentText();
+
+
+    /*Populate totals for Number of Attendees*/
+
+    qry.prepare("SELECT SUM(NumberofAttendees) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%'");
+    qry.exec();
+
+    double result;
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+    totalsPres[0] = result;
+    labelsPres[0] = "Number Of Attendees";
+
+    qry.prepare("SELECT SUM(Hours) FROM Presentations WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+presType+"%' AND Date BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    qry.exec();
+    if(qry.next()){
+    result = qry.record().value(0).toInt();
+    }else{
+        result = 0;
+    }
+
+    totalsPres[1] = qry.record().value(0).toDouble();
+    labelsPres[1] = "Hours";
+
+    pieWindow = new PieChart(labelsPres, totalsPres, 2, 2, this);
+
+    QPrinter printer;
+    QPainter painter;
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print Pie Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    pieWindow->render(&painter);
+    painter.end();
+
+
+
+
+}
+
+
+

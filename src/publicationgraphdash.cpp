@@ -73,6 +73,7 @@ void publicationGraphDash::on_barBtn_clicked()
     ui->bar_graphPub->replot();
     this->setWindowTitle("Pretty Graph");
 
+
 }
 
 //draws graph 1
@@ -207,4 +208,78 @@ void publicationGraphDash::on_pieBtn_clicked()
     labelsPub[1] = "Number Of Citations";
     pieWindow = new PieChart(labelsPub, totalsPub, 2, 2, this);
     pieWindow->showMaximized();
+
+
+
 }
+void publicationGraphDash::printPieButton(){
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+    QString professor =ui->searchInPub->text();
+    QString pubType = ui->pubType->currentText();
+    QString strtDate=QString::number(ui->fromCBPub->currentText().toInt());
+    QString edDate=QString::number(ui->toCBPub->currentText().toInt());
+
+
+    /*Populate totals for Number of Contributors*/
+
+    qry.prepare("SELECT SUM(NumberOfContributors) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+
+    int result;
+
+    qry.next();
+    result = qry.record().value(0).toInt();
+
+    totalsPub[0] = result;
+    labelsPub[0] = "Number Of Contributors";
+
+    qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
+    //qry.prepare("SELECT * FROM Teaching");
+    qry.exec();
+    qry.next();
+    result = qry.record().value(0).toInt();
+    totalsPub[1] = qry.record().value(0).toInt();
+    labelsPub[1] = "Number Of Citations";
+    pieWindow = new PieChart(labelsPub, totalsPub, 2, 2, this);
+
+
+
+    QPrinter printer;
+    QPainter painter;
+    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print Pie Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    pieWindow->render(&painter);
+    painter.end();
+
+
+
+
+}
+void publicationGraphDash::printBarButton(){
+    QPrinter printer;
+    QPainter painter;
+    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+
+    dialog->setWindowTitle("Print Bar Chart");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    painter.scale(0.5,0.5);
+    ui->bar_graphPub->render(&painter);
+    painter.end();
+}
+
+
+
+
+
