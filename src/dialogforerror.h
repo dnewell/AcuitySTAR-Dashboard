@@ -27,6 +27,7 @@ private:
     Ui::DialogForError *ui;
     QDialog *teachingTable;
     QDialog *fullTeachingTable;
+
 };
 
 #endif // DIALOGFORERROR_H

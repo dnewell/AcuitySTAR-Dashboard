@@ -25,6 +25,8 @@ private:
     Ui::GrantsFundingGraphDash *ui;
     double totalsGrants[2];
     QString labelsGrants[2];
+    double totalsGrantsPie[2];
+    QString labelsGrantsPie[2];
 };
 
 #endif // GRANTSFUNDINGGRAPHDASH_H

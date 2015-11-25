@@ -15,97 +15,357 @@
 #include <publicationgraphdash.h>
 #include <presentationgraphdash.h>
 #include <grantsfundinggraphdash.h>
+#include <QApplication>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPainter>
+#include "bug_report.h"
+#include "tech_support.h"
+#include <QMessageBox>
+#include "progressindicator.h"
 
 using namespace std;
-
+extern string tab_focus;
+QString file_path;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    makeTree(0,0);
+    makeEmptyTree();
 }
 
-void MainWindow::makeTree(int startDate, int endDate){
+void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
     ui->treeWidget->clear();
+
+    if(CSV_type=="Teaching"){
+        ui->treeWidget->headerItem()->setText(0,"");
+        ui->treeWidget->headerItem()->setText(1,"Academic Year");
+        ui->treeWidget->headerItem()->setText(2,"Hours");
+        ui->treeWidget->headerItem()->setText(3,"Students");
+    }
+    else if(CSV_type=="Presentations"){
+        ui->treeWidget->headerItem()->setText(0,"");
+        ui->treeWidget->headerItem()->setText(1,"Academic Year");
+        ui->treeWidget->headerItem()->setText(2,"# of Presentations");
+        ui->treeWidget->headerItem()->setText(3,"");
+    }
+    else if(CSV_type=="Publications"){
+        ui->treeWidget->headerItem()->setText(0,"");
+        ui->treeWidget->headerItem()->setText(1,"Type of Publication  ");
+        ui->treeWidget->headerItem()->setText(2,"Total");
+        ui->treeWidget->headerItem()->setText(3,"");
+    }
+    else if (CSV_type == "Grants"){
+        ui->treeWidget->headerItem()->setText(0,"");
+        ui->treeWidget->headerItem()->setText(1,"Funding or Grant Type");
+        ui->treeWidget->headerItem()->setText(2,"Total #");
+        ui->treeWidget->headerItem()->setText(3,"Total $");
+    }
+
     //get data for vectors
-    Summary* grabber = new Summary();
+    Summary* summary = new Summary();
+    QVector<double> Tier_1_Tot, Tier_2_Tot, Tier_3_Tot;
 
-    QVector<Year> underVec= grabber->summaryFill("Undergraduate Medical Education",startDate,endDate);
-    QVector<Year> continuingVec= grabber->summaryFill("Continuing Medical Education",startDate,endDate);
-    QVector<Year> postVec = grabber->summaryFill("Postgraduate Medical Education",startDate,endDate);
-    QVector<Year> otherVec= grabber->summaryFill("Other",startDate,endDate);
-
-    //Set tree widget table headers
-    ui->treeWidget->setColumnCount(4);
-    ui->treeWidget->headerItem()->setText(0,"");
-    ui->treeWidget->headerItem()->setText(1,"Academic Year");
-    ui->treeWidget->headerItem()->setText(2,"Hours");
-    ui->treeWidget->headerItem()->setText(3,"Students");
+    QVector<QString> Tier_1_Fields, Tier_2_Fields, Tier_3_Fields;
 
 
-    //ui->comboBox
-    //make PME,UME,CME,Other
-    int totHoursP = 0;
-    int totStudentsP = 0;
-    int totHoursU = 0;
-    int totStudentsU = 0;
-    int totHoursC = 0;
-    int totStudentsC = 0;
-    int totHoursO = 0;
-    int totStudentsO = 0;
+//TEACHING
+    if (CSV_type == "Teaching")
+    {
+        Tier_1_Fields = {"PME", "CME", "UME", "Other"};
+        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
+        for (int y = start_year; y <= end_year; y++)
+        {
+            Tier_2_Fields.insert(y-start_year,QString::number(y));
+        }
 
-    //calculate Header Totals
-    for(int m=0; m < (int)postVec.size(); m++) {
-        totHoursP = totHoursP + postVec[m].tothours;
-        totStudentsP = totStudentsP + postVec[m].totstudents;
-        totHoursU = totHoursU + underVec[m].tothours;
-        totStudentsU = totStudentsU + underVec[m].totstudents;
-        totHoursC = totHoursC + continuingVec[m].tothours;
-        totStudentsC = totStudentsC + continuingVec[m].totstudents;
-        totHoursO = totHoursO + otherVec[m].tothours;
-        totStudentsO = totStudentsO + otherVec[m].totstudents;
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *pme = root(Tier_1_Fields[0], Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *cme = root(Tier_1_Fields[1], Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *ume = root(Tier_1_Fields[2], Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[3] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *other = root(Tier_1_Fields[3], Tier_1_Tot);
+
+            //iterate once on each Tier_2 element
+        for (int i = 0; i < Tier_2_Fields.length(); i++)
+        {
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_pme = tier2_root(pme, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_cme = tier2_root(cme, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_ume = tier2_root(ume, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_other = tier2_root(other, Tier_2_Fields[i], Tier_2_Tot);
+                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+
+                //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                 tier3_root(t2_pme, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_cme, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_ume, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_other, Tier_3_Fields[j], Tier_3_Tot);
+            }
+       }
     }
-    //build headers
-    QTreeWidgetItem *pme = root("PME", QString::number(totHoursP), QString::number(totStudentsP));
-    QTreeWidgetItem *ume = root("UME", QString::number(totHoursU), QString::number(totStudentsU));
-    QTreeWidgetItem *cme = root("CME", QString::number(totHoursC), QString::number(totStudentsC));
-    QTreeWidgetItem *other = root("Other", QString::number(totHoursO), QString::number(totStudentsO));
 
-    //build:
-    //pme tree
-    for(int i=0; i < (int)postVec.size(); i++) {
-        QTreeWidgetItem *year1 = yearChild(pme, QString::number(postVec[i].date),QString::number(postVec[i].tothours),QString::number(postVec[i].totstudents));
-        for(int j = 0; j < (int)postVec[i].list.size(); j++){
-            facultyChild(year1, postVec[i].list[j].faculty,QString::number(postVec[i].list[j].hours),QString::number(postVec[i].list[j].students));
+    //GRANTS
+    else if (CSV_type == "Grants"){
+        Tier_1_Fields = {"Grants", "Clinical Trials"};
+        Tier_2_Fields = {"Peer Reviewed", "Industry Sponsored"};
+
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *grants = root(Tier_1_Fields[0], Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *funding = root(Tier_1_Fields[1], Tier_1_Tot);
+
+            //iterate once on each Tier_2 element
+        for (int i = 0; i < Tier_2_Fields.length(); i++)
+        {
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_grants = tier2_root(grants, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_funding = tier2_root(funding, Tier_2_Fields[i], Tier_2_Tot);
+                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+
+                //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                 tier3_root(t2_grants, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_funding, Tier_3_Fields[j], Tier_3_Tot);
+            }
+       }
+    }
+
+    //PUBLICATIONS
+    else if (CSV_type == "Publications"){
+        Tier_1_Fields = {"Publications"};
+        Tier_2_Fields = {"Published Abstracts", "Journal Articles", "Books", "Book Chapters", "Letters to Editor"};
+
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *pub = root(Tier_1_Fields[0], Tier_1_Tot);
+
+            //iterate once on each Tier_2 element
+        for (int i = 0; i < Tier_2_Fields.length(); i++)
+        {
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_pub = tier2_root(pub, Tier_2_Fields[i], Tier_2_Tot);
+                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+
+                //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                 tier3_root(t2_pub, Tier_3_Fields[j], Tier_3_Tot);
+            }
         }
     }
-    //ume tree
-    for(int i=0; i < (int)underVec.size(); i++) {
-        QTreeWidgetItem *year2 = yearChild(ume, QString::number(underVec[i].date),QString::number(underVec[i].tothours),QString::number(underVec[i].totstudents));
-        for(int j = 0; j < (int)underVec[i].list.size(); j++){
-            facultyChild(year2, underVec[i].list[j].faculty,QString::number(underVec[i].list[j].hours),QString::number(underVec[i].list[j].students));
+
+    //PRESENTATIONS
+    else if (CSV_type == "Presentations")
+    {
+        Tier_1_Fields = {"Invited Lectures", "Abstracts Presented", "Other"};
+
+        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
+        for (int y = start_year; y <= end_year; y++){
+            Tier_2_Fields.insert(y-start_year,QString::number(y));
+        }
+
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *invite = root("Invited Lectures", Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *abstract = root("Abstracts Presented", Tier_1_Tot);
+        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
+        QTreeWidgetItem *next = root("Other", Tier_1_Tot);
+
+            //iterate once on each Tier_2 element
+        for (int i = 0; i < Tier_2_Fields.length(); i++)
+        {
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_invite = tier2_root(invite, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_abstract = tier2_root(abstract, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                QTreeWidgetItem *t2_next = tier2_root(next, Tier_2_Fields[i], Tier_2_Tot);
+
+
+                //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                 tier3_root(t2_invite, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_abstract, Tier_3_Fields[j], Tier_3_Tot);
+            }
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+
+            for (int j = 0; j < Tier_3_Fields.length(); j++)
+            {
+                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                tier3_root(t2_next, Tier_3_Fields[j], Tier_3_Tot);
+            }
         }
     }
-    //cme tree
-    for(int i=0; i < (int)continuingVec.size(); i++) {
-        QTreeWidgetItem *year3 = yearChild(cme, QString::number(continuingVec[i].date),QString::number(continuingVec[i].tothours),QString::number(continuingVec[i].totstudents));
-        for(int j = 0; j < (int)continuingVec[i].list.size(); j++){
-            facultyChild(year3, continuingVec[i].list[j].faculty,QString::number(continuingVec[i].list[j].hours),QString::number(continuingVec[i].list[j].students));
-        }
-    }
-    //other tree
-    for(int i=0; i < (int)otherVec.size(); i++) {
-        QTreeWidgetItem *year4 = yearChild(other, QString::number(otherVec[i].date),QString::number(otherVec[i].tothours),QString::number(otherVec[i].totstudents));
-        for(int j = 0; j < (int)otherVec[i].list.size(); j++){
-            facultyChild(year4, otherVec[i].list[j].faculty,QString::number(otherVec[i].list[j].hours),QString::number(otherVec[i].list[j].students));
-        }
+
+    //resize columns
+    for(int n = 0; n < 4; n++)
+    {
+        ui->treeWidget->resizeColumnToContents(n);
     }
 }
 
 //creates headings
-QTreeWidgetItem* MainWindow::root(QString title, QString totalHours, QString totalStudents)
+//sets tier_1 header name and totals
+QTreeWidgetItem* MainWindow::root(QString title, QVector<double> totals)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem(ui->treeWidget);
+    item->setText(0,title);
+
+    for(int x = 0; x < totals.length(); x++){
+        cout<<"Totals:"<<totals[x]<<endl;
+        item->setText(x+2,QString::number(totals[x]));
+    }
+    ui->treeWidget->addTopLevelItem(item);
+    return item;
+}
+
+//sets tier_2 and tier_3 header names and totals
+QTreeWidgetItem* MainWindow::tier2_root(QTreeWidgetItem *parent, QString Tier_name, QVector<double> totals)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(1,Tier_name);
+
+    for(int x = 0; x < totals.length(); x++){
+        item->setText(x+2,QString::number(totals[x]));
+    }
+
+    parent->addChild(item);
+    return item;
+}
+void MainWindow::tier3_root(QTreeWidgetItem *parent, QString Tier_name, QVector<double> totals)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(1,Tier_name);
+
+    for(int x = 0; x < totals.length(); x++){
+        item->setText(x+2,QString::number(totals[x]));
+    }
+
+    parent->addChild(item);
+}
+
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+  if(ui->tabWidget->currentIndex() == 0){
+   dialogWindow = new Dialog(this);
+   dialogWindow->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 1){
+
+      QDialog *pubDash = new publicationGraphDash(this);
+      pubDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 3){
+
+      QDialog *presDash = new PresentationGraphDash(this);
+      presDash->showMaximized();
+  }else if(ui->tabWidget->currentIndex() == 2){
+
+      QDialog *grantsDash = new GrantsFundingGraphDash(this);
+      grantsDash->showMaximized();
+  }
+}
+
+////////////////////////////////////////////////////////////////
+void MainWindow::on_pushButton_2_clicked()
+{
+    file_path = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
+    if (file_path  != NULL){
+    string filePathSt = file_path.toStdString();
+    DB* db = new DB();
+    ProgressIndicator *progressIndicator = new ProgressIndicator();
+    progressIndicator->show();
+
+    db->createDatabase();
+    string tableName = db->teachingCsvIntoDb(filePathSt);
+    QString table = QString::fromStdString(tableName);
+
+    QString tableFilter = "";
+    if (tableName == "Teaching"){
+        tableFilter = "(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')";
+    }
+
+    dialogForError = new DialogForError(table,tableFilter);
+    progressIndicator->close();
+    dialogForError->show();
+    }
+}
+
+//void MainWindow::on_pushButton_3_clicked()
+//{
+//    makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
+//    makePrint(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt(),"Teaching");
+//}
+
+//void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
+//{
+//
+//}
+
+void MainWindow::on_actionAbout_Canteloupe_triggered()
+{
+    canteHelp = new About_Canteloupe(this);
+    canteHelp -> show();
+}
+
+
+//creates headings
+QTreeWidgetItem* MainWindow::root2(QString title, QString totalHours, QString totalStudents)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(ui->treeWidget);
     item->setText(0,title);
@@ -115,85 +375,7 @@ QTreeWidgetItem* MainWindow::root(QString title, QString totalHours, QString tot
     return item;
 }
 
-//values inside the headings
-QTreeWidgetItem* MainWindow::yearChild(QTreeWidgetItem *parent, QString yearRange, QString totalHours, QString totalStudents)
-{
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    //QString s = QString::number(yearRange);
-    item->setText(1,yearRange);
-    item->setText(2,totalHours);
-    item->setText(3,totalStudents);
-    parent->addChild(item);
-    return item;
-}
 
-//values inside the headings
-void MainWindow::facultyChild(QTreeWidgetItem *parent, QString faculty, QString totalHours, QString totalStudents)
-{
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(1,faculty);
-    item->setText(2,totalHours);
-    item->setText(3,totalStudents);
-    parent->addChild(item);
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-  if(filePath.contains("Teaching")){
-   dialogWindow = new Dialog(filePath, this);
-   dialogWindow->show();
-  }else if(filePath.contains("Publications")){
-
-      QDialog *pubDash = new publicationGraphDash(this);
-      pubDash->show();
-  }else if(filePath.contains("Presentations")){
-
-      QDialog *presDash = new PresentationGraphDash(this);
-      presDash->show();
-  }else if(filePath.contains("Grants")){
-
-      QDialog *grantsDash = new GrantsFundingGraphDash(this);
-      grantsDash->show();
-  }
-}
-
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    filePath = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
-    if (filePath != NULL){
-    string filePathSt = filePath.toStdString();
-    DB* db = new DB();
-    db->createDatabase();
-    db->teachingCsvIntoDb(filePathSt);
-    }
-}
-
-void MainWindow::on_pushButton_3_clicked()
-{
-    makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
-//    makePrint(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt(),"Teaching");
-}
-
-void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
-{
-
-}
-
-void MainWindow::on_actionAbout_Canteloupe_triggered()
-{
-    canteHelp = new About_Canteloupe(this);
-    canteHelp -> show();
-
-//    about_canteloupe canteHelp;
-//    canteHelp.setModal(true);
-//    canteHelp.exec();
-}
 //void MainWindow::makePrint(int start_year, int end_year, QString CSV_type){
 //    ui->treeWidget->clear();
 
@@ -313,8 +495,137 @@ void MainWindow::on_actionAbout_Canteloupe_triggered()
 
 //}//makeTree
 
+void MainWindow::makeEmptyTree(){
+    ui->treeWidget->clear();
+    //Set tree widget table headers
+    ui->treeWidget->setColumnCount(4);
+    ui->treeWidget->headerItem()->setText(0,"");
+    ui->treeWidget->headerItem()->setText(1,"Academic Year");
+    ui->treeWidget->headerItem()->setText(2,"Hours");
+    ui->treeWidget->headerItem()->setText(3,"Students");
 
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(1,"0");
+    item->setText(2,"0");
+    item->setText(3,"0");
+    //build headers
+    QTreeWidgetItem *pme = root2("PME", "0", "0");
+    pme->addChild(item);
+    QTreeWidgetItem *ume = root2("UME", "0","0");
+    QTreeWidgetItem *item2 = new QTreeWidgetItem();
+    item->setText(1,"0");
+    item->setText(2,"0");
+    item->setText(3,"0");
+    ume->addChild(item2);
+    QTreeWidgetItem *cme = root2("CME", "0", "0");
+    QTreeWidgetItem *item3 = new QTreeWidgetItem();
+    item->setText(1,"0");
+    item->setText(2,"0");
+    item->setText(3,"0");
+    cme->addChild(item3);
+    QTreeWidgetItem *other = root2("Other", "0", "0");
+    QTreeWidgetItem *item4 = new QTreeWidgetItem();
+    item->setText(1,"0");
+    item->setText(2,"0");
+    item->setText(3,"0");
+    other->addChild(item4);
+
+    //hide tree
+    pme->setHidden(true);
+    cme->setHidden(true);
+    ume->setHidden(true);
+    other->setHidden(true);
+}
+
+//print
 void MainWindow::on_pushButton_4_clicked()
 {
 
+
+
+    table = new TeachingTable("Teaching","");
+    table->showMaximized();
+
+
 }
+
+
+
+
+//tabs
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    switch(index)
+    {
+    case 0:
+       // tab_focus = "Teaching";
+        ui->main_window_label->setText("Teaching");
+        makeTree(1975,2015, "Teaching");
+        break;
+    case 1:
+        //tab_focus = "Publications";
+        ui->main_window_label->setText("Publications");
+        makeTree(1975,2015, "Publications");
+        break;
+    case 2:
+       // tab_focus = "Funding";
+        ui->main_window_label->setText("Funding");
+        makeTree(1975,2015, "Grants");
+        break;
+    case 3:
+       // tab_focus = "Presentations";
+        ui->main_window_label->setText("Presentations");
+        makeTree(1975,2015, "Presentations");
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    on_pushButton_2_clicked();
+}
+
+void MainWindow::on_actionReport_Bugs_triggered()
+{
+    bug = new Bug_Report(this);
+    bug -> show();
+}
+
+void MainWindow::on_actionTechnical_Support_triggered()
+{
+    tech = new Tech_Support(this);
+    tech -> show();
+}
+
+void MainWindow::on_actionContext_Help_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
+    QPrinter printer;
+    //QDir::homePath() + QDir::separator() + name
+    //printer.setOutputFileName(QDir::homePath() + QDir::separator() + testprint");
+    QPainter painter;
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print  Document");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    ui->treeWidget->expandAll();
+    //ui->treeWidget->size(100, 100);
+    //ui->treeWidget->adjustSize();
+    ui->treeWidget->render(&painter);
+    ui->treeWidget->collapseAll();
+    painter.end();
+}
+

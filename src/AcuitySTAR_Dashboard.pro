@@ -5,7 +5,7 @@
 #-------------------------------------------------
 include("nightcharts.pri")
 
-QT       += core gui sql
+QT       += core gui sql printsupport
 QMAKE_CXXFLAGS += -std=gnu++11
 
 
@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     piechart.cpp \
     presentationgraphdash.cpp \
     grantsfundinggraphdash.cpp \
-    publicationgraphdash.cpp
+    publicationgraphdash.cpp \
+    progressindicator.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1706,7 +1707,8 @@ HEADERS  += mainwindow.h \
     bug_report.h \
     publicationgraphdash.h \
     presentationgraphdash.h \
-    grantsfundinggraphdash.h
+    grantsfundinggraphdash.h \
+    progressindicator.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
@@ -1718,7 +1720,8 @@ FORMS    += mainwindow.ui \
     tech_support.ui \
     publicationgraphdash.ui \
     presentationgraphdash.ui \
-    grantsfundinggraphdash.ui
+    grantsfundinggraphdash.ui \
+    progressindicator.ui
 
 DISTFILES += \
     icon_resource_file.rc

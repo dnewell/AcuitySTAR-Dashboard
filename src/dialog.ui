@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>575</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>1000</width>
-       <height>1000</height>
+       <width>3000</width>
+       <height>3000</height>
       </size>
      </property>
      <property name="font">
@@ -40,7 +40,10 @@
    <item>
     <widget class="QLineEdit" name="searchIn">
      <property name="text">
-      <string>Faculty Member Name</string>
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Search Member Name</string>
      </property>
     </widget>
    </item>

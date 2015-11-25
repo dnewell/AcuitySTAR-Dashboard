@@ -15,6 +15,7 @@ public:
     QVector<double> getTier3(QString, QString, QString, int, int, QString);
     QVector<double> getTier2(QString, QString, int, int, QString);
     QVector<double> getTier1(QString, int, int, QString);
+    QVector<double> getTier1Filter(QString, QString, int, int, QString);
 };
 
 #endif // SUMMARYFILL_H
