@@ -15,6 +15,10 @@
 #include <publicationgraphdash.h>
 #include <presentationgraphdash.h>
 #include <grantsfundinggraphdash.h>
+#include <QApplication>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPainter>
 #include "bug_report.h"
 #include "tech_support.h"
 #include <QMessageBox>
@@ -541,9 +545,16 @@ void MainWindow::makeEmptyTree(){
 //print
 void MainWindow::on_pushButton_4_clicked()
 {
+
+
+
     table = new TeachingTable("Teaching","");
     table->showMaximized();
+
+
 }
+
+
 
 
 //tabs
@@ -601,4 +612,24 @@ void MainWindow::on_actionTechnical_Support_triggered()
 void MainWindow::on_actionContext_Help_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
+    QPrinter printer;
+    //QDir::homePath() + QDir::separator() + name
+    //printer.setOutputFileName(QDir::homePath() + QDir::separator() + testprint");
+    QPainter painter;
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print  Document");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    ui->treeWidget->expandAll();
+    //ui->treeWidget->size(100, 100);
+    //ui->treeWidget->adjustSize();
+    ui->treeWidget->render(&painter);
+    ui->treeWidget->collapseAll();
+    painter.end();
 }
