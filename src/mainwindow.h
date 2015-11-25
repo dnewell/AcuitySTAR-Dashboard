@@ -35,6 +35,8 @@ private slots:
     void on_treeWidget_itemActivated(QTreeWidgetItem *item, int column);
     void on_actionAbout_Canteloupe_triggered();
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;
