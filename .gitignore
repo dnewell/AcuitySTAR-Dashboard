@@ -130,3 +130,11 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
+build-AcuitySTAR_Dashboard-Desktop_Qt_5_5_0_MinGW_32bit-Debug/object_script.AcuitySTAR_Dashboard.Debug
+build-AcuitySTAR_Dashboard-Desktop_Qt_5_5_0_MinGW_32bit-Debug/object_script.AcuitySTAR_Dashboard.Release
+src/csvprogressbar.cpp
+src/csvprogressbar.h
+src/csvprogressbar.ui
+src/nightchartswidget.cpp
+src/nightchartswidget.h
+src/progressBar.gif
