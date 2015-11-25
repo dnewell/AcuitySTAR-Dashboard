@@ -3,6 +3,7 @@
 # Project created by QtCreator 2015-10-19T20:25:08
 #
 #-------------------------------------------------
+include("nightcharts.pri")
 
 QT       += core gui sql
 QMAKE_CXXFLAGS += -std=gnu++11
@@ -23,13 +24,16 @@ SOURCES += main.cpp\
     summary.cpp \
     year.cpp \
     about_canteloupe.cpp \
-    filter.cpp \
     teachingtable.cpp \
     dialogforerror.cpp \
     bug_report.cpp \
     tech_support.cpp \
     message.cpp \
-    window.cpp
+    window.cpp \
+    piechart.cpp \
+    presentationgraphdash.cpp \
+    grantsfundinggraphdash.cpp \
+    publicationgraphdash.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1692,22 +1696,29 @@ HEADERS  += mainwindow.h \
     ui_dialog.h \
     ui_mainwindow.h \
     about_canteloupe.h \
-    filter.h \
+    piechart.h \
     teachingtable.h \
     dialogforerror.h \
-    bug_report.h \
-    tech_support.h \
+    window.h \
     message.h \
-    window.h
+    tech_support.h \
+    window.h \
+    bug_report.h \
+    publicationgraphdash.h \
+    presentationgraphdash.h \
+    grantsfundinggraphdash.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
     about_canteloupe.ui \
-    filter.ui \
+    piechart.ui \
     teachingtable.ui \
     dialogforerror.ui \
     bug_report.ui \
-    tech_support.ui
+    tech_support.ui \
+    publicationgraphdash.ui \
+    presentationgraphdash.ui \
+    grantsfundinggraphdash.ui
 
 DISTFILES += \
     icon_resource_file.rc
