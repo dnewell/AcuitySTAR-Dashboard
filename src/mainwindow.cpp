@@ -13,6 +13,8 @@
 #include "about_canteloupe.h"
 #include <dialog.h>
 #include <publicationgraphdash.h>
+#include <presentationgraphdash.h>
+#include <grantsfundinggraphdash.h>
 
 using namespace std;
 
@@ -149,6 +151,14 @@ void MainWindow::on_pushButton_clicked()
 
       QDialog *pubDash = new publicationGraphDash(this);
       pubDash->show();
+  }else if(filePath.contains("Presentations")){
+
+      QDialog *presDash = new PresentationGraphDash(this);
+      presDash->show();
+  }else if(filePath.contains("Grants")){
+
+      QDialog *grantsDash = new GrantsFundingGraphDash(this);
+      grantsDash->show();
   }
 }
 

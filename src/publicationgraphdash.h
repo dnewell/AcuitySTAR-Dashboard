@@ -14,9 +14,18 @@ class publicationGraphDash : public QDialog
 public:
     explicit publicationGraphDash(QWidget *parent = 0);
     ~publicationGraphDash();
+private slots:
+     void make_graph1(int startDate, int endDate);
+     void on_barBtn_clicked();
+
+     void on_pieBtn_clicked();
 
 private:
     Ui::publicationGraphDash *ui;
+    bool pie = false;
+    QDialog *pieWindow;
+    double totalsPub[2];
+    QString labelsPub[2];
 };
 
 #endif // PUBLICATIONGRAPHDASH_H
