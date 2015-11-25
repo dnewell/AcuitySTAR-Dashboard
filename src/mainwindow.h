@@ -18,7 +18,6 @@
 #include "tech_support.h"
 
 using namespace std;
-extern string tab_focus;
 extern QString filePath;
 
 namespace Ui {
