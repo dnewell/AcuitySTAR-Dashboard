@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>publicationGraphDash</class>
+ <widget class="QDialog" name="publicationGraphDash">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>615</width>
+    <height>545</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QCustomPlot" name="bar_graphPub" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>591</width>
+     <height>500</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>500</width>
+     <height>500</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1000</width>
+     <height>1000</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>510</y>
+     <width>601</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="searchInPub">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Search Name</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="pubType">
+      <item>
+       <property name="text">
+        <string>Journal Article</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Published</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Books</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Newspapers</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Working Papers</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="fromCBPub">
+      <property name="currentText">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="toCBPub">
+      <property name="currentText">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="barBtn">
+      <property name="text">
+       <string>Bar Graph</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pieBtn">
+      <property name="text">
+       <string>Pie Chart</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

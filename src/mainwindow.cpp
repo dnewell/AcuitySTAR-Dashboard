@@ -12,10 +12,9 @@
 #include <filter.h>
 #include "about_canteloupe.h"
 #include <dialog.h>
-#include "bug_report.h"
-#include "tech_support.h"
-#include <QMessageBox>
-//#include <QtNetwork/qnetworkaccessmanager.h>
+#include <publicationgraphdash.h>
+#include <presentationgraphdash.h>
+#include <grantsfundinggraphdash.h>
 
 using namespace std;
 
@@ -26,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     makeTree(0,0);
-
 }
 
 void MainWindow::makeTree(int startDate, int endDate){
@@ -146,40 +144,40 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-   dialogWindow = new Dialog(this);
+  if(filePath.contains("Teaching")){
+   dialogWindow = new Dialog(filePath, this);
    dialogWindow->show();
+  }else if(filePath.contains("Publications")){
+
+      QDialog *pubDash = new publicationGraphDash(this);
+      pubDash->show();
+  }else if(filePath.contains("Presentations")){
+
+      QDialog *presDash = new PresentationGraphDash(this);
+      presDash->show();
+  }else if(filePath.contains("Grants")){
+
+      QDialog *grantsDash = new GrantsFundingGraphDash(this);
+      grantsDash->show();
+  }
 }
 
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
-    if (fileName != NULL){
-    string filePath = fileName.toStdString();
+    filePath = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
+    if (filePath != NULL){
+    string filePathSt = filePath.toStdString();
     DB* db = new DB();
     db->createDatabase();
-    string tableName = db->teachingCsvIntoDb(filePath);
-    QString table = QString::fromStdString(tableName);
-    QString tableFilter = "";
-    if (tableName == "Teaching"){
-        tableFilter = "(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')";
-    }
-
-    dialogForError = new DialogForError(table,tableFilter);
-    dialogForError->show();
-    cout << tableName << endl;
+    db->teachingCsvIntoDb(filePathSt);
     }
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-    table = new TeachingTable("Teaching","");
-    table->showMaximized();
+//    makePrint(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt(),"Teaching");
 }
 
 void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
@@ -191,31 +189,127 @@ void MainWindow::on_actionAbout_Canteloupe_triggered()
 {
     canteHelp = new About_Canteloupe(this);
     canteHelp -> show();
-}
 
-void MainWindow::on_actionOpen_triggered()
-{
-    on_pushButton_2_clicked();
+//    about_canteloupe canteHelp;
+//    canteHelp.setModal(true);
+//    canteHelp.exec();
 }
+//void MainWindow::makePrint(int start_year, int end_year, QString CSV_type){
+//    ui->treeWidget->clear();
 
-void MainWindow::on_actionExit_triggered()
-{
-    QApplication::quit();
-}
+//    if(CSV_type==""){
+//        ui->treeWidget->setColumnCount(4);
+//    }
 
-void MainWindow::on_actionReport_Bugs_triggered()
-{
-    bug = new Bug_Report(this);
-    bug -> show();
-}
+//    if(CSV_type=="Teaching"){
+//        ui->treeWidget->headerItem()->setText(0,"");
+//        ui->treeWidget->headerItem()->setText(1,"Academic Year");
+//        ui->treeWidget->headerItem()->setText(2,"Hours");
+//        ui->treeWidget->headerItem()->setText(3,"Students");
+//    }
+//    else if(CSV_type=="Presentations"){
+//        ui->treeWidget->headerItem()->setText(0,"");
+//        ui->treeWidget->headerItem()->setText(1,"Academic Year");
+//        ui->treeWidget->headerItem()->setText(2,"# of Presentations");
+//        ui->treeWidget->headerItem()->setText(3,"");
+//    }
+//    else if(CSV_type=="Publications"){
+//        ui->treeWidget->headerItem()->setText(0,"");
+//        ui->treeWidget->headerItem()->setText(1,"Type");
+//        ui->treeWidget->headerItem()->setText(2,"Total");
+//        ui->treeWidget->headerItem()->setText(3,"");
+//    }
+//    else if (CSV_type == "Grants"){
+//        ui->treeWidget->headerItem()->setText(0,"");
+//        ui->treeWidget->headerItem()->setText(1,"Funding Type");
+//        ui->treeWidget->headerItem()->setText(2,"Total #");
+//        ui->treeWidget->headerItem()->setText(3,"Total $");
+//    }
 
-void MainWindow::on_actionTechnical_Support_triggered()
-{
-    tech = new Tech_Support(this);
-    tech -> show();
-}
+//    //get data for vectors
+//    Summary* summary = new Summary();
+//    QVector<double> Tier_1_Tot, Tier_2_Tot, Tier_3_Tot;
+//    QVector<QString> Tier_1_Fields, Tier_2_Fields, Tier_3_Fields;
+//    QString printString;
 
-void MainWindow::on_actionContext_Help_triggered()
-{
-    QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
-}
+
+
+//    if (CSV_type == "Teaching"){
+//        Tier_1_Fields = {"PME", "CME", "UME", "Other"};
+
+//        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
+//        for (int y = start_year; y <= end_year; y++){
+//            Tier_2_Fields.insert(y-start_year,QString::number(y));
+//        }
+
+//    }
+//    else if (CSV_type == "Grants"){
+//        Tier_1_Fields = {"Grants", "Clinical Funding"};
+//        Tier_2_Fields = {"Peer Reviewed", "Industry Sponsored"};
+//    }
+//    else if (CSV_type == "Publications"){
+//        Tier_1_Fields = {"Publications"};
+//        Tier_2_Fields = {"Published Abstracts", "Journal Articles", "Books", "Book Chapters", "Letters to Editor"};
+//    }
+//    else if (CSV_type == "Presentations"){
+//        Tier_1_Fields = {"Invited Lectures", "Abstracts Presented", "Next Presentation"};
+
+//        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
+//        for (int y = start_year; y <= end_year; y++){
+//            Tier_2_Fields.insert(y-start_year,QString::number(y));
+//        }
+
+//    }
+
+//    //iterate once on each Tier_1 element
+//    for (int x = 0; x < Tier_1_Fields.length(); x++){
+
+//        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[x] ,start_year ,end_year ,CSV_type));
+
+//        printString = printString + "\n " + Tier_1_Fields[x] + " : ";
+
+//        for (int totIndex = 0; totIndex < Tier_1_Tot.length();totIndex++){
+
+//            printString = printString + " " + Tier_1_Tot[totIndex] + " ";
+
+//        }//for totIndex
+
+//        //iterate once on each Tier_2 element
+//        for (int y = 0; y < Tier_2_Fields.length(); y++){
+
+//            Tier_2_Tot=(summary->getTier2(Tier_1_Fields[x], Tier_2_Fields[y], start_year, end_year, CSV_type));
+
+//            printString = printString + "\n " + Tier_2_Fields[y] + " : ";
+
+//            for (int totIndex = 0; totIndex < Tier_2_Tot.length();totIndex++){
+
+//                printString = printString + " " + Tier_2_Tot[totIndex] + " ";
+
+//            }//for totIndex
+
+//            //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+//            Tier_3_Fields=(summary->getFaculty(Tier_1_Fields[x], Tier_2_Fields[y], start_year, end_year, CSV_type));
+
+//            //iterate once for each Tier_3 element
+//            for (int z = 0; z < Tier_3_Fields.length(); z++){
+
+//                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[x], Tier_2_Fields[y], Tier_3_Fields[z], start_year, end_year, CSV_type));
+
+//                printString = printString + "\n " + Tier_3_Fields[z] + " : ";
+
+//                for (int totIndex = 0; totIndex < Tier_3_Tot.length();totIndex++){
+
+//                    printString = printString + " " + Tier_3_Tot[totIndex] + " ";
+
+//                }//for totIndex
+
+//            }//for z
+
+//        }//for y
+
+//    }//for x
+
+//    qDebug()<< printString;
+
+//}//makeTree
+
