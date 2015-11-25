@@ -12,6 +12,8 @@
 #include <iostream>
 #include <algorithm>
 #include <piechart.h>
+#include <QCompleter>
+#include <QStringList>
 
 PresentationGraphDash::PresentationGraphDash(QWidget *parent) :
     QDialog(parent),
@@ -26,6 +28,25 @@ PresentationGraphDash::PresentationGraphDash(QWidget *parent) :
          ui->fromCBPres->addItem(year);
          ui->toCBPres->addItem(year);
      }
+
+     /*Auto Complete LineEdit*/
+     QStringList *list = new QStringList();
+
+     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+     db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+     db.open();
+     QSqlQuery qry(db);
+
+     qry.prepare("SELECT DISTINCT MemberName FROM Presentations");
+     qry.exec();
+
+     while(qry.next()){
+     QString name = QString(qry.record().value(0).toString());
+     *list  << name;
+     }
+
+     QCompleter* completer = new QCompleter(*list);
+     ui->searchInPres->setCompleter(completer);
 
 }
 

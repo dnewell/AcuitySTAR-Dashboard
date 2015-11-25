@@ -12,6 +12,8 @@
 #include <iostream>
 #include <algorithm>
 #include <piechart.h>
+#include <QCompleter>
+#include <QStringList>
 
 publicationGraphDash::publicationGraphDash(QWidget *parent) :
     QDialog(parent),
@@ -30,6 +32,28 @@ publicationGraphDash::publicationGraphDash(QWidget *parent) :
           ui->fromCBPub->addItem(year);
           ui->toCBPub->addItem(year);
       }
+
+      /*AutoComplete*/
+
+
+      /*Auto Complete LineEdit*/
+      QStringList *list = new QStringList();
+
+      QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+      db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+      db.open();
+      QSqlQuery qry(db);
+
+      qry.prepare("SELECT DISTINCT MemberName FROM Publications");
+      qry.exec();
+
+      while(qry.next()){
+      QString name = QString(qry.record().value(0).toString());
+      *list  << name;
+      }
+
+      QCompleter* completer = new QCompleter(*list);
+      ui->searchInPub->setCompleter(completer);
 
 
 
@@ -59,7 +83,6 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
     db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
     db.open();
     QSqlQuery qry(db);
-
     QString professor =ui->searchInPub->text();
     QString pubType = ui->pubType->currentText();
     QString strtDate=QString::number(startDate);

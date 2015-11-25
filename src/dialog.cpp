@@ -28,6 +28,24 @@ Dialog::Dialog(QString filePath, QWidget *parent):
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
 //     this->setWindowTitle("Pretty Graph");
 
+    QStringList *list = new QStringList();
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    qry.prepare("SELECT DISTINCT MemberName FROM Teaching");
+    qry.exec();
+
+    while(qry.next()){
+    QString name = QString(qry.record().value(0).toString());
+    *list  << name;
+    }
+
+    QCompleter* completer = new QCompleter(*list);
+    ui->searchIn->setCompleter(completer);
+
 }
 
 Dialog::~Dialog()

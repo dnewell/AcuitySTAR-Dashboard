@@ -26,6 +26,23 @@ GrantsFundingGraphDash::GrantsFundingGraphDash(QWidget *parent) :
         ui->fromCBGrants->addItem(year);
         ui->toCBGrants->addItem(year);
     }
+    QStringList *list = new QStringList();
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
+    db.open();
+    QSqlQuery qry(db);
+
+    qry.prepare("SELECT DISTINCT MemberName FROM Grants");
+    qry.exec();
+
+    while(qry.next()){
+    QString name = QString(qry.record().value(0).toString());
+    *list  << name;
+    }
+
+    QCompleter* completer = new QCompleter(*list);
+    ui->searchInGrants->setCompleter(completer);
 }
 
 GrantsFundingGraphDash::~GrantsFundingGraphDash()
