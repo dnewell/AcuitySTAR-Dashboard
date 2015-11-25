@@ -17,9 +17,12 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Error Validation</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>-20</x>
@@ -40,8 +43,8 @@
     <rect>
      <x>70</x>
      <y>80</y>
-     <width>181</width>
-     <height>31</height>
+     <width>211</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -51,10 +54,10 @@
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>70</x>
      <y>120</y>
-     <width>121</width>
-     <height>31</height>
+     <width>211</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -64,10 +67,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>30</y>
-     <width>237</width>
-     <height>13</height>
+     <x>30</x>
+     <y>20</y>
+     <width>281</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -77,14 +80,14 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>30</x>
      <y>50</y>
-     <width>225</width>
-     <height>13</height>
+     <width>281</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>containing missing or invalid entries:</string>
+    <string> containing missing or invalid entries:</string>
    </property>
   </widget>
  </widget>

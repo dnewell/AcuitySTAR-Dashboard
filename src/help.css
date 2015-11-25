@@ -4,12 +4,15 @@ body {
 }
 
 h1 {
+    font-family: sans-serif;
     color: darkorange;
     margin-left: 20px;
+    letter-spacing: 3px;
 }
 
 h2,h3,p {
     font-family: sans-serif;
     padding-left: 5%;
     padding-right: 5%;
+    letter-spacing: 0.5px;
 }
