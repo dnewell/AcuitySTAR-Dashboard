@@ -25,8 +25,28 @@
 #include "progressindicator.h"
 
 using namespace std;
-extern string tab_focus;
+
+extern string tab_focus = "Teaching";
+
 QString file_path;
+
+//teaching
+static QTreeWidgetItem *pme;
+static QTreeWidgetItem *cme;
+static QTreeWidgetItem *ume;
+static QTreeWidgetItem *teaching_other;
+
+//grants
+static QTreeWidgetItem *grants;
+static QTreeWidgetItem *funding;
+
+//publications
+static QTreeWidgetItem *pub;
+
+//presentatiosns
+static QTreeWidgetItem *invite;
+static QTreeWidgetItem *abstract;
+static QTreeWidgetItem *pres_other;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
-    ui->treeWidget->clear();
+   // ui->treeWidget->clear();
 
     if(CSV_type=="Teaching"){
         ui->treeWidget->headerItem()->setText(0,"");
@@ -82,13 +102,13 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         }
 
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *pme = root(Tier_1_Fields[0], Tier_1_Tot);
+        pme = root(Tier_1_Fields[0], Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *cme = root(Tier_1_Fields[1], Tier_1_Tot);
+        cme = root(Tier_1_Fields[1], Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *ume = root(Tier_1_Fields[2], Tier_1_Tot);
+        ume = root(Tier_1_Fields[2], Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[3] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *other = root(Tier_1_Fields[3], Tier_1_Tot);
+        teaching_other = root(Tier_1_Fields[3], Tier_1_Tot);
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
@@ -100,7 +120,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
                 QTreeWidgetItem *t2_ume = tier2_root(ume, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_other = tier2_root(other, Tier_2_Fields[i], Tier_2_Tot);
+                QTreeWidgetItem *t2_other = tier2_root(teaching_other, Tier_2_Fields[i], Tier_2_Tot);
                 //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
@@ -139,9 +159,9 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         Tier_2_Fields = {"Peer Reviewed", "Industry Sponsored"};
 
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *grants = root(Tier_1_Fields[0], Tier_1_Tot);
+        grants = root(Tier_1_Fields[0], Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *funding = root(Tier_1_Fields[1], Tier_1_Tot);
+        funding = root(Tier_1_Fields[1], Tier_1_Tot);
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
@@ -175,7 +195,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         Tier_2_Fields = {"Published Abstracts", "Journal Articles", "Books", "Book Chapters", "Letters to Editor"};
 
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *pub = root(Tier_1_Fields[0], Tier_1_Tot);
+        pub = root(Tier_1_Fields[0], Tier_1_Tot);
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
@@ -206,11 +226,11 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         }
 
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *invite = root("Invited Lectures", Tier_1_Tot);
+        invite = root("Invited Lectures", Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *abstract = root("Abstracts Presented", Tier_1_Tot);
+        abstract = root("Abstracts Presented", Tier_1_Tot);
         Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
-        QTreeWidgetItem *next = root("Other", Tier_1_Tot);
+        pres_other = root("Other", Tier_1_Tot);
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
@@ -220,7 +240,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
                 QTreeWidgetItem *t2_abstract = tier2_root(abstract, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_next = tier2_root(next, Tier_2_Fields[i], Tier_2_Tot);
+                QTreeWidgetItem *t2_next = tier2_root(pres_other, Tier_2_Fields[i], Tier_2_Tot);
 
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
@@ -333,6 +353,63 @@ void MainWindow::on_pushButton_2_clicked()
 
     db->createDatabase();
     string tableName = db->teachingCsvIntoDb(filePathSt);
+    if(pme != NULL)
+    {
+    pme->setHidden(true);
+    cme->setHidden(true);
+    ume->setHidden(true);
+    teaching_other->setHidden(true);
+    }
+
+    //Funding
+    if(grants != NULL)
+    {
+    grants->setHidden(true);
+    funding->setHidden(true);
+    }
+
+    //publications
+    if(pub != NULL)
+    {
+    pub->setHidden(true);
+    }
+
+    //presentations
+    if(invite != NULL)
+    {
+    invite->setHidden(true);
+    abstract->setHidden(true);
+    pres_other->setHidden(true);
+    }
+
+    if (tableName == "Teaching")
+    {
+        ui->tabWidget->setCurrentIndex(0);
+        tab_focus = "Teaching";
+        ui->main_window_label->setText("Teaching");
+        makeTree(1975,2015, "Teaching");
+    }
+    else if (tableName == "Publications")
+    {
+        ui->tabWidget->setCurrentIndex(1);
+        tab_focus = "Publications";
+        ui->main_window_label->setText("Publications");
+        makeTree(1975,2015, "Publications");
+    }
+    else if (tableName == "Grants")
+    {
+        ui->tabWidget->setCurrentIndex(2);
+        tab_focus = "Grants";
+        ui->main_window_label->setText("Funding");
+        makeTree(1975,2015, "Grants");
+    }
+    else if (tableName == "Presentations")
+    {
+        ui->tabWidget->setCurrentIndex(3);
+        tab_focus = "Presentations";
+        ui->main_window_label->setText("Presentations");
+        makeTree(1975,2015, "Presentations");
+    }
     QString table = QString::fromStdString(tableName);
 
     QString tableFilter = "";
@@ -540,17 +617,10 @@ void MainWindow::makeEmptyTree(){
 //print
 void MainWindow::on_pushButton_4_clicked()
 {
-
-
-
-    table = new TeachingTable("Teaching","");
+    QString tableName = QString::fromStdString(tab_focus);
+    table = new TeachingTable(tableName,"");
     table->showMaximized();
-
-
 }
-
-
-
 
 //tabs
 void MainWindow::on_tabWidget_tabBarClicked(int index)
@@ -558,24 +628,138 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     switch(index)
     {
     case 0:
-       // tab_focus = "Teaching";
+        tab_focus = "Teaching";
         ui->main_window_label->setText("Teaching");
-        makeTree(1975,2015, "Teaching");
+
+         //teaching
+        if(pme != NULL)
+        {
+        pme->setHidden(false);
+        cme->setHidden(false);
+        ume->setHidden(false);
+        teaching_other->setHidden(false);
+        }
+
+        //Funding
+        if(grants != NULL)
+        {
+        grants->setHidden(true);
+        funding->setHidden(true);
+        }
+
+        //publications
+        if(pub != NULL)
+        {
+        pub->setHidden(true);
+        }
+
+        //presentations
+        if(invite != NULL)
+        {
+        invite->setHidden(true);
+        abstract->setHidden(true);
+        pres_other->setHidden(true);
+        }
+
         break;
     case 1:
-        //tab_focus = "Publications";
+        tab_focus = "Publications";
         ui->main_window_label->setText("Publications");
-        makeTree(1975,2015, "Publications");
+        if(pme != NULL)
+        {
+        pme->setHidden(true);
+        cme->setHidden(true);
+        ume->setHidden(true);
+        teaching_other->setHidden(true);
+        }
+
+        //Funding
+        if(grants != NULL)
+        {
+        grants->setHidden(true);
+        funding->setHidden(true);
+        }
+
+        //publications
+        if(pub != NULL)
+        {
+        pub->setHidden(false);
+        }
+
+        //presentations
+        if(invite != NULL)
+        {
+        invite->setHidden(true);
+        abstract->setHidden(true);
+        pres_other->setHidden(true);
+        }
+
         break;
     case 2:
-       // tab_focus = "Funding";
+        tab_focus = "Funding";
         ui->main_window_label->setText("Funding");
-        makeTree(1975,2015, "Grants");
+
+        if(pme != NULL)
+        {
+        pme->setHidden(true);
+        cme->setHidden(true);
+        ume->setHidden(true);
+        teaching_other->setHidden(true);
+        }
+
+        //Funding
+        if(grants != NULL)
+        {
+        grants->setHidden(false);
+        funding->setHidden(false);
+        }
+
+        //publications
+        if(pub != NULL)
+        {
+        pub->setHidden(true);
+        }
+
+        //presentations
+        if(invite != NULL)
+        {
+        invite->setHidden(true);
+        abstract->setHidden(true);
+        pres_other->setHidden(true);
+        }
+
         break;
     case 3:
-       // tab_focus = "Presentations";
+        tab_focus = "Presentations";
         ui->main_window_label->setText("Presentations");
-        makeTree(1975,2015, "Presentations");
+        if(pme != NULL)
+        {
+        pme->setHidden(true);
+        cme->setHidden(true);
+        ume->setHidden(true);
+        teaching_other->setHidden(true);
+        }
+
+        //Funding
+        if(grants != NULL)
+        {
+        grants->setHidden(true);
+        funding->setHidden(true);
+        }
+
+        //publications
+        if(pub != NULL)
+        {
+        pub->setHidden(true);
+        }
+
+        //presentations
+        if(invite != NULL)
+        {
+        invite->setHidden(false);
+        abstract->setHidden(false);
+        pres_other->setHidden(false);
+        }
         break;
     default:
         break;
