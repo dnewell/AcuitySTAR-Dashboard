@@ -628,8 +628,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     switch(index)
     {
     case 0:
-        tab_focus = "Teaching";
-        ui->main_window_label->setText("Teaching");
+        //tab_focus = "Teaching";
+        //ui->main_window_label->setText("Teaching");
 
          //teaching
         if(pme != NULL)
@@ -663,8 +663,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 1:
-        tab_focus = "Publications";
-        ui->main_window_label->setText("Publications");
+        //tab_focus = "Publications";
+        //ui->main_window_label->setText("Publications");
         if(pme != NULL)
         {
         pme->setHidden(true);
@@ -696,8 +696,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 2:
-        tab_focus = "Funding";
-        ui->main_window_label->setText("Funding");
+        //tab_focus = "Funding";
+        //ui->main_window_label->setText("Funding");
 
         if(pme != NULL)
         {
@@ -730,8 +730,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 3:
-        tab_focus = "Presentations";
-        ui->main_window_label->setText("Presentations");
+        //tab_focus = "Presentations";
+        //ui->main_window_label->setText("Presentations");
         if(pme != NULL)
         {
         pme->setHidden(true);
