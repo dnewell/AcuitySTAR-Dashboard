@@ -61,7 +61,7 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
     mainLayout->addWidget(view);
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
-    setWindowTitle(tr("Teaching Table"));
+    setWindowTitle(tr("Table"));
 
 }
 
