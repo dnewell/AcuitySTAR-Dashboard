@@ -23,6 +23,10 @@ private slots:
     void printPieButton();
     void printBarButton();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::GrantsFundingGraphDash *ui;
     double totalsGrants[2];

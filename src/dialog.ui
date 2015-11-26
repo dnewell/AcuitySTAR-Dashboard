@@ -302,6 +302,20 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="print_bar_Button">
+       <property name="text">
+        <string>Print Bar</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="print_pie_Button">
+       <property name="text">
+        <string>Print Pie</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>

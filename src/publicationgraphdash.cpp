@@ -283,3 +283,13 @@ void publicationGraphDash::printBarButton(){
 
 
 
+
+void publicationGraphDash::on_pushButton_clicked()
+{
+    printBarButton();
+}
+
+void publicationGraphDash::on_pushButton_2_clicked()
+{
+    printPieButton();
+}
