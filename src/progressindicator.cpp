@@ -10,12 +10,6 @@ ProgressIndicator::ProgressIndicator(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags( Qt::CustomizeWindowHint );
-//    QGraphicsScene scene;
-//    QLabel *gif_anim = new QLabel();
-//    QMovie *movie = new QMovie("progress.gif");
-//    gif_anim->setMovie(movie);
-//    movie->start();
-//    QGraphicsProxyWidget *proxy = scene.addWidget(gif_anim);
 }
 
 ProgressIndicator::~ProgressIndicator()

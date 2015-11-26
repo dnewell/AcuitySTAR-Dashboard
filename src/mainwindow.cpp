@@ -433,12 +433,14 @@ void MainWindow::on_button_graph_clicked()
 
 void MainWindow::browse()
 {
+    ProgressIndicator *progressIndicator = new ProgressIndicator();
+    progressIndicator->show();
     file_path = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
     if (file_path  != NULL){
     string filePathSt = file_path.toStdString();
     DB* db = new DB();
-    ProgressIndicator *progressIndicator = new ProgressIndicator();
-    progressIndicator->show();
+    progressIndicator->raise();
+    progressIndicator->activateWindow();
 
     db->createDatabase();
     string tableName = db->teachingCsvIntoDb(filePathSt);
@@ -514,10 +516,12 @@ void MainWindow::browse()
     else if (tableName == "Publications"){
         tableFilter = "(MemberName='' or PrimaryDomain='' or PublicationStatus='' or Type='' or StatusDate='' or Role='' or JournalNamePublishedInBookTitleetc='' or Authors='' or Title='')";
     }
-
-    dialogForError = new DialogForError(table,tableFilter);
     progressIndicator->close();
+    dialogForError = new DialogForError(table,tableFilter);
+
     dialogForError->show();
+    dialogForError->raise();
+    dialogForError->activateWindow();
     }
 }
 

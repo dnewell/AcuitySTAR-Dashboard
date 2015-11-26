@@ -6,9 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>356</width>
+    <height>106</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI Black</family>
+    <pointsize>12</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,27 +30,19 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>110</y>
-     <width>231</width>
-     <height>16</height>
+     <x>40</x>
+     <y>40</y>
+     <width>301</width>
+     <height>20</height>
     </rect>
    </property>
-   <property name="text">
-    <string>“Those who are free of resentful thoughts</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>130</y>
-     <width>151</width>
-     <height>21</height>
-    </rect>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
-    <string> surely find peace.” - Buddha</string>
+    <string>Loading and processing data.  Please wait...</string>
    </property>
   </widget>
  </widget>
