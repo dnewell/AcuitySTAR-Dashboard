@@ -73,7 +73,7 @@ void TeachingTable::submit()
         model->database().commit();
     } else {
         model->database().rollback();
-        QMessageBox::warning(this, tr("Teaching Table"),
+        QMessageBox::warning(this, tr("Table"),
                              tr("The database reported an error: %1")
                              .arg(model->lastError().text()));
     }
