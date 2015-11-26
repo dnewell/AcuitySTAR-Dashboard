@@ -132,7 +132,7 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
     }
-    cout<<q.toStdString()<<endl;
+    //cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
@@ -214,7 +214,7 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1 + " AND MemberName = " + "'" + tier3 + "'";
     }
-    cout<<q.toStdString()<<endl;
+    //cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
@@ -298,7 +298,7 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
     }
-    cout<<q.toStdString()<<endl;
+    //cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
@@ -369,7 +369,7 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     }
     QString qstr1=QString::number(endDate);
     q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
-    cout<<q.toStdString()<<endl;
+    //cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
@@ -440,7 +440,7 @@ QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startD
     }
     QString qstr1=QString::number(endDate);
     q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1 + " AND MemberName = " + "'" + tier3 + "'";
-    cout<<q.toStdString()<<endl;
+    //cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){

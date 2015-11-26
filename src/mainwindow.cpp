@@ -87,8 +87,8 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
     //get data for vectors
     Summary* summary = new Summary();
     QVector<double> Tier_1_Tot, Tier_2_Tot, Tier_3_Tot;
-
     QVector<QString> Tier_1_Fields, Tier_2_Fields, Tier_3_Fields;
+    QString faculty=ui->lineEdit->text();
 
 
 //TEACHING
@@ -101,50 +101,81 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_2_Fields.insert(y-start_year,QString::number(y));
         }
 
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        pme = root(Tier_1_Fields[0], Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        cme = root(Tier_1_Fields[1], Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
-        ume = root(Tier_1_Fields[2], Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[3] ,start_year ,end_year ,CSV_type));
-        teaching_other = root(Tier_1_Fields[3], Tier_1_Tot);
+        if(faculty==""){
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+            pme = root(Tier_1_Fields[0], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+            cme = root(Tier_1_Fields[1], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
+            ume = root(Tier_1_Fields[2], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[3] ,start_year ,end_year ,CSV_type));
+            teaching_other = root(Tier_1_Fields[3], Tier_1_Tot);
+        }
+        else{
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[0] ,faculty ,start_year ,end_year ,CSV_type));
+            pme = root(Tier_1_Fields[0], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[1] ,faculty ,start_year ,end_year ,CSV_type));
+            cme = root(Tier_1_Fields[1], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[2] ,faculty ,start_year ,end_year ,CSV_type));
+            ume = root(Tier_1_Fields[2], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[3] ,faculty ,start_year ,end_year ,CSV_type));
+            teaching_other = root(Tier_1_Fields[3], Tier_1_Tot);
+        }
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QTreeWidgetItem *t2_pme;
+            QTreeWidgetItem *t2_cme;
+            QTreeWidgetItem *t2_ume;
+            QTreeWidgetItem *t2_other;
+            if(faculty==""){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_pme = tier2_root(pme, Tier_2_Fields[i], Tier_2_Tot);
+                t2_pme = tier2_root(pme, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_cme = tier2_root(cme, Tier_2_Fields[i], Tier_2_Tot);
+                t2_cme = tier2_root(cme, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_ume = tier2_root(ume, Tier_2_Fields[i], Tier_2_Tot);
+                t2_ume = tier2_root(ume, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_other = tier2_root(teaching_other, Tier_2_Fields[i], Tier_2_Tot);
-                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+                t2_other = tier2_root(teaching_other, Tier_2_Fields[i], Tier_2_Tot);
+            }
+            else{
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_pme = tier2_root(pme, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_cme = tier2_root(cme, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_ume = tier2_root(ume, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_other = tier2_root(teaching_other, Tier_2_Fields[i], Tier_2_Tot);
+            }
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_pme, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                 tier3_root(t2_cme, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
 
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                 tier3_root(t2_ume, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -158,29 +189,48 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         Tier_1_Fields = {"Grants", "Clinical Trials"};
         Tier_2_Fields = {"Peer Reviewed", "Industry Sponsored"};
 
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        grants = root(Tier_1_Fields[0], Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        funding = root(Tier_1_Fields[1], Tier_1_Tot);
+        if(faculty==""){
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+            grants = root(Tier_1_Fields[0], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+            funding = root(Tier_1_Fields[1], Tier_1_Tot);
+        }
+        else{
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[0] ,faculty, start_year ,end_year ,CSV_type));
+            grants = root(Tier_1_Fields[0], Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[1] ,faculty, start_year ,end_year ,CSV_type));
+            funding = root(Tier_1_Fields[1], Tier_1_Tot);
+        }
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QTreeWidgetItem *t2_grants;
+            QTreeWidgetItem *t2_funding;
+            if(faculty==""){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_grants = tier2_root(grants, Tier_2_Fields[i], Tier_2_Tot);
+                t2_grants = tier2_root(grants, Tier_2_Fields[i], Tier_2_Tot);
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_funding = tier2_root(funding, Tier_2_Fields[i], Tier_2_Tot);
-                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+                t2_funding = tier2_root(funding, Tier_2_Fields[i], Tier_2_Tot);
+            }
+            else{
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_grants = tier2_root(grants, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_funding = tier2_root(funding, Tier_2_Fields[i], Tier_2_Tot);
+            }
 
-                //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
+            //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_grants, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -194,19 +244,32 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         Tier_1_Fields = {"Publications"};
         Tier_2_Fields = {"Published Abstracts", "Journal Articles", "Books", "Book Chapters", "Letters to Editor"};
 
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        pub = root(Tier_1_Fields[0], Tier_1_Tot);
+        if(faculty==""){
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+            pub = root(Tier_1_Fields[0], Tier_1_Tot);
+        }
+        else{
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[0] ,faculty ,start_year ,end_year ,CSV_type));
+            pub = root(Tier_1_Fields[0], Tier_1_Tot);
+        }
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QTreeWidgetItem *t2_pub;
+            if(faculty==""){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_pub = tier2_root(pub, Tier_2_Fields[i], Tier_2_Tot);
-                //INSERT CODE TO DISPLAY TIER_2_DATA IN GUI
+                t2_pub = tier2_root(pub, Tier_2_Fields[i], Tier_2_Tot);
+            }
+            else{
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_pub = tier2_root(pub, Tier_2_Fields[i], Tier_2_Tot);
+            }
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                else Tier_3_Fields = {faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -225,39 +288,65 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_2_Fields.insert(y-start_year,QString::number(y));
         }
 
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
-        invite = root("Invited Lectures", Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
-        abstract = root("Abstracts Presented", Tier_1_Tot);
-        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
-        pres_other = root("Other", Tier_1_Tot);
+        if(faculty==""){
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
+            invite = root("Invited Lectures", Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
+            abstract = root("Abstracts Presented", Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1(Tier_1_Fields[2] ,start_year ,end_year ,CSV_type));
+            pres_other = root("Other", Tier_1_Tot);
+        }
+        else{
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[0] ,faculty ,start_year ,end_year ,CSV_type));
+            invite = root("Invited Lectures", Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[1] ,faculty ,start_year ,end_year ,CSV_type));
+            abstract = root("Abstracts Presented", Tier_1_Tot);
+            Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[2] ,faculty ,start_year ,end_year ,CSV_type));
+            pres_other = root("Other", Tier_1_Tot);
+        }
 
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
-                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_invite = tier2_root(invite, Tier_2_Fields[i], Tier_2_Tot);
-                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_abstract = tier2_root(abstract, Tier_2_Fields[i], Tier_2_Tot);
-                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                QTreeWidgetItem *t2_next = tier2_root(pres_other, Tier_2_Fields[i], Tier_2_Tot);
+            QTreeWidgetItem *t2_invite;
+            QTreeWidgetItem *t2_abstract;
+            QTreeWidgetItem *t2_next;
 
+            if(faculty==""){
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                t2_invite = tier2_root(invite, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                t2_abstract = tier2_root(abstract, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier2(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                t2_next = tier2_root(pres_other, Tier_2_Fields[i], Tier_2_Tot);
+            }
+            else{
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_invite = tier2_root(invite, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_abstract = tier2_root(abstract, Tier_2_Fields[i], Tier_2_Tot);
+                Tier_2_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], faculty, start_year, end_year, CSV_type));
+                t2_next = tier2_root(pres_other, Tier_2_Fields[i], Tier_2_Tot);
+            }
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
+                else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_invite, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
                 Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                 tier3_root(t2_abstract, Tier_3_Fields[j], Tier_3_Tot);
             }
-            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
+            else Tier_3_Fields={faculty};
 
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
