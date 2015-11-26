@@ -49,19 +49,19 @@ QTreeWidgetItem* root2(QString title, QString totalHours, QString totalStudents)
     void makeTree(int startDate, int endDate, QString CSV_type);
 
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-   // void on_treeWidget_itemActivated(QTreeWidgetItem *item, int column);
+    void browse();
+    void print();
+    void on_button_graph_clicked();
     void on_actionAbout_Canteloupe_triggered();
-  //  void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
+    void on_button_display_clicked();
 	void on_tabWidget_tabBarClicked(int index);
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
     void on_actionReport_Bugs_triggered();
     void on_actionTechnical_Support_triggered();
     void on_actionContext_Help_triggered();
+
+    void on_button_refresh_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -321,7 +321,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_button_graph_clicked()
 {
   if(ui->tabWidget->currentIndex() == 0){
    dialogWindow = new Dialog(this);
@@ -341,8 +341,8 @@ void MainWindow::on_pushButton_clicked()
   }
 }
 
-////////////////////////////////////////////////////////////////
-void MainWindow::on_pushButton_2_clicked()
+
+void MainWindow::browse()
 {
     file_path = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
     if (file_path  != NULL){
@@ -387,28 +387,28 @@ void MainWindow::on_pushButton_2_clicked()
         ui->tabWidget->setCurrentIndex(0);
         tab_focus = "Teaching";
         ui->main_window_label->setText("Teaching");
-        makeTree(1975,2015, "Teaching");
+        makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Teaching");
     }
     else if (tableName == "Publications")
     {
         ui->tabWidget->setCurrentIndex(1);
         tab_focus = "Publications";
         ui->main_window_label->setText("Publications");
-        makeTree(1975,2015, "Publications");
+        makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Publications");
     }
     else if (tableName == "Grants")
     {
         ui->tabWidget->setCurrentIndex(2);
         tab_focus = "Grants";
         ui->main_window_label->setText("Funding");
-        makeTree(1975,2015, "Grants");
+        makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Grants");
     }
     else if (tableName == "Presentations")
     {
         ui->tabWidget->setCurrentIndex(3);
         tab_focus = "Presentations";
         ui->main_window_label->setText("Presentations");
-        makeTree(1975,2015, "Presentations");
+        makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Presentations");
     }
     QString table = QString::fromStdString(tableName);
 
@@ -423,16 +423,7 @@ void MainWindow::on_pushButton_2_clicked()
     }
 }
 
-//void MainWindow::on_pushButton_3_clicked()
-//{
-//    makeTree(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt());
-//    makePrint(ui->comboBox->currentText().toInt(),ui->comboBox_2->currentText().toInt(),"Teaching");
-//}
 
-//void MainWindow::on_treeWidget_itemActivated(QTreeWidgetItem *item, int column)
-//{
-//
-//}
 
 void MainWindow::on_actionAbout_Canteloupe_triggered()
 {
@@ -453,124 +444,6 @@ QTreeWidgetItem* MainWindow::root2(QString title, QString totalHours, QString to
 }
 
 
-//void MainWindow::makePrint(int start_year, int end_year, QString CSV_type){
-//    ui->treeWidget->clear();
-
-//    if(CSV_type==""){
-//        ui->treeWidget->setColumnCount(4);
-//    }
-
-//    if(CSV_type=="Teaching"){
-//        ui->treeWidget->headerItem()->setText(0,"");
-//        ui->treeWidget->headerItem()->setText(1,"Academic Year");
-//        ui->treeWidget->headerItem()->setText(2,"Hours");
-//        ui->treeWidget->headerItem()->setText(3,"Students");
-//    }
-//    else if(CSV_type=="Presentations"){
-//        ui->treeWidget->headerItem()->setText(0,"");
-//        ui->treeWidget->headerItem()->setText(1,"Academic Year");
-//        ui->treeWidget->headerItem()->setText(2,"# of Presentations");
-//        ui->treeWidget->headerItem()->setText(3,"");
-//    }
-//    else if(CSV_type=="Publications"){
-//        ui->treeWidget->headerItem()->setText(0,"");
-//        ui->treeWidget->headerItem()->setText(1,"Type");
-//        ui->treeWidget->headerItem()->setText(2,"Total");
-//        ui->treeWidget->headerItem()->setText(3,"");
-//    }
-//    else if (CSV_type == "Grants"){
-//        ui->treeWidget->headerItem()->setText(0,"");
-//        ui->treeWidget->headerItem()->setText(1,"Funding Type");
-//        ui->treeWidget->headerItem()->setText(2,"Total #");
-//        ui->treeWidget->headerItem()->setText(3,"Total $");
-//    }
-
-//    //get data for vectors
-//    Summary* summary = new Summary();
-//    QVector<double> Tier_1_Tot, Tier_2_Tot, Tier_3_Tot;
-//    QVector<QString> Tier_1_Fields, Tier_2_Fields, Tier_3_Fields;
-//    QString printString;
-
-
-
-//    if (CSV_type == "Teaching"){
-//        Tier_1_Fields = {"PME", "CME", "UME", "Other"};
-
-//        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
-//        for (int y = start_year; y <= end_year; y++){
-//            Tier_2_Fields.insert(y-start_year,QString::number(y));
-//        }
-
-//    }
-//    else if (CSV_type == "Grants"){
-//        Tier_1_Fields = {"Grants", "Clinical Funding"};
-//        Tier_2_Fields = {"Peer Reviewed", "Industry Sponsored"};
-//    }
-//    else if (CSV_type == "Publications"){
-//        Tier_1_Fields = {"Publications"};
-//        Tier_2_Fields = {"Published Abstracts", "Journal Articles", "Books", "Book Chapters", "Letters to Editor"};
-//    }
-//    else if (CSV_type == "Presentations"){
-//        Tier_1_Fields = {"Invited Lectures", "Abstracts Presented", "Next Presentation"};
-
-//        //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
-//        for (int y = start_year; y <= end_year; y++){
-//            Tier_2_Fields.insert(y-start_year,QString::number(y));
-//        }
-
-//    }
-
-//    //iterate once on each Tier_1 element
-//    for (int x = 0; x < Tier_1_Fields.length(); x++){
-
-//        Tier_1_Tot=(summary->getTier1(Tier_1_Fields[x] ,start_year ,end_year ,CSV_type));
-
-//        printString = printString + "\n " + Tier_1_Fields[x] + " : ";
-
-//        for (int totIndex = 0; totIndex < Tier_1_Tot.length();totIndex++){
-
-//            printString = printString + " " + Tier_1_Tot[totIndex] + " ";
-
-//        }//for totIndex
-
-//        //iterate once on each Tier_2 element
-//        for (int y = 0; y < Tier_2_Fields.length(); y++){
-
-//            Tier_2_Tot=(summary->getTier2(Tier_1_Fields[x], Tier_2_Fields[y], start_year, end_year, CSV_type));
-
-//            printString = printString + "\n " + Tier_2_Fields[y] + " : ";
-
-//            for (int totIndex = 0; totIndex < Tier_2_Tot.length();totIndex++){
-
-//                printString = printString + " " + Tier_2_Tot[totIndex] + " ";
-
-//            }//for totIndex
-
-//            //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
-//            Tier_3_Fields=(summary->getFaculty(Tier_1_Fields[x], Tier_2_Fields[y], start_year, end_year, CSV_type));
-
-//            //iterate once for each Tier_3 element
-//            for (int z = 0; z < Tier_3_Fields.length(); z++){
-
-//                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[x], Tier_2_Fields[y], Tier_3_Fields[z], start_year, end_year, CSV_type));
-
-//                printString = printString + "\n " + Tier_3_Fields[z] + " : ";
-
-//                for (int totIndex = 0; totIndex < Tier_3_Tot.length();totIndex++){
-
-//                    printString = printString + " " + Tier_3_Tot[totIndex] + " ";
-
-//                }//for totIndex
-
-//            }//for z
-
-//        }//for y
-
-//    }//for x
-
-//    qDebug()<< printString;
-
-//}//makeTree
 
 void MainWindow::makeEmptyTree(){
     ui->treeWidget->clear();
@@ -612,10 +485,18 @@ void MainWindow::makeEmptyTree(){
     cme->setHidden(true);
     ume->setHidden(true);
     other->setHidden(true);
+
+    //generate date ranges
+        for (int x = 1975; x <= 2015; x ++)
+        {
+            ui->comboBox_start->addItem(QString::number(x));
+            ui->comboBox_end->addItem(QString::number(x));
+        }
+
 }
 
 //print
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_button_display_clicked()
 {
     QString tableName = QString::fromStdString(tab_focus);
     table = new TeachingTable(tableName,"");
@@ -629,7 +510,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     {
     case 0:
         //tab_focus = "Teaching";
-        //ui->main_window_label->setText("Teaching");
+        ui->main_window_label->setText("Teaching");
 
          //teaching
         if(pme != NULL)
@@ -664,7 +545,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         break;
     case 1:
         //tab_focus = "Publications";
-        //ui->main_window_label->setText("Publications");
+        ui->main_window_label->setText("Publications");
         if(pme != NULL)
         {
         pme->setHidden(true);
@@ -697,7 +578,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         break;
     case 2:
         //tab_focus = "Funding";
-        //ui->main_window_label->setText("Funding");
+        ui->main_window_label->setText("Funding");
 
         if(pme != NULL)
         {
@@ -731,7 +612,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         break;
     case 3:
         //tab_focus = "Presentations";
-        //ui->main_window_label->setText("Presentations");
+        ui->main_window_label->setText("Presentations");
         if(pme != NULL)
         {
         pme->setHidden(true);
@@ -773,7 +654,7 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    on_pushButton_2_clicked();
+    browse();
 }
 
 void MainWindow::on_actionReport_Bugs_triggered()
@@ -793,7 +674,7 @@ void MainWindow::on_actionContext_Help_triggered()
     QDesktopServices::openUrl(QUrl("http://canteloupe.s3-website-us-east-1.amazonaws.com/help.html", QUrl::TolerantMode));
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::print()
 {
 
     QPrinter printer;
@@ -813,3 +694,52 @@ void MainWindow::on_pushButton_5_clicked()
     painter.end();
 }
 
+
+void MainWindow::on_button_refresh_clicked()
+{
+    if(pme != NULL)
+    {
+    pme->setHidden(true);
+    cme->setHidden(true);
+    ume->setHidden(true);
+    teaching_other->setHidden(true);
+    }
+
+    //Funding
+    if(grants != NULL)
+    {
+    grants->setHidden(true);
+    funding->setHidden(true);
+    }
+
+    //publications
+    if(pub != NULL)
+    {
+    pub->setHidden(true);
+    }
+
+    //presentations
+    if(invite != NULL)
+    {
+    invite->setHidden(true);
+    abstract->setHidden(true);
+    pres_other->setHidden(true);
+    }
+   switch(ui->tabWidget->currentIndex())
+   {
+   case 0:
+      makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Teaching");
+       break;
+   case 1:
+      makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Publications");
+       break;
+   case 2:
+      makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Grants");
+       break;
+   case 3:
+      makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Presentations");
+       break;
+   default:
+       break;
+   }
+}
