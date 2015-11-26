@@ -20,7 +20,7 @@ PresentationGraphDash::PresentationGraphDash(QWidget *parent) :
     ui(new Ui::PresentationGraphDash)
 {
     ui->setupUi(this);
-
+    ui->searchInPres->setPlaceholderText("Last Name, First Name");
     //Fill the items of the ComboBox
      for(int i = 1975; i <= 2015; i++)
      {

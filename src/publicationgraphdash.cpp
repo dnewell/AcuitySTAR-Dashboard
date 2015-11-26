@@ -22,7 +22,7 @@ publicationGraphDash::publicationGraphDash(QWidget *parent) :
 
 
     ui->setupUi(this);
-
+    ui->searchInPub->setPlaceholderText("Last Name, First Name");
 //    ui->fromCBPub->clear();
 //    ui->toCBPub->clear();
      //Fill the items of the ComboBox

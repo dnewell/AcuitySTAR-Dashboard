@@ -63,6 +63,8 @@ private slots:
 
     void on_button_refresh_clicked();
 
+    void on_actionPrint_triggered();
+
 private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;

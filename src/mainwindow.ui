@@ -52,7 +52,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Department of Medicine</string>
+       <string>Schulich School of Medicine &amp; Dentistry</string>
       </property>
      </widget>
     </item>
@@ -61,7 +61,7 @@
       <item>
        <widget class="QLabel" name="label_search">
         <property name="text">
-         <string>Search:</string>
+         <string>Filter by Name: </string>
         </property>
        </widget>
       </item>
@@ -220,7 +220,7 @@
      <x>0</x>
      <y>0</y>
      <width>927</width>
-     <height>26</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help">
@@ -236,7 +236,9 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="separator"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionPrint"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -274,7 +276,7 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open</string>
+    <string>Open CSV</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -286,6 +288,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

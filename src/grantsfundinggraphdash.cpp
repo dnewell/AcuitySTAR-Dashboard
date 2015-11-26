@@ -20,6 +20,7 @@ GrantsFundingGraphDash::GrantsFundingGraphDash(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->searchInGrants->setPlaceholderText("Last Name, First Name");
     for(int i = 1975; i <= 2015; i++)
     {
         QString year = QString::number(i);

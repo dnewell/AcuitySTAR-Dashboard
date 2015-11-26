@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lineEdit->setPlaceholderText("Last Name, First Name");
     makeEmptyTree();
 }
 
@@ -844,4 +845,24 @@ void MainWindow::on_button_refresh_clicked()
    default:
        break;
    }
+}
+
+void MainWindow::on_actionPrint_triggered()
+{
+
+    QPrinter printer;
+    //QDir::homePath() + QDir::separator() + name
+    //printer.setOutputFileName(QDir::homePath() + QDir::separator() + testprint");
+    QPainter painter;
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    dialog->setWindowTitle("Print  Document");
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    painter.begin(&printer);
+    ui->treeWidget->expandAll();
+    //ui->treeWidget->size(100, 100);
+    //ui->treeWidget->adjustSize();
+    ui->treeWidget->render(&painter);
+    ui->treeWidget->collapseAll();
+    painter.end();
 }

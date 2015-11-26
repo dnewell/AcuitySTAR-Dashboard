@@ -22,7 +22,7 @@ Dialog::Dialog(QWidget *parent):
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-
+    ui->searchIn->setPlaceholderText("Last Name, First Name");
 //    Dialog::make_graph1(2009,2015);
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
 //     this->setWindowTitle("Pretty Graph");
