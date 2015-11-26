@@ -20,6 +20,8 @@ private slots:
     void on_graphBtn_clicked();
 
     void on_pieBtn_clicked();
+    void printPieButton();
+    void printBarButton();
 
 private:
     Ui::GrantsFundingGraphDash *ui;

@@ -19,6 +19,8 @@ private slots:
      void on_barBtn_clicked();
 
      void on_pieBtn_clicked();
+     void printPieButton();
+     void printBarButton();
 
 private:
     Ui::publicationGraphDash *ui;

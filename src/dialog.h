@@ -25,6 +25,8 @@ private slots:
     void make_graph2(int startDate, int endDate);
     void on_graphBtn_clicked();
     void on_pieChart_clicked();
+    void printPieButton();
+    void printBarButton();
 
 private:
     Ui::Dialog *ui;
