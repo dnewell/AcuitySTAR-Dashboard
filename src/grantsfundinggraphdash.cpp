@@ -286,3 +286,13 @@ void GrantsFundingGraphDash::printPieButton(){
 
 
 }
+
+void GrantsFundingGraphDash::on_pushButton_clicked()
+{
+    printBarButton();
+}
+
+void GrantsFundingGraphDash::on_pushButton_2_clicked()
+{
+    printPieButton();
+}

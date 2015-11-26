@@ -289,3 +289,13 @@ void PresentationGraphDash::printPieButton(){
 
 
 
+
+void PresentationGraphDash::on_pushButton_clicked()
+{
+    printBarButton();
+}
+
+void PresentationGraphDash::on_pushButton_2_clicked()
+{
+    printPieButton();
+}

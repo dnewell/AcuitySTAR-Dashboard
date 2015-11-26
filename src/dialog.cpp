@@ -451,3 +451,13 @@ void Dialog::printBarButton(){
 
 
 
+
+void Dialog::on_print_pie_Button_clicked()
+{
+    printPieButton();
+}
+
+void Dialog::on_print_bar_Button_clicked()
+{
+   printBarButton();
+}

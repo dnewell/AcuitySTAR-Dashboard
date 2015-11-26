@@ -22,6 +22,10 @@ private slots:
      void printPieButton();
      void printBarButton();
 
+     void on_pushButton_clicked();
+
+     void on_pushButton_2_clicked();
+
 private:
     Ui::publicationGraphDash *ui;
     bool pie = false;

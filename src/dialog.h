@@ -28,6 +28,10 @@ private slots:
     void printPieButton();
     void printBarButton();
 
+    void on_print_pie_Button_clicked();
+
+    void on_print_bar_Button_clicked();
+
 private:
     Ui::Dialog *ui;
     bool pie = false;
