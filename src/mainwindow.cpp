@@ -414,7 +414,16 @@ void MainWindow::browse()
 
     QString tableFilter = "";
     if (tableName == "Teaching"){
-        tableFilter = "(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')";
+        tableFilter = "(MemberName='' or PrimaryDomain='' or StartDate='' or EndDate='' or Program='' or TypeofCourseActivity='' or CourseActivity='' or GeographicalScope='' or HoursperTeachingSessionorWeek='' or NumberofTeachingSessionsorWeeks='' or TotalHours='')";
+    }
+    else if (tableName == "Grants"){
+        tableFilter = "(MemberName='' or PrimaryDomain='' or StartDate='' or EndDate='' or FundingType='' or Status=''or PeerReviewed='' or IndustryGrant='' or Role='' or Title='' or PrincipalInvestigator='' or CoInvestigators='' or TotalAmount='')";
+    }
+    else if (tableName == "Presentations"){
+        tableFilter = "(MemberName='' or PrimaryDomain='' or Date='' or Type='' or Role='' or Title='')";
+    }
+    else if (tableName == "Publications"){
+        tableFilter = "(MemberName='' or PrimaryDomain='' or PublicationStatus='' or Type='' or StatusDate='' or Role='' or JournalNamePublishedInBookTitleetc='' or Authors='' or Title='')";
     }
 
     dialogForError = new DialogForError(table,tableFilter);
