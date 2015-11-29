@@ -17,12 +17,14 @@ void DialogForError::on_pushButton_2_clicked()
 {
     teachingTable = new TeachingTable(a,b);
     teachingTable->showMaximized();
+    this->close();
 }
 
 void DialogForError::on_pushButton_3_clicked()
 {
     fullTeachingTable = new TeachingTable(a,"");
     fullTeachingTable->showMaximized();
+    this->close();
 }
 
 DialogForError::~DialogForError()
