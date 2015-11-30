@@ -116,6 +116,9 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_end">
+        <property name="currentIndex">
+         <number>-1</number>
+        </property>
         <property name="duplicatesEnabled">
          <bool>true</bool>
         </property>

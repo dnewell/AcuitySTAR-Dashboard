@@ -7,9 +7,8 @@ class DB
 {
 public:
     DB();
+    ~DB();
     void createDatabase();
-    string teachingCsvIntoDb(string);
-    string getTypeFromHeadingList(int);
 };
 
 #endif // DB_H

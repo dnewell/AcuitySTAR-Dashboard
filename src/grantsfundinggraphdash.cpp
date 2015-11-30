@@ -29,9 +29,7 @@ GrantsFundingGraphDash::GrantsFundingGraphDash(QWidget *parent) :
     }
     QStringList *list = new QStringList();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     qry.prepare("SELECT DISTINCT MemberName FROM Grants");
@@ -55,9 +53,7 @@ GrantsFundingGraphDash::~GrantsFundingGraphDash()
 void GrantsFundingGraphDash::make_graph1(int startDate,int endDate)
 {
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInGrants->text();
@@ -74,8 +70,8 @@ void GrantsFundingGraphDash::make_graph1(int startDate,int endDate)
 
     qry.next();
     result = qry.record().value(0).toDouble();
-    qDebug()<<qry.lastQuery();
-    qDebug()<<qry.record();
+    //qDebug()<<qry.lastQuery();
+    //qDebug()<<qry.record();
     totalsGrants[0] = result;
     labelsGrants[0] = "Total Amount";
 
@@ -159,9 +155,7 @@ void GrantsFundingGraphDash::on_graphBtn_clicked()
 
 void GrantsFundingGraphDash::on_pieBtn_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInGrants->text();
@@ -175,8 +169,8 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
     qry.exec();
 
     double result;
-    qDebug()<<qry.lastQuery();
-    qDebug()<<qry.record();
+    //qDebug()<<qry.lastQuery();
+    //qDebug()<<qry.record();
 
 
     if(qry.next()){
@@ -227,9 +221,7 @@ void GrantsFundingGraphDash::printBarButton(){
 
 
 void GrantsFundingGraphDash::printPieButton(){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInGrants->text();

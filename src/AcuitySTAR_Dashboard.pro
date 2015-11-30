@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     presentationgraphdash.cpp \
     grantsfundinggraphdash.cpp \
     publicationgraphdash.cpp \
-    progressindicator.cpp
+    progressindicator.cpp \
+    opencsv.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
@@ -1708,7 +1709,8 @@ HEADERS  += mainwindow.h \
     publicationgraphdash.h \
     presentationgraphdash.h \
     grantsfundinggraphdash.h \
-    progressindicator.h
+    progressindicator.h \
+    opencsv.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \

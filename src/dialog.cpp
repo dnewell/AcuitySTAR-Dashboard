@@ -27,11 +27,10 @@ Dialog::Dialog(QWidget *parent):
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
 //     this->setWindowTitle("Pretty Graph");
 
+
     QStringList *list = new QStringList();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     qry.prepare("SELECT DISTINCT MemberName FROM Teaching");
@@ -66,10 +65,9 @@ void Dialog::on_graphBtn_clicked()
 void Dialog::make_graph1(int startDate,int endDate)
 {
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QString professor =ui->searchIn->text();
     QString progLevel = ui->progLevel->currentText();
     QString strtDate=QString::number(ui->fromCB->currentText().toInt());
@@ -82,7 +80,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[0] = qry.record().value(0).toInt();
     labels[0] = "Hours Per Teaching Session Or Weeks";
 
@@ -93,7 +91,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[1] = qry.record().value(0).toInt();
     labels[1] = "Number Of Teaching Sessions Or Weeks";
 
@@ -104,7 +102,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[2] = qry.record().value(0).toInt();
     labels[2] = "Number Of Trainees";
 
@@ -115,7 +113,7 @@ void Dialog::make_graph1(int startDate,int endDate)
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[3] = qry.record().value(0).toInt();
     labels[3] = "Total Hours";
 
@@ -175,19 +173,6 @@ void Dialog::make_graph1(int startDate,int endDate)
 
    QVector<double> graphData;
 
-//   //Right here we loop through our array of selected items and append to graphdate before displaying it.
-//   QModelIndex index;
-
-//   foreach(index, selectedItems) {
-
-//          if(index.row() == 2){
-//
-//          }
-
-//    }
-
-//   qDebug()<< totStudentsP << totStudentsU << totStudentsC << totStudentsO;
-//   graphData << totals[0] << totals[1] << totals[2] << totals[3];
    graphData << totals[0] << totals[1] << totals[2] << totals[3];
    postBar->setData(ticks, graphData);
 
@@ -284,26 +269,14 @@ void Dialog::make_graph2(int startDate,int endDate)
     ui->bar_graph->yAxis->grid()->setSubGridPen(gridPen);
 
    QVector<double> graphData;
-//   QModelIndex index;
 
-//   foreach(index, selectedItems) {
-
-//          if(index.row() == 3){
-//              qDebug()<<("here");
-//              graphData << totHoursP << totHoursU << totHoursC << totHoursO;
-//              postBar->setData(ticks, graphData);
-//          }
-
-//        }
    graphData << totHoursP << totHoursU << totHoursC << totHoursO;
    postBar->setData(ticks, graphData);
 }
 
 void Dialog::on_pieChart_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
     QString professor =ui->searchIn->text();
     QString progLevel = ui->progLevel->currentText();
@@ -317,7 +290,7 @@ void Dialog::on_pieChart_clicked()
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[0] = qry.record().value(0).toInt();
     labels[0] = "Hours Per Teaching Session Or Weeks";
 
@@ -328,7 +301,7 @@ void Dialog::on_pieChart_clicked()
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[1] = qry.record().value(0).toInt();
     labels[1] = "Number Of Teaching Sessions Or Weeks";
 
@@ -339,7 +312,7 @@ void Dialog::on_pieChart_clicked()
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[2] = qry.record().value(0).toInt();
     labels[2] = "Number Of Trainees";
 
@@ -350,7 +323,7 @@ void Dialog::on_pieChart_clicked()
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[3] = qry.record().value(0).toInt();
     labels[3] = "Total Hours";
 
@@ -361,9 +334,7 @@ void Dialog::on_pieChart_clicked()
 }
 
 void Dialog::printPieButton(){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
     QString professor =ui->searchIn->text();
     QString progLevel = ui->progLevel->currentText();
@@ -377,7 +348,7 @@ void Dialog::printPieButton(){
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[0] = qry.record().value(0).toInt();
     labels[0] = "Hours Per Teaching Session Or Weeks";
 
@@ -388,7 +359,7 @@ void Dialog::printPieButton(){
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[1] = qry.record().value(0).toInt();
     labels[1] = "Number Of Teaching Sessions Or Weeks";
 
@@ -399,7 +370,7 @@ void Dialog::printPieButton(){
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[2] = qry.record().value(0).toInt();
     labels[2] = "Number Of Trainees";
 
@@ -410,7 +381,7 @@ void Dialog::printPieButton(){
     //qry.prepare("SELECT * FROM Teaching");
     qry.exec();
     qry.next();
-    qDebug()<< qry.lastQuery();
+    //qDebug()<< qry.lastQuery();
     totals[3] = qry.record().value(0).toInt();
     labels[3] = "Total Hours";
 

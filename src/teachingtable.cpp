@@ -10,15 +10,10 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
     QDialog(parent),
     ui(new Ui::TeachingTable)
 {
-    //ui->setupUi(this);
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");  //without all the QDir stuff, will only look in current working directory
-    db.open();
 
-    //QSqlQueryModel *model = new QSqlQueryModel;
-    model = new QSqlTableModel(this);
-    //model->setQuery("SELECT * from teaching");
-    //model->setTable("teaching");
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
+    model = new QSqlTableModel(this, db);
+
     model->setTable(tableName);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     if (filter  != ""){

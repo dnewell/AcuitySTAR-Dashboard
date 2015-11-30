@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "opencsv.h"
 #include <QTreeWidgetItem>
 #include <QVector>
 #include <vector>
@@ -27,6 +28,7 @@
 using namespace std;
 
 extern string tab_focus = "Teaching";
+static OpenCSV *db;
 
 QString file_path;
 
@@ -52,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+   // static OpenCSV db = new OpenCSV();
     ui->setupUi(this);
     ui->lineEdit->setPlaceholderText("Last Name, First Name");
     makeEmptyTree();
@@ -372,7 +375,7 @@ QTreeWidgetItem* MainWindow::root(QString title, QVector<double> totals)
     item->setText(0,title);
 
     for(int x = 0; x < totals.length(); x++){
-        cout<<"Totals:"<<totals[x]<<endl;
+        //cout<<"Totals:"<<totals[x]<<endl;
         item->setText(x+2,QString::number(totals[x]));
     }
     ui->treeWidget->addTopLevelItem(item);
@@ -439,12 +442,12 @@ void MainWindow::browse()
     file_path = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
     if (file_path  != NULL){
     string filePathSt = file_path.toStdString();
-    DB* db = new DB();
+
     progressIndicator->raise();
     progressIndicator->activateWindow();
 
-    db->createDatabase();
-    string tableName = db->teachingCsvIntoDb(filePathSt);
+
+    string tableName = db->csvIntoDb(filePathSt);
     if(pme != NULL)
     {
     pme->setHidden(true);
@@ -479,6 +482,7 @@ void MainWindow::browse()
         ui->tabWidget->setCurrentIndex(0);
         tab_focus = "Teaching";
         ui->main_window_label->setText("Teaching");
+
         makeTree(ui->comboBox_start->currentText().toInt(),ui->comboBox_end->currentText().toInt(), "Teaching");
     }
     else if (tableName == "Publications")
@@ -523,6 +527,10 @@ void MainWindow::browse()
     dialogForError->show();
     dialogForError->raise();
     dialogForError->activateWindow();
+
+    // default date filter range
+    ui->comboBox_start->setCurrentIndex(0);
+    ui->comboBox_end->setCurrentIndex(ui->comboBox_end->count()-1);  // sets to last year in box
     }
 }
 
@@ -595,6 +603,9 @@ void MainWindow::makeEmptyTree(){
             ui->comboBox_start->addItem(QString::number(x));
             ui->comboBox_end->addItem(QString::number(x));
         }
+    // set default date range
+        ui->comboBox_start->setCurrentIndex(0);
+        ui->comboBox_end->setCurrentIndex(ui->comboBox_end->count()-1);
 
 }
 

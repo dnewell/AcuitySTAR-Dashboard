@@ -39,9 +39,7 @@ publicationGraphDash::publicationGraphDash(QWidget *parent) :
       /*Auto Complete LineEdit*/
       QStringList *list = new QStringList();
 
-      QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-      db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-      db.open();
+      QSqlDatabase db = QSqlDatabase::database("db_connection");
       QSqlQuery qry(db);
 
       qry.prepare("SELECT DISTINCT MemberName FROM Publications");
@@ -80,10 +78,9 @@ void publicationGraphDash::on_barBtn_clicked()
 void publicationGraphDash::make_graph1(int startDate,int endDate)
 {
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QString professor =ui->searchInPub->text();
     QString pubType = ui->pubType->currentText();
     QString strtDate=QString::number(startDate);
@@ -175,10 +172,9 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
 
 void publicationGraphDash::on_pieBtn_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QString professor =ui->searchInPub->text();
     QString pubType = ui->pubType->currentText();
     QString strtDate=QString::number(ui->fromCBPub->currentText().toInt());
@@ -213,9 +209,7 @@ void publicationGraphDash::on_pieBtn_clicked()
 
 }
 void publicationGraphDash::printPieButton(){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
     QString professor =ui->searchInPub->text();
     QString pubType = ui->pubType->currentText();

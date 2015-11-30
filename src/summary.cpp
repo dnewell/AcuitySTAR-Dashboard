@@ -13,12 +13,8 @@ using namespace std;
 
 QVector<Year> Summary::summaryFill(QString program, int start, int end){
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");  //without all the QDir stuff, will only look in current working directory
-    qDebug()<<(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
-
 
     QVector<Year> years;
     QString qstr;
@@ -29,7 +25,7 @@ QVector<Year> Summary::summaryFill(QString program, int start, int end){
         if(program.compare("Other")!=0){
                     qry.prepare("SELECT Faculty, HoursperTeachingSessionorWeek, NumberOfTrainees FROM Teaching WHERE StartDate LIKE '"+qstr+"%' AND Program = '"+program+"'");
                     qry.exec();
-                    qDebug()<<(qry.lastQuery());
+                   // qDebug()<<(qry.lastQuery());
                 }
                 else{
                     qry.prepare("SELECT Faculty, HoursperTeachingSessionorWeek, NumberOfTrainees FROM Teaching WHERE StartDate LIKE '"+qstr+"%' AND Program NOT IN ('Postgraduate Medical Education', 'Continuing Medical Education', 'Undergraduate Medical Education')");
@@ -65,16 +61,15 @@ QVector<Year> Summary::summaryFill(QString program, int start, int end){
         }
         years.append(curyear);
     }
-    db.close();
     return years;
 }
 
 
 QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate, int endDate, QString csvtype){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QVector<QString> facultys;
     QString field, source, date;
 
@@ -138,16 +133,15 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     while(qry.next()){
         facultys.append(qry.value(0).toString());
     }
-    db.close();
     return facultys;
 }
 
 
 QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, int startDate, int endDate, QString csvtype){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QVector<double> facultys;
     QString field, source, data, date;
     int values;
@@ -222,16 +216,15 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
             facultys.append(qry.value(n).toDouble());
         }
     }
-    db.close();
     return facultys;
 }
 
 
 QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, int endDate, QString csvtype){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QVector<double> facultys;
     QString field, source, data, date;
     int values;
@@ -306,16 +299,15 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
             facultys.append(qry.value(n).toDouble());
         }
     }
-    db.close();
     return facultys;
 }
 
 
 QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QString csvtype){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QVector<double> facultys;
     QString field, data, date;
     int values;
@@ -377,16 +369,15 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
             facultys.append(qry.value(n).toDouble());
         }
     }
-    db.close();
     return facultys;
 }
 
 
 QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startDate, int endDate, QString csvtype){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
+
     QVector<double> facultys;
     QString field, data, date;
     int values;
@@ -448,6 +439,5 @@ QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startD
             facultys.append(qry.value(n).toDouble());
         }
     }
-    db.close();
     return facultys;
 }

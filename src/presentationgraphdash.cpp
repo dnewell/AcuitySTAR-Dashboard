@@ -32,9 +32,7 @@ PresentationGraphDash::PresentationGraphDash(QWidget *parent) :
      /*Auto Complete LineEdit*/
      QStringList *list = new QStringList();
 
-     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-     db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-     db.open();
+     QSqlDatabase db = QSqlDatabase::database("db_connection");
      QSqlQuery qry(db);
 
      qry.prepare("SELECT DISTINCT MemberName FROM Presentations");
@@ -59,9 +57,7 @@ PresentationGraphDash::~PresentationGraphDash()
 void PresentationGraphDash::make_graph1(int startDate,int endDate)
 {
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInPres->text();
@@ -164,9 +160,7 @@ void PresentationGraphDash::on_barBtn_clicked()
 
 void PresentationGraphDash::on_pieBtn_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInPres->text();
@@ -233,9 +227,7 @@ void PresentationGraphDash::printBarButton(){
 void PresentationGraphDash::printPieButton(){
 
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::homePath() + QDir::separator() + "database.sqlite");
-    db.open();
+    QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
     QString professor =ui->searchInPres->text();
