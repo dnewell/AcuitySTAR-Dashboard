@@ -156,34 +156,38 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                else Tier_3_Fields={faculty};
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_pme, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_cme, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_cme, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
 
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_ume, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_ume, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_other, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_other, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
        }
     }
@@ -226,19 +230,21 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
             //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_grants, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="") Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_funding, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_funding, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
        }
     }
@@ -272,12 +278,13 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                else Tier_3_Fields = {faculty};
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_pub, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
         }
     }
@@ -335,27 +342,29 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
                 //This function from Summary will return the names/faculties involved Tier_1_Fields[x] and Tier_2_Fields[y]
 
-                if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
-                else Tier_3_Fields={faculty};
+                Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_invite, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_abstract, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_abstract, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
-            if(faculty=="")Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
-            else Tier_3_Fields={faculty};
-
+            Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
-                Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
-                tier3_root(t2_next, Tier_3_Fields[j], Tier_3_Tot);
+                if(faculty=="" || faculty==Tier_3_Fields[j]){
+                    Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
+                    tier3_root(t2_next, Tier_3_Fields[j], Tier_3_Tot);
+                }
             }
         }
     }
