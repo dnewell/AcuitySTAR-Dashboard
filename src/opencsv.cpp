@@ -126,7 +126,7 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
  * @return string with type of csv file (i.e. the SQL table name)
  */
 string OpenCSV::getTypeFromHeadingList(int numHeadings){
-    if (numHeadings == 28 || numHeadings == 29){
+    if (numHeadings == 27 || numHeadings == 28 || numHeadings == 29){
         return "Teaching";
     }
     if (numHeadings == 37 || numHeadings == 38 || numHeadings == 39){
