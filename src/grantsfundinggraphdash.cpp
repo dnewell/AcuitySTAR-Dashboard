@@ -1,6 +1,5 @@
 #include "grantsfundinggraphdash.h"
 #include "ui_grantsfundinggraphdash.h"
-#include <year.h>
 #include <summary.h>
 #include <qcustomplot.h>
 #include <db.h>

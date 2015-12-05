@@ -1,6 +1,5 @@
 #include "publicationgraphdash.h"
 #include "ui_publicationgraphdash.h"
-#include <year.h>
 #include <summary.h>
 #include <qcustomplot.h>
 #include <db.h>

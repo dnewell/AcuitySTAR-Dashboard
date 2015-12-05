@@ -1,6 +1,5 @@
 #include "dialog.h"
 #include "ui_dialog.h"
-#include <year.h>
 #include <summary.h>
 #include <qcustomplot.h>
 #include <db.h>

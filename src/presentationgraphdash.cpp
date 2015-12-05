@@ -1,6 +1,5 @@
 #include "presentationgraphdash.h"
 #include "ui_presentationgraphdash.h"
-#include <year.h>
 #include <summary.h>
 #include <qcustomplot.h>
 #include <db.h>

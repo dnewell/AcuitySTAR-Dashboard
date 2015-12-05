@@ -20,9 +20,7 @@ SOURCES += main.cpp\
     dialog.cpp \
     qcustomplot.cpp \
     db.cpp \
-    entry.cpp \
     summary.cpp \
-    year.cpp \
     about_canteloupe.cpp \
     teachingtable.cpp \
     dialogforerror.cpp \
@@ -41,9 +39,7 @@ HEADERS  += mainwindow.h \
     dialog.h \
     qcustomplot.h \
     db.h \
-    entry.h \
     summary.h \
-    year.h \
     boost/bind/arg.hpp \
     boost/bind/bind.hpp \
     boost/bind/bind_cc.hpp \
