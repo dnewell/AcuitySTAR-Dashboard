@@ -13,7 +13,6 @@
 
 #include "opencsv.h"
 #include <string>
-#include <string>
 #include <iostream>
 #include <fstream>
 #include <list>
@@ -45,8 +44,7 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
     list<string> headingList;
 
 
-
-    QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");                 // database driver guts
+    QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");                 // new database connection created
     QSqlQuery query(sqlDatabase);
 
 
@@ -89,7 +87,7 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
     qstr = QString::fromStdString(finalQuery);
     query.exec(qstr);
 
-
+    sqlDatabase.transaction();
     while (getline(inputfile, currentLine))                                             // process the remaining rows line by line
     {
         finalQuery = "";
@@ -112,6 +110,7 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
         qstr = QString::fromStdString("UPDATE GRANTS SET TotalAmount= Replace(replace(TotalAmount, '$', ''), ',', '');");
         query.exec(qstr);
     }
+    sqlDatabase.commit();
     return tableName;
 }
 
