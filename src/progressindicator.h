@@ -2,6 +2,9 @@
 #define PROGRESSINDICATOR_H
 
 #include <QDialog>
+#include "ui_progressindicator.h"
+#include <QGraphicsScene>
+#include <QMovie>
 
 namespace Ui {
 class ProgressIndicator;

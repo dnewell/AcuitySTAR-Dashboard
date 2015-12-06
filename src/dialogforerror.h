@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <teachingtable.h>
+#include "ui_dialogforerror.h"
 
 namespace Ui {
 class DialogForError;

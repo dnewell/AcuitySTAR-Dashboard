@@ -1,10 +1,4 @@
 #include "piechart.h"
-#include "ui_piechart.h"
-#include "nightcharts.h"
-#include <QWidget>
-#include <QPainter>
-#include "QPaintEvent"
-#include "QColor"
 
 PieChart::PieChart(QString labels[], double values[], int valLength, int labLength, QWidget *parent) :
     QDialog(parent),

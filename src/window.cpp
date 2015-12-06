@@ -1,8 +1,4 @@
 #include "window.h"
-#include <QtGui>
-#include <QTextEdit>
-#include <QPushButton>
-#include <QVBoxLayout>
 
 Window::Window()
 {

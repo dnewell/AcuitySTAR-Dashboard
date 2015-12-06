@@ -12,13 +12,7 @@
  **/
 
 #include "opencsv.h"
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <list>
-#include <QtSql/QtSql>
-#include <boost/tokenizer.hpp>
+
 
 using namespace std;
 using namespace boost;

@@ -2,6 +2,7 @@
 #define TECH_SUPPORT_H
 
 #include <QDialog>
+#include "ui_tech_support.h"
 
 namespace Ui {
 class Tech_Support;

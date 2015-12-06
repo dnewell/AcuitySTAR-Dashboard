@@ -3,6 +3,11 @@
 
 #include <QVector>
 #include <QString>
+//#include <QCoreApplication>
+#include <QtSql/QtSql>
+#include <QDebug>
+#include <iostream>
+#include "QDebug"
 
 class Summary
 {

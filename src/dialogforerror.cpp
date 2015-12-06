@@ -1,5 +1,5 @@
 #include "dialogforerror.h"
-#include "ui_dialogforerror.h"
+
 QString a = "";
 QString b = "";
 DialogForError::DialogForError(const QString &table,const QString &tableFilter,QWidget *parent) :

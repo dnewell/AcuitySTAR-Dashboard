@@ -6,6 +6,10 @@
 #include <QtSql/QSqlQuery>
 #include <QTableView>
 #include <QSqlTableModel>
+#include "ui_teachingtable.h"
+#include <QtWidgets>
+#include <QtSql>
+
 class QDialogButtonBox;
 class QPushButton;
 class QSqlTableModel;

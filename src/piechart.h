@@ -2,6 +2,12 @@
 #define PIECHART_H
 
 #include <QDialog>
+#include "ui_piechart.h"
+#include "nightcharts.h"
+#include <QWidget>
+#include <QPainter>
+#include "QPaintEvent"
+#include "QColor"
 
 namespace Ui {
 class PieChart;

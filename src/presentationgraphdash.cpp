@@ -1,18 +1,5 @@
 #include "presentationgraphdash.h"
-#include "ui_presentationgraphdash.h"
-#include <summary.h>
-#include <qcustomplot.h>
-#include <db.h>
-#include <QCoreApplication>
-#include <QVector>
-#include <QString>
-#include <QtSql/QtSql>
-#include <QDebug>
-#include <iostream>
-#include <algorithm>
-#include <piechart.h>
-#include <QCompleter>
-#include <QStringList>
+
 
 PresentationGraphDash::PresentationGraphDash(QWidget *parent) :
     QDialog(parent),

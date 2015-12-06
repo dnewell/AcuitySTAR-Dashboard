@@ -6,14 +6,37 @@
 #include <QtGui>
 #include <QTreeWidget>
 #include <QPushButton>
+#include <QApplication>
+#include <QMessageBox>
+
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPainter>
+#include <QTreeWidgetItem>
+#include <QVector>
+#include <vector>
+#include <unistd.h>
+#include <filter.h>
+
+#include "summary.h"
+
 #include "about_canteloupe.h"
 #include <string>
 #include <QString>
 #include <stdio.h>
 #include <iostream>
-#include <dialogforerror.h>
-#include <dialog.h>
-#include <teachingtable.h>
+#include "dialogforerror.h"
+#include "dialog.h"
+#include "teachingtable.h"
+#include "bug_report.h"
+#include "tech_support.h"
+#include "publicationgraphdash.h"
+#include "presentationgraphdash.h"
+#include "grantsfundinggraphdash.h"
+#include "progressindicator.h"
+#include "db.h"
+#include "ui_mainwindow.h"
+#include "opencsv.h"
 #include "bug_report.h"
 #include "tech_support.h"
 

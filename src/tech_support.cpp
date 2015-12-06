@@ -1,5 +1,4 @@
 #include "tech_support.h"
-#include "ui_tech_support.h"
 
 Tech_Support::Tech_Support(QWidget *parent) :
     QDialog(parent),

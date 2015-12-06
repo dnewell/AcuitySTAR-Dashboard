@@ -2,6 +2,12 @@
 #define BUG_REPORT_H
 
 #include <QDialog>
+#include "ui_bug_report.h"
+#include <Qtcore>
+#include <QtGui>
+#include <QMessageBox>
+#include "message.h"
+#include <window.h>
 
 namespace Ui {
 class Bug_Report;

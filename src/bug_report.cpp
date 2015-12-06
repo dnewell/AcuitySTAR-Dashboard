@@ -1,10 +1,5 @@
 #include "bug_report.h"
-#include "ui_bug_report.h"
-#include <Qtcore>
-#include <QtGui>
-#include <QMessageBox>
-#include <message.h>
-#include <window.h>
+
 
 Bug_Report::Bug_Report(QWidget *parent) :
     QDialog(parent),

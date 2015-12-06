@@ -1,29 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "opencsv.h"
-#include <QTreeWidgetItem>
-#include <QVector>
-#include <vector>
-#include <string>
-#include <stdio.h>
-#include <iostream>
-#include <unistd.h>
-#include <summary.h>
-#include <db.h>
-#include <filter.h>
-#include "about_canteloupe.h"
-#include <dialog.h>
-#include <publicationgraphdash.h>
-#include <presentationgraphdash.h>
-#include <grantsfundinggraphdash.h>
-#include <QApplication>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QPainter>
-#include "bug_report.h"
-#include "tech_support.h"
-#include <QMessageBox>
-#include "progressindicator.h"
 
 using namespace std;
 
@@ -50,6 +25,8 @@ static QTreeWidgetItem *invite;
 static QTreeWidgetItem *abstract;
 static QTreeWidgetItem *pres_other;
 
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -63,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
    // ui->treeWidget->clear();
     cout << "in makeTree" << endl;
+    int count;
 
     if(CSV_type=="Teaching"){
         ui->treeWidget->headerItem()->setText(0,"");
@@ -160,6 +138,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_pme, Tier_3_Fields[j], Tier_3_Tot);
@@ -168,6 +147,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_cme, Tier_3_Fields[j], Tier_3_Tot);
@@ -177,6 +157,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_ume, Tier_3_Fields[j], Tier_3_Tot);
@@ -185,6 +166,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_other, Tier_3_Fields[j], Tier_3_Tot);
@@ -214,6 +196,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            count++;
             QTreeWidgetItem *t2_grants;
             QTreeWidgetItem *t2_funding;
             if(faculty==""){
@@ -234,6 +217,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_grants, Tier_3_Fields[j], Tier_3_Tot);
@@ -242,6 +226,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_funding, Tier_3_Fields[j], Tier_3_Tot);
@@ -267,6 +252,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            count++;
             QTreeWidgetItem *t2_pub;
             if(faculty==""){
                 Tier_2_Tot=(summary->getTier2(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
@@ -282,6 +268,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_pub, Tier_3_Fields[j], Tier_3_Tot);
@@ -297,10 +284,12 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
         //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
         for (int y = start_year; y <= end_year; y++){
+            count++;
             Tier_2_Fields.insert(y-start_year,QString::number(y));
         }
 
         if(faculty==""){
+            count++;
             Tier_1_Tot=(summary->getTier1(Tier_1_Fields[0] ,start_year ,end_year ,CSV_type));
             invite = root("Invited Lectures", Tier_1_Tot);
             Tier_1_Tot=(summary->getTier1(Tier_1_Fields[1] ,start_year ,end_year ,CSV_type));
@@ -309,6 +298,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             pres_other = root("Other", Tier_1_Tot);
         }
         else{
+            count++;
             Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[0] ,faculty ,start_year ,end_year ,CSV_type));
             invite = root("Invited Lectures", Tier_1_Tot);
             Tier_1_Tot=(summary->getTier1Filter(Tier_1_Fields[1] ,faculty ,start_year ,end_year ,CSV_type));
@@ -320,6 +310,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            count++;
             QTreeWidgetItem *t2_invite;
             QTreeWidgetItem *t2_abstract;
             QTreeWidgetItem *t2_next;
@@ -346,6 +337,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                  tier3_root(t2_invite, Tier_3_Fields[j], Tier_3_Tot);
@@ -354,6 +346,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_abstract, Tier_3_Fields[j], Tier_3_Tot);
@@ -362,6 +355,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
                     tier3_root(t2_next, Tier_3_Fields[j], Tier_3_Tot);
@@ -373,8 +367,10 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
     //resize columns
     for(int n = 0; n < 4; n++)
     {
+        count++;
         ui->treeWidget->resizeColumnToContents(n);
     }
+     cout << count << endl;
 }
 
 //creates headings
@@ -385,6 +381,7 @@ QTreeWidgetItem* MainWindow::root(QString title, QVector<double> totals)
     item->setText(0,title);
 
     for(int x = 0; x < totals.length(); x++){
+
         //cout<<"Totals:"<<totals[x]<<endl;
         item->setText(x+2,QString::number(totals[x]));
     }
@@ -399,6 +396,7 @@ QTreeWidgetItem* MainWindow::tier2_root(QTreeWidgetItem *parent, QString Tier_na
     item->setText(1,Tier_name);
 
     for(int x = 0; x < totals.length(); x++){
+
         item->setText(x+2,QString::number(totals[x]));
     }
 
@@ -411,10 +409,12 @@ void MainWindow::tier3_root(QTreeWidgetItem *parent, QString Tier_name, QVector<
     item->setText(1,Tier_name);
 
     for(int x = 0; x < totals.length(); x++){
+
         item->setText(x+2,QString::number(totals[x]));
     }
 
     parent->addChild(item);
+
 }
 
 

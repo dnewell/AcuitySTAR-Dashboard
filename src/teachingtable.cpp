@@ -1,8 +1,4 @@
 #include "teachingtable.h"
-#include "ui_teachingtable.h"
-
-#include <QtWidgets>
-#include <QtSql>
 
 
 TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWidget *parent) :

@@ -2,6 +2,7 @@
 #define ABOUT_CANTELOUPE_H
 
 #include <QDialog>
+#include "ui_about_canteloupe.h"
 
 namespace Ui {
 class About_Canteloupe;

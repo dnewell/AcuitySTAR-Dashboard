@@ -1,11 +1,5 @@
-#include <QCoreApplication>
-#include <QVector>
-#include <QString>
-#include <QtSql/QtSql>
-#include <QDebug>
-#include <iostream>
 #include "summary.h"
-#include "QDebug"
+
 using namespace std;
 
 

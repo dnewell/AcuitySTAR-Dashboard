@@ -1,12 +1,25 @@
 #ifndef OPENCSV_H
 #define OPENCSV_H
 
-#include <string>
 #include <iostream>
 #include <fstream>
 #include <list>
 #include <QtSql/QtSql>
 #include <boost/tokenizer.hpp>
+#include <string>
+#include <stdio.h>
+#include <QtSql/QtSql>
+
+
+
+
+
+
+
+
+
+
+
 
 
 class OpenCSV
