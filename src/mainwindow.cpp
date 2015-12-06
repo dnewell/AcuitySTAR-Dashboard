@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-   // static OpenCSV db = new OpenCSV();
+    //db = new OpenCSV();
     ui->setupUi(this);
     ui->lineEdit->setPlaceholderText("Last Name, First Name");
     makeEmptyTree();
@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
    // ui->treeWidget->clear();
+    cout << "in makeTree" << endl;
 
     if(CSV_type=="Teaching"){
         ui->treeWidget->headerItem()->setText(0,"");
@@ -457,6 +458,8 @@ void MainWindow::browse()
 
 
     string tableName = db->csvIntoDb(filePathSt);
+    //progressIndicator->close();
+    this->activateWindow();
     if(pme != NULL)
     {
     pme->setHidden(true);

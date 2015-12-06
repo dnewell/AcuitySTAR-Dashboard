@@ -15,12 +15,15 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 #include <list>
 #include <QtSql/QtSql>
 #include <boost/tokenizer.hpp>
 
 using namespace std;
 using namespace boost;
+
+static list<string> headingList;
 
 OpenCSV::OpenCSV()
 {
@@ -41,12 +44,11 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
     string builtHeaderQuery = "";
     string finalQuery       = "";
     QString qstr            = "";
-    list<string> headingList;
 
+    headingList.clear();
 
     QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");                 // new database connection created
     QSqlQuery query(sqlDatabase);
-
 
     ifstream inputfile(fullPathToFile);                                                 // open input file stream and handle file not found error
     if(!inputfile.is_open()){
@@ -75,8 +77,8 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
     }
     builtHeaderQuery = builtHeaderQuery.substr(0, builtHeaderQuery.length()-2);
 
-    string tableName = getTypeFromHeadingList(headingList.size());                      // creates new table with the appropriate name
-
+    string tableName = getTypeFromHeadingList();                      // creates new table with the appropriate name
+    cout<<tableName<<endl;
     finalQuery = "DROP TABLE " + tableName + ";";                                       // drop table if it already exists, then insert new table
 
     qstr = QString::fromStdString(finalQuery);
@@ -87,11 +89,19 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
     qstr = QString::fromStdString(finalQuery);
     query.exec(qstr);
 
-    sqlDatabase.transaction();
+    int counter = 0;
     while (getline(inputfile, currentLine))                                             // process the remaining rows line by line
     {
+        sqlDatabase.transaction();
         finalQuery = "";
         builtValueQuery = "";
+
+        std::string sToRemove = "\\";
+
+        std::string::size_type i = currentLine.find(sToRemove);
+
+        if (i != std::string::npos)
+           currentLine.erase(i, sToRemove.length());
 
         tokenizer<escaped_list_separator<char> > tok(currentLine);                      // give boost tokenizer the currentline
         for(tokenizer<escaped_list_separator<char> >::iterator beg=tok.begin(); beg!=tok.end();++beg){
@@ -99,43 +109,119 @@ string OpenCSV::csvIntoDb(string fullPathToFile){
         }
 
         builtValueQuery  = builtValueQuery.substr(0, builtValueQuery.length()-1) +" ";
-        string tableName = getTypeFromHeadingList(headingList.size());                  // decides the type of CSV file from the number of the headings, names table appropriately
+        string tableName = getTypeFromHeadingList();                                    // decides the type of CSV file from the number of the headings, names table appropriately
         finalQuery = "INSERT INTO " + tableName + " VALUES(" + builtValueQuery + ")";   // builds the query from the 28 values in a single row
 
         qstr = QString::fromStdString(finalQuery);                                      // cast to QString
-
         query.exec(qstr);                                                               // executes the database query, inserting one row into the table
+        if (counter % 200 == 0){
+            sqlDatabase.commit();
+        }
+
+        counter++;
     }
+
     if (tableName == "Grants"){
-        qstr = QString::fromStdString("UPDATE GRANTS SET TotalAmount= Replace(replace(TotalAmount, '$', ''), ',', '');");
+        qstr = QString::fromStdString("UPDATE Grants SET TotalAmount= Replace(replace(TotalAmount, '$', ''), ',', '');");
         query.exec(qstr);
     }
-    sqlDatabase.commit();
+    if ((counter-1) % 200 != 0){
+            sqlDatabase.commit();
+    }
+    cout << "done loading data. returning to MainWindow" << endl;
     return tableName;
 }
 
 /**
- * This helper function decides from an integer representing the number of elements in a std::list containing
+ * This helper function decides from a std::list containing
  * heading names which type of CSV file the headings correspond to.
  *
- * The multiple conditions in the if statements handle the possibility of a column being added or removed,
- * it is a hack, however, and could break if a Presentations CSV has only 29 headings, for example.
- * The alternative is much more complicated, though, and this should work for our purposes.
- *
- * @return string with type of csv file (i.e. the SQL table name)
+ * @return string with type of csv file (i.e. the desired SQL table name)
  */
-string OpenCSV::getTypeFromHeadingList(int numHeadings){
-    if (numHeadings == 27 || numHeadings == 28 || numHeadings == 29){
+string OpenCSV::getTypeFromHeadingList(){
+    if (listContainsString("NumberofTeachingSessionsorWeeks")){
         return "Teaching";
     }
-    if (numHeadings == 37 || numHeadings == 38 || numHeadings == 39){
+    if (listContainsString("FundingType")){
         return "Grants";
     }
-    if (numHeadings == 30 || numHeadings == 31){
+    if (listContainsString("Host")){
         return "Presentations";
     }
-    if (numHeadings == 43 || numHeadings == 44 || numHeadings == 45){
+    if (listContainsString("Publisher")){
         return "Publications";
     }
+
+//    if (headings.size() == 27 || headings.size() == 28 || headings.size() == 29){
+//        return "Teaching";
+//    }
+//    if (headings.size() == 37 || headings.size() == 38 || headings.size() == 39){
+//        return "Grants";
+//    }
+//    if (headings.size() == 30 || headings.size() == 31){
+//        return "Presentations";
+//    }
+//    if (headings.size() == 43 || headings.size() == 44 || headings.size() == 45){
+//        return "Publications";
+//    }
+
+
     return "Unexpected CSV type";
+}
+
+/**
+ * This function removes specific characters from a CSV file,
+ * which might be required: Boost Tokenizer breaks under
+ * certain combinations of escape sequence characters, (backslashes are not good)
+ * so the CSV can be pre-cleaned before tokenizing.
+ *
+ * @brief sanitizeCSV
+ * @param string to remove
+ * @param pathToFile
+ * @return path to the sanitized file
+ */
+OpenCSV::removeFromCSV(string pathToFile, string stringToReplace){
+
+
+      ifstream in(pathToFile);
+      string str, line;
+      while(getline(in, line))
+        str += line + "\n";
+      cout << str;
+
+      in.close();
+
+      std::string::iterator end_pos0 = std::remove(str.begin(), str.end(), '*');
+      std::string::iterator end_pos1 = std::remove(str.begin(), str.end(), '(');
+      std::string::iterator end_pos2 = std::remove(str.begin(), str.end(), ')');
+
+      ofstream out(pathToFile); // Open for writing
+      out << str;
+      out.close();
+     ///:~
+
+
+}
+
+/**
+ * Helper function returns true if its input string exists
+ * as a substring in a list
+ *
+ * @brief OpenCSV::listContainsString
+ * @param stringToFind
+ * @return
+ */
+bool OpenCSV::listContainsString(string stringToFind){
+
+       std::list<string>::iterator iter = std::find (headingList.begin(), headingList.end(), stringToFind);
+
+       if ( headingList.end() == iter)
+       {
+           return false;
+       }
+       else
+       {
+           return true;
+       }
+
 }

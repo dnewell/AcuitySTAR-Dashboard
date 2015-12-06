@@ -8,12 +8,16 @@
 #include <QtSql/QtSql>
 #include <boost/tokenizer.hpp>
 
+
 class OpenCSV
 {
 public:
     OpenCSV();
     std::string csvIntoDb(std::string);
-    std::string getTypeFromHeadingList(int);
+    std::string getTypeFromHeadingList();
+private:
+    removeFromCSV(std::string, std::string);
+    bool listContainsString(std::string);
 };
 
 
