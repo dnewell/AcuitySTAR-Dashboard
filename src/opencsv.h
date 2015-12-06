@@ -16,7 +16,7 @@ public:
     std::string csvIntoDb(std::string);
     std::string getTypeFromHeadingList();
 private:
-    removeFromCSV(std::string, std::string);
+    void removeFromCSV(std::string, std::string);
     bool listContainsString(std::string);
 };
 
