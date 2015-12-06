@@ -180,7 +180,7 @@ string OpenCSV::getTypeFromHeadingList(){
  * @param pathToFile
  * @return path to the sanitized file
  */
-OpenCSV::removeFromCSV(string pathToFile, string stringToReplace){
+void OpenCSV::removeFromCSV(string pathToFile, string stringToReplace){
 
 
       ifstream in(pathToFile);
