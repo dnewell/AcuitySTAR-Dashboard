@@ -5,19 +5,26 @@
 #include <QtSql>
 
 
+
 TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWidget *parent) :
 //TeachingTable::TeachingTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TeachingTable)
 {
-
     QSqlDatabase db = QSqlDatabase::database("db_connection");
-    model = new QSqlTableModel(this, db);
+
+    if (filter  != ""){
+      model = new MySubClassedSqlTableModel(this);
+    }
+    else{
+       model = new QSqlTableModel(this, db);
+    }
+    //model = new QSqlTableModel(this, db);
 
     model->setTable(tableName);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     if (filter  != ""){
-           model->setFilter(filter);
+      model->setFilter(filter);
     }
 
     model->select();
@@ -61,8 +68,13 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
 }
 
 
+
+
+
+
 void TeachingTable::submit()
 {
+
     model->database().transaction();
     if (model->submitAll()) {
         model->database().commit();
@@ -72,6 +84,8 @@ void TeachingTable::submit()
                              tr("The database reported an error: %1")
                              .arg(model->lastError().text()));
     }
+
+
 }
 
 void TeachingTable::remove()
