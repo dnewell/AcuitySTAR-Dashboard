@@ -17,7 +17,6 @@ CONFIG += c++11
 RC_FILE = icon_resource_file.rc
 SOURCES += main.cpp\
         mainwindow.cpp \
-    dialog.cpp \
     qcustomplot.cpp \
     db.cpp \
     summary.cpp \
@@ -33,10 +32,10 @@ SOURCES += main.cpp\
     grantsfundinggraphdash.cpp \
     publicationgraphdash.cpp \
     progressindicator.cpp \
-    opencsv.cpp
+    opencsv.cpp \
+    teachinggraphdash.cpp
 
 HEADERS  += mainwindow.h \
-    dialog.h \
     qcustomplot.h \
     db.h \
     summary.h \
@@ -1706,10 +1705,10 @@ HEADERS  += mainwindow.h \
     presentationgraphdash.h \
     grantsfundinggraphdash.h \
     progressindicator.h \
-    opencsv.h
+    opencsv.h \
+    teachinggraphdash.h
 
 FORMS    += mainwindow.ui \
-    dialog.ui \
     about_canteloupe.ui \
     piechart.ui \
     teachingtable.ui \
@@ -1719,7 +1718,8 @@ FORMS    += mainwindow.ui \
     publicationgraphdash.ui \
     presentationgraphdash.ui \
     grantsfundinggraphdash.ui \
-    progressindicator.ui
+    progressindicator.ui \
+    teachinggraphdash.ui
 
 DISTFILES += \
     icon_resource_file.rc

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <dialogforerror.h>
-#include <dialog.h>
+#include <teachinggraphdash.h>
 #include <teachingtable.h>
 #include "bug_report.h"
 #include "tech_support.h"
@@ -60,10 +60,13 @@ private slots:
     void on_actionReport_Bugs_triggered();
     void on_actionTechnical_Support_triggered();
     void on_actionContext_Help_triggered();
+    void autoComplete();
 
     void on_button_refresh_clicked();
 
     void on_actionPrint_triggered();
+
+    void on_lineEdit_cursorPositionChanged(int arg1, int arg2);
 
 private:
     Ui::MainWindow *ui;
