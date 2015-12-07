@@ -4,7 +4,6 @@
 #include <QModelIndexList>
 #include <QDialog>
 #include <qcustomplot.h>
-#include <QModelIndexList>
 
 namespace Ui {
 class TeachingGraphDash;
