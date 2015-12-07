@@ -448,7 +448,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_button_graph_clicked()
 {
   if(ui->tabWidget->currentIndex() == 0){
-   dialogWindow = new Dialog(this);
+   dialogWindow = new TeachingGraphDash(this);
    dialogWindow->showMaximized();
   }else if(ui->tabWidget->currentIndex() == 1){
 
@@ -915,4 +915,49 @@ void MainWindow::on_actionPrint_triggered()
     ui->treeWidget->render(&painter);
     ui->treeWidget->collapseAll();
     painter.end();
+}
+
+void MainWindow::autoComplete()
+{
+
+    //Autocomplete based on what tab is open
+
+    QStringList *list = new QStringList();
+    QString table;
+
+    if(ui->tabWidget->currentIndex() == 0){
+     table = "Teaching";
+    }else if(ui->tabWidget->currentIndex() == 1){
+
+       table = "Publications";
+    }else if(ui->tabWidget->currentIndex() == 3){
+
+       table = "Presentations";
+    }else if(ui->tabWidget->currentIndex() == 2){
+
+        table = "Grants";
+    }
+
+
+    QSqlDatabase sqlDatabase = QSqlDatabase::database("db_connection");                 // new database connection created
+    sqlDatabase.open();
+    QSqlQuery qry(sqlDatabase);
+
+
+
+    qry.prepare("SELECT DISTINCT MemberName FROM " + table);
+    qry.exec();
+
+    while(qry.next()){
+    QString name = QString(qry.record().value(0).toString());
+    *list  << name;
+    }
+
+    QCompleter* completer = new QCompleter(*list);
+    ui->lineEdit->setCompleter(completer);
+}
+
+void MainWindow::on_lineEdit_cursorPositionChanged(int arg1, int arg2)
+{
+    autoComplete();
 }

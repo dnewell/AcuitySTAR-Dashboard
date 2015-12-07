@@ -1,34 +1,24 @@
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef TEACHINGGRAPHDASH_H
+#define TEACHINGGRAPHDASH_H
 
 #include <QModelIndexList>
 #include <QDialog>
-#include "ui_dialog.h"
-#include <summary.h>
 #include <qcustomplot.h>
-#include <db.h>
-#include <QCoreApplication>
-#include <QVector>
-#include <QString>
-#include <QtSql/QtSql>
-#include <QDebug>
-#include <iostream>
-#include <algorithm>
-#include <piechart.h>
+#include <QModelIndexList>
 
 namespace Ui {
-class Dialog;
+class TeachingGraphDash;
 }
 
-class Dialog : public QDialog
+class TeachingGraphDash : public QDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit Dialog(QWidget *parent = 0);
+    explicit TeachingGraphDash(QWidget *parent = 0);
 
-    ~Dialog();
+    ~TeachingGraphDash();
 
 private slots:
    void make_graph1(int startDate, int endDate);
@@ -43,11 +33,11 @@ private slots:
     void on_print_bar_Button_clicked();
 
 private:
-    Ui::Dialog *ui;
+    Ui::TeachingGraphDash *ui;
     bool pie = false;
     QDialog *pieWindow;
     double totals[16];
     QString labels[16];
 };
 
-#endif // DIALOG_H
+#endif // TEACHINGGRAPHDASH_H

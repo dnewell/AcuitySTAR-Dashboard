@@ -1,19 +1,40 @@
-#include "dialog.h"
-
+#include "teachinggraphdash.h"
+#include "ui_teachinggraphdash.h"
+#include <summary.h>
+#include <qcustomplot.h>
+#include <db.h>
+#include <QCoreApplication>
+#include <QVector>
+#include <QString>
+#include <QtSql/QtSql>
+#include <QDebug>
+#include <iostream>
+#include <algorithm>
+#include <piechart.h>
 
 using namespace std;
 
 //This code actually generates the graph, look at this
 //qcustomplot.cpp is supplied by qcustomplot, do not touch that
-Dialog::Dialog(QWidget *parent):
+TeachingGraphDash::TeachingGraphDash(QWidget *parent):
     QDialog(parent),
-    ui(new Ui::Dialog)
+    ui(new Ui::TeachingGraphDash)
 {
     ui->setupUi(this);
     ui->searchIn->setPlaceholderText("Last Name, First Name");
 //    Dialog::make_graph1(2009,2015);
 //     //Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
 //     this->setWindowTitle("Pretty Graph");
+
+    //Fill the items of the ComboBox
+    ui->fromCB->clear();
+    ui->toCB->clear();
+     for(int i = 1975; i <= 2015; i++)
+     {
+         QString year = QString::number(i);
+         ui->fromCB->addItem(year);
+         ui->toCB->addItem(year);
+     }
 
 
     QStringList *list = new QStringList();
@@ -34,15 +55,15 @@ Dialog::Dialog(QWidget *parent):
 
 }
 
-Dialog::~Dialog()
+TeachingGraphDash::~TeachingGraphDash()
 {
     delete ui;
 }
 
-void Dialog::on_graphBtn_clicked()
+void TeachingGraphDash::on_graphBtn_clicked()
 {
     ui->bar_graph->clearPlottables();
-    Dialog::make_graph1(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
+    TeachingGraphDash::make_graph1(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
     // Dialog::make_graph2(ui->fromCB->currentText().toInt(),ui->toCB->currentText().toInt());
      ui->bar_graph->replot();
      this->setWindowTitle("Pretty Graph");
@@ -50,7 +71,7 @@ void Dialog::on_graphBtn_clicked()
 }
 
 //draws bar graph
-void Dialog::make_graph1(int startDate,int endDate)
+void TeachingGraphDash::make_graph1(int startDate,int endDate)
 {
 
     QSqlDatabase db = QSqlDatabase::database("db_connection");
@@ -166,7 +187,7 @@ void Dialog::make_graph1(int startDate,int endDate)
 
 }
 
-void Dialog::make_graph2(int startDate,int endDate)
+void TeachingGraphDash::make_graph2(int startDate,int endDate)
 {
     //get data for graph
     Summary* grabber = new Summary();
@@ -262,7 +283,7 @@ void Dialog::make_graph2(int startDate,int endDate)
    postBar->setData(ticks, graphData);
 }
 
-void Dialog::on_pieChart_clicked()
+void TeachingGraphDash::on_pieChart_clicked()
 {
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
@@ -321,7 +342,7 @@ void Dialog::on_pieChart_clicked()
 
 }
 
-void Dialog::printPieButton(){
+void TeachingGraphDash::printPieButton(){
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
     QString professor =ui->searchIn->text();
@@ -392,7 +413,7 @@ void Dialog::printPieButton(){
 
 
 }
-void Dialog::printBarButton(){
+void TeachingGraphDash::printBarButton(){
     QPrinter printer;
     QPainter painter;
     //printer.setOutputFileName("/Users/Anoop/Filenamecena");
@@ -411,12 +432,12 @@ void Dialog::printBarButton(){
 
 
 
-void Dialog::on_print_pie_Button_clicked()
+void TeachingGraphDash::on_print_pie_Button_clicked()
 {
     printPieButton();
 }
 
-void Dialog::on_print_bar_Button_clicked()
+void TeachingGraphDash::on_print_bar_Button_clicked()
 {
    printBarButton();
 }
