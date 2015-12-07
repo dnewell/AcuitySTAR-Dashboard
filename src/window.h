@@ -4,7 +4,6 @@
 #include "message.h"
 #include <QTextEdit>
 #include <QtGui>
-#include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 
