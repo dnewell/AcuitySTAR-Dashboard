@@ -8,19 +8,6 @@
 #include <boost/tokenizer.hpp>
 #include <string>
 #include <stdio.h>
-#include <QtSql/QtSql>
-
-
-
-
-
-
-
-
-
-
-
-
 
 class OpenCSV
 {
