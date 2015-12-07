@@ -39,8 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
    // ui->treeWidget->clear();
-    cout << "in makeTree" << endl;
-    int count;
+
+
+    int count=0;
 
     if(CSV_type=="Teaching"){
         ui->treeWidget->headerItem()->setText(0,"");
@@ -82,6 +83,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         for (int y = start_year; y <= end_year; y++)
         {
             Tier_2_Fields.insert(y-start_year,QString::number(y));
+            QCoreApplication::processEvents();
         }
 
         if(faculty==""){
@@ -108,6 +110,8 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QCoreApplication::processEvents();
+            count++;
             QTreeWidgetItem *t2_pme;
             QTreeWidgetItem *t2_cme;
             QTreeWidgetItem *t2_ume;
@@ -138,6 +142,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -147,6 +152,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -157,6 +163,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -166,6 +173,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[3], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[3], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -196,6 +204,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QCoreApplication::processEvents();
             count++;
             QTreeWidgetItem *t2_grants;
             QTreeWidgetItem *t2_funding;
@@ -217,6 +226,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -226,6 +236,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -252,6 +263,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QCoreApplication::processEvents();
             count++;
             QTreeWidgetItem *t2_pub;
             if(faculty==""){
@@ -268,6 +280,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -284,6 +297,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
 
         //sets a one year range from start_year to end_year and stores each range in Tier_2_Fields
         for (int y = start_year; y <= end_year; y++){
+            QCoreApplication::processEvents();
             count++;
             Tier_2_Fields.insert(y-start_year,QString::number(y));
         }
@@ -310,6 +324,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             //iterate once on each Tier_2 element
         for (int i = 0; i < Tier_2_Fields.length(); i++)
         {
+            QCoreApplication::processEvents();
             count++;
             QTreeWidgetItem *t2_invite;
             QTreeWidgetItem *t2_abstract;
@@ -337,6 +352,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
                 Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[0], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                  Tier_3_Tot=(summary->getTier3(Tier_1_Fields[0], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -346,6 +362,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[1], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[1], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -355,6 +372,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
             Tier_3_Fields = (summary->getFaculty(Tier_1_Fields[2], Tier_2_Fields[i], start_year, end_year, CSV_type));
             for (int j = 0; j < Tier_3_Fields.length(); j++)
             {
+                QCoreApplication::processEvents();
                 count++;
                 if(faculty=="" || faculty==Tier_3_Fields[j]){
                     Tier_3_Tot=(summary->getTier3(Tier_1_Fields[2], Tier_2_Fields[i], Tier_3_Fields[j], start_year, end_year, CSV_type));
@@ -370,7 +388,7 @@ void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
         count++;
         ui->treeWidget->resizeColumnToContents(n);
     }
-     cout << count << endl;
+
 }
 
 //creates headings
@@ -381,6 +399,7 @@ QTreeWidgetItem* MainWindow::root(QString title, QVector<double> totals)
     item->setText(0,title);
 
     for(int x = 0; x < totals.length(); x++){
+        QCoreApplication::processEvents();
 
         //cout<<"Totals:"<<totals[x]<<endl;
         item->setText(x+2,QString::number(totals[x]));
@@ -396,6 +415,7 @@ QTreeWidgetItem* MainWindow::tier2_root(QTreeWidgetItem *parent, QString Tier_na
     item->setText(1,Tier_name);
 
     for(int x = 0; x < totals.length(); x++){
+        QCoreApplication::processEvents();
 
         item->setText(x+2,QString::number(totals[x]));
     }
@@ -409,6 +429,7 @@ void MainWindow::tier3_root(QTreeWidgetItem *parent, QString Tier_name, QVector<
     item->setText(1,Tier_name);
 
     for(int x = 0; x < totals.length(); x++){
+        QCoreApplication::processEvents();
 
         item->setText(x+2,QString::number(totals[x]));
     }
@@ -449,6 +470,7 @@ void MainWindow::browse()
 {
     ProgressIndicator *progressIndicator = new ProgressIndicator();
     progressIndicator->show();
+
     file_path = QFileDialog::getOpenFileName(this, tr("Open File"),"~/",tr("(*.csv)"));
     if (file_path  != NULL){
     string filePathSt = file_path.toStdString();
@@ -458,8 +480,7 @@ void MainWindow::browse()
 
 
     string tableName = db->csvIntoDb(filePathSt);
-    //progressIndicator->close();
-    this->activateWindow();
+    //this->activateWindow();
     if(pme != NULL)
     {
     pme->setHidden(true);
@@ -488,6 +509,7 @@ void MainWindow::browse()
     abstract->setHidden(true);
     pres_other->setHidden(true);
     }
+    progressIndicator->close();
 
     if (tableName == "Teaching")
     {
@@ -520,6 +542,7 @@ void MainWindow::browse()
     }
     QString table = QString::fromStdString(tableName);
 
+
     QString tableFilter = "";
     if (tableName == "Teaching"){
         tableFilter = "(MemberName='' or PrimaryDomain='' or StartDate='' or EndDate='' or Program='' or TypeofCourseActivity='' or CourseActivity='' or GeographicalScope='' or HoursperTeachingSessionorWeek='' or NumberofTeachingSessionsorWeeks='' or TotalHours='')";
@@ -533,7 +556,10 @@ void MainWindow::browse()
     else if (tableName == "Publications"){
         tableFilter = "(MemberName='' or PrimaryDomain='' or PublicationStatus='' or Type='' or StatusDate='' or Role='' or JournalNamePublishedInBookTitleetc='' or Authors='' or Title='')";
     }
-    progressIndicator->close();
+
+
+
+
     dialogForError = new DialogForError(table,tableFilter);
 
     dialogForError->show();
@@ -544,6 +570,7 @@ void MainWindow::browse()
     ui->comboBox_start->setCurrentIndex(0);
     ui->comboBox_end->setCurrentIndex(ui->comboBox_end->count()-1);  // sets to last year in box
     }
+
 }
 
 

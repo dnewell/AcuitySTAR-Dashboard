@@ -8,6 +8,7 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
+    int count=0;
     QVector<QString> facultys;
     QString field, source, date;
 
@@ -55,6 +56,7 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     QString q = "SELECT DISTINCT MemberName FROM " + csvtype + " WHERE (";
     for( int a = startDate; a < endDate; a = a + 1 )
     {
+        //count++;
         QString qstr=QString::number(a);
         q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
     }
@@ -65,12 +67,14 @@ QVector<QString> Summary::getFaculty(QString tier1, QString tier2, int startDate
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
     }
-    //cout<<q.toStdString()<<endl;
+    ////cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
+        ////count++;
         facultys.append(qry.value(0).toString());
     }
+    //cout<<"Get Faculty:"<<count<<endl;
     return facultys;
 }
 
@@ -80,6 +84,7 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
+    int count=0;
     QVector<double> facultys;
     QString field, source, data, date;
     int values;
@@ -136,6 +141,7 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     QString q = "SELECT "+data+" FROM "+csvtype+" WHERE (";
     for( int a = startDate; a < endDate; a = a + 1 )
     {
+        //count++;
         QString qstr=QString::number(a);
         q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
     }
@@ -146,14 +152,17 @@ QVector<double> Summary::getTier3(QString tier1, QString tier2, QString tier3, i
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1 + " AND MemberName = " + "'" + tier3 + "'";
     }
-    //cout<<q.toStdString()<<endl;
+    ////cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
         for(int n=0; n<values; n++){
+            QCoreApplication::processEvents();
+            //count++;
             facultys.append(qry.value(n).toDouble());
         }
     }
+    ////cout<<"Tier 3:"<<count<<endl;
     return facultys;
 }
 
@@ -163,6 +172,7 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
+    int count=0;
     QVector<double> facultys;
     QString field, source, data, date;
     int values;
@@ -219,6 +229,8 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     QString q = "SELECT "+data+" FROM "+csvtype+" WHERE (";
     for( int a = startDate; a < endDate; a = a + 1 )
     {
+        QCoreApplication::processEvents();
+        //count++;
         QString qstr=QString::number(a);
         q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
     }
@@ -229,14 +241,17 @@ QVector<double> Summary::getTier2(QString tier1, QString tier2, int startDate, i
     else{
         q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
     }
-    //cout<<q.toStdString()<<endl;
+    ////cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
         for(int n=0; n<values; n++){
+            QCoreApplication::processEvents();
+            //count++;
             facultys.append(qry.value(n).toDouble());
         }
     }
+    ////cout<<"Tier 2:"<<count<<endl;
     return facultys;
 }
 
@@ -246,6 +261,7 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
+    int count=0;
     QVector<double> facultys;
     QString field, data, date;
     int values;
@@ -294,19 +310,24 @@ QVector<double> Summary::getTier1(QString tier1, int startDate, int endDate, QSt
     QString q = "SELECT "+data+" FROM "+csvtype+" WHERE (";
     for( int a = startDate; a < endDate; a = a + 1 )
     {
+        QCoreApplication::processEvents();
+        //count++;
         QString qstr=QString::number(a);
         q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
     }
     QString qstr1=QString::number(endDate);
     q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1;
-    //cout<<q.toStdString()<<endl;
+    ////cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
         for(int n=0; n<values; n++){
+            QCoreApplication::processEvents();
+            //count++;
             facultys.append(qry.value(n).toDouble());
         }
     }
+    //cout<<"Tier 1:"<<count<<endl;
     return facultys;
 }
 
@@ -316,6 +337,7 @@ QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startD
     QSqlDatabase db = QSqlDatabase::database("db_connection");
     QSqlQuery qry(db);
 
+    int count=0;
     QVector<double> facultys;
     QString field, data, date;
     int values;
@@ -364,18 +386,23 @@ QVector<double> Summary::getTier1Filter(QString tier1, QString tier3, int startD
     QString q = "SELECT "+data+" FROM "+csvtype+" WHERE (";
     for( int a = startDate; a < endDate; a = a + 1 )
     {
+        QCoreApplication::processEvents();
+        //count++;
         QString qstr=QString::number(a);
         q = q + " " + date + " LIKE '%" + qstr + "%' OR ";
     }
     QString qstr1=QString::number(endDate);
     q = q + " " + date + " LIKE '%" + qstr1 + "%' ) AND " + field + " " + tier1 + " AND MemberName = " + "'" + tier3 + "'";
-    //cout<<q.toStdString()<<endl;
+    ////cout<<q.toStdString()<<endl;
     qry.prepare(q);
     qry.exec();
     while(qry.next()){
         for(int n=0; n<values; n++){
+            QCoreApplication::processEvents();
+            //count++;
             facultys.append(qry.value(n).toDouble());
         }
     }
+    //cout<<"Tier 1 Filtered:"<<count<<endl;
     return facultys;
 }

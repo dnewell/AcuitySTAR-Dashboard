@@ -146,20 +146,6 @@ string OpenCSV::getTypeFromHeadingList(){
         return "Publications";
     }
 
-//    if (headings.size() == 27 || headings.size() == 28 || headings.size() == 29){
-//        return "Teaching";
-//    }
-//    if (headings.size() == 37 || headings.size() == 38 || headings.size() == 39){
-//        return "Grants";
-//    }
-//    if (headings.size() == 30 || headings.size() == 31){
-//        return "Presentations";
-//    }
-//    if (headings.size() == 43 || headings.size() == 44 || headings.size() == 45){
-//        return "Publications";
-//    }
-
-
     return "Unexpected CSV type";
 }
 
