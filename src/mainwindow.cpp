@@ -31,14 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //db = new OpenCSV();
     ui->setupUi(this);
     ui->lineEdit->setPlaceholderText("Last Name, First Name");
     makeEmptyTree();
 }
 
 void MainWindow::makeTree(int start_year, int end_year, QString CSV_type){
-   // ui->treeWidget->clear();
+
 
 
     int count=0;
@@ -400,8 +399,6 @@ QTreeWidgetItem* MainWindow::root(QString title, QVector<double> totals)
 
     for(int x = 0; x < totals.length(); x++){
         QCoreApplication::processEvents();
-
-        //cout<<"Totals:"<<totals[x]<<endl;
         item->setText(x+2,QString::number(totals[x]));
     }
     ui->treeWidget->addTopLevelItem(item);
@@ -480,7 +477,6 @@ void MainWindow::browse()
 
 
     string tableName = db->csvIntoDb(filePathSt);
-    //this->activateWindow();
     if(pme != NULL)
     {
     pme->setHidden(true);
@@ -662,7 +658,6 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     switch(index)
     {
     case 0:
-        //tab_focus = "Teaching";
         ui->main_window_label->setText("Teaching");
 
          //teaching
@@ -697,7 +692,6 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 1:
-        //tab_focus = "Publications";
         ui->main_window_label->setText("Publications");
         if(pme != NULL)
         {
@@ -730,7 +724,6 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 2:
-        //tab_focus = "Funding";
         ui->main_window_label->setText("Funding");
 
         if(pme != NULL)
@@ -764,7 +757,6 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 
         break;
     case 3:
-        //tab_focus = "Presentations";
         ui->main_window_label->setText("Presentations");
         if(pme != NULL)
         {
@@ -831,8 +823,6 @@ void MainWindow::print()
 {
 
     QPrinter printer;
-    //QDir::homePath() + QDir::separator() + name
-    //printer.setOutputFileName(QDir::homePath() + QDir::separator() + testprint");
     QPainter painter;
     QPrintDialog *dialog = new QPrintDialog(&printer);
     dialog->setWindowTitle("Print  Document");
@@ -840,8 +830,6 @@ void MainWindow::print()
         return;
     painter.begin(&printer);
     ui->treeWidget->expandAll();
-    //ui->treeWidget->size(100, 100);
-    //ui->treeWidget->adjustSize();
     ui->treeWidget->render(&painter);
     ui->treeWidget->collapseAll();
     painter.end();

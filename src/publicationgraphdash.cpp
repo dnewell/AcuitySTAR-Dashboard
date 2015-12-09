@@ -22,8 +22,7 @@ publicationGraphDash::publicationGraphDash(QWidget *parent) :
 
     ui->setupUi(this);
     ui->searchInPub->setPlaceholderText("Last Name, First Name");
-//    ui->fromCBPub->clear();
-//    ui->toCBPub->clear();
+
      //Fill the items of the ComboBox
       for(int i = 1975; i <= 2015; i++)
       {
@@ -66,7 +65,7 @@ void publicationGraphDash::on_barBtn_clicked()
 {
     ui->bar_graphPub->clearPlottables();
     make_graph1(ui->fromCBPub->currentText().toInt(),ui->toCBPub->currentText().toInt());
-    // Dialog::make_graph2(ui->fromCBPub->currentText().toInt(),ui->toCBPub->currentText().toInt());
+
     ui->bar_graphPub->replot();
     this->setWindowTitle("Pretty Graph");
 
@@ -89,7 +88,7 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
     /*Populate totals for Number of Contributors*/
 
     qry.prepare("SELECT SUM(NumberOfContributors) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
 
     int result;
@@ -101,7 +100,7 @@ void publicationGraphDash::make_graph1(int startDate,int endDate)
     labelsPub[0] = "Number Of Contributors";
 
     qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
     qry.next();
     result = qry.record().value(0).toInt();
@@ -183,7 +182,7 @@ void publicationGraphDash::on_pieBtn_clicked()
     /*Populate totals for Number of Contributors*/
 
     qry.prepare("SELECT SUM(NumberOfContributors) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
 
     int result;
@@ -195,7 +194,7 @@ void publicationGraphDash::on_pieBtn_clicked()
     labelsPub[0] = "Number Of Contributors";
 
     qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
     qry.next();
     result = qry.record().value(0).toInt();
@@ -219,7 +218,7 @@ void publicationGraphDash::printPieButton(){
     /*Populate totals for Number of Contributors*/
 
     qry.prepare("SELECT SUM(NumberOfContributors) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
 
     int result;
@@ -231,7 +230,7 @@ void publicationGraphDash::printPieButton(){
     labelsPub[0] = "Number Of Contributors";
 
     qry.prepare("SELECT SUM(NumberofCitations) FROM Publications WHERE MemberName LIKE '"+professor+"%' AND Type LIKE '"+pubType+"%' AND StatusDate BETWEEN '"+strtDate+"%' AND '"+edDate+"%' ");
-    //qry.prepare("SELECT * FROM Teaching");
+
     qry.exec();
     qry.next();
     result = qry.record().value(0).toInt();
@@ -243,7 +242,6 @@ void publicationGraphDash::printPieButton(){
 
     QPrinter printer;
     QPainter painter;
-    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
     QPrintDialog *dialog = new QPrintDialog(&printer);
     dialog->setWindowTitle("Print Pie Chart");
     if (dialog->exec() != QDialog::Accepted)
@@ -260,7 +258,6 @@ void publicationGraphDash::printPieButton(){
 void publicationGraphDash::printBarButton(){
     QPrinter printer;
     QPainter painter;
-    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
     QPrintDialog *dialog = new QPrintDialog(&printer);
 
     dialog->setWindowTitle("Print Bar Chart");

@@ -3,7 +3,6 @@
 
 
 TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWidget *parent) :
-//TeachingTable::TeachingTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TeachingTable)
 {
@@ -15,7 +14,7 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
     else{
        model = new QSqlTableModel(this, db);
     }
-    //model = new QSqlTableModel(this, db);
+
 
     model->setTable(tableName);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -25,12 +24,9 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
 
     model->select();
 
-   // model->setFilter("(MemberName = '') OR (PrimaryDomain = '') OR (StartDate = '') OR (EndDate ='')");
     QTableView *view = new QTableView;
     view->setModel(model);
     view->resizeColumnsToContents();
-    //view->show();
-    //db.close();
 
     submitButton = new QPushButton(tr("Save Change"));
     submitButton->setDefault(true);
@@ -38,14 +34,12 @@ TeachingTable::TeachingTable(const QString &tableName,const QString &filter, QWi
     if (filter  != ""){
       deleteButton = new QPushButton(tr("&Ignore All Errors"));
     }
-    //deleteButton = new QPushButton(tr("&Delete"));
     quitButton = new QPushButton(tr("Close"));
     buttonBox = new QDialogButtonBox(Qt::Vertical);
     buttonBox->addButton(submitButton, QDialogButtonBox::ActionRole);
     if (filter  != ""){
       buttonBox->addButton(deleteButton, QDialogButtonBox::ActionRole);
     }
-    //buttonBox->addButton(deleteButton, QDialogButtonBox::ActionRole);
     buttonBox->addButton(revertButton, QDialogButtonBox::ActionRole);
     buttonBox->addButton(quitButton, QDialogButtonBox::RejectRole);
     connect(submitButton, SIGNAL(clicked()), this, SLOT(submit()));
@@ -88,7 +82,6 @@ void TeachingTable::remove()
 {
 
     model->removeRows(0,model->rowCount());
-    //model->database().commit();
     QMessageBox msgBox;
     msgBox.setText("All rows which contained errors have been removed.");
     msgBox.setInformativeText("Do you wish to save this change?");

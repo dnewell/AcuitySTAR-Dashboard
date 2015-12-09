@@ -192,10 +192,6 @@ void TeachingGraphDash::make_graph2(int startDate,int endDate)
     //get data for graph
     Summary* grabber = new Summary();
 
-    //QVector<Year> underVec= grabber->summaryFill("Undergraduate Medical Education",startDate,endDate);
-    //QVector<Year> continuingVec= grabber->summaryFill("Continuing Medical Education",startDate,endDate);
-    //QVector<Year> postVec = grabber->summaryFill("Postgraduate Medical Education",startDate,endDate);
-    //QVector<Year> otherVec= grabber->summaryFill("Other",startDate,endDate);
 
     int totHoursP = 0;
     int totStudentsP = 0;
@@ -206,17 +202,6 @@ void TeachingGraphDash::make_graph2(int startDate,int endDate)
     int totHoursO = 0;
     int totStudentsO = 0;
 
-    //calculate Header Totals
-//    for(int m=0; m < (int)postVec.size(); m++) {
-//        totHoursP = totHoursP + postVec[m].tothours;
-//        totStudentsP = totStudentsP + postVec[m].totstudents;
-//        totHoursU = totHoursU + underVec[m].tothours;
-//        totStudentsU = totStudentsU + underVec[m].totstudents;
-//        totHoursC = totHoursC + continuingVec[m].tothours;
-//        totStudentsC = totStudentsC + continuingVec[m].totstudents;
-//        totHoursO = totHoursO + otherVec[m].tothours;
-//        totStudentsO = totStudentsO + otherVec[m].totstudents;
-//    }
 
 
 

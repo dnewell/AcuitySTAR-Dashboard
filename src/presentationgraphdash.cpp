@@ -138,7 +138,6 @@ void PresentationGraphDash::on_barBtn_clicked()
 {
     ui->bar_graphPres->clearPlottables();
     make_graph1(ui->fromCBPres->currentText().toInt(),ui->toCBPres->currentText().toInt());
-    // Dialog::make_graph2(ui->fromCBPres->currentText().toInt(),ui->toCBPres->currentText().toInt());
     ui->bar_graphPres->replot();
     this->setWindowTitle("Pretty Graph");
 
@@ -191,7 +190,6 @@ void PresentationGraphDash::on_pieBtn_clicked()
 void PresentationGraphDash::printBarButton(){
     QPrinter printer;
     QPainter painter;
-   //printer.setOutputFileName("/Users/Anoop/Filenamecena");
     QPrintDialog *dialog = new QPrintDialog(&printer);
 
     dialog->setWindowTitle("Print Bar Chart");

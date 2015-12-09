@@ -58,8 +58,6 @@ void GrantsFundingGraphDash::make_graph1(int startDate,int endDate)
 
     qry.next();
     result = qry.record().value(0).toDouble();
-    //qDebug()<<qry.lastQuery();
-    //qDebug()<<qry.record();
     totalsGrants[0] = result;
     labelsGrants[0] = "Total Amount";
 
@@ -135,7 +133,6 @@ void GrantsFundingGraphDash::on_graphBtn_clicked()
 {
     ui->bar_graphGrants->clearPlottables();
     make_graph1(ui->fromCBGrants->currentText().toInt(),ui->toCBGrants->currentText().toInt());
-    // Dialog::make_graph2(ui->fromCBPub->currentText().toInt(),ui->toCBPub->currentText().toInt());
     ui->bar_graphGrants->replot();
     this->setWindowTitle("Pretty Graph");
 
@@ -157,8 +154,6 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
     qry.exec();
 
     double result;
-    //qDebug()<<qry.lastQuery();
-    //qDebug()<<qry.record();
 
 
     if(qry.next()){
@@ -189,7 +184,6 @@ void GrantsFundingGraphDash::on_pieBtn_clicked()
 void GrantsFundingGraphDash::printBarButton(){
     QPrinter printer;
     QPainter painter;
-    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
     QPrintDialog *dialog = new QPrintDialog(&printer);
 
     dialog->setWindowTitle("Print Bar Chart");
@@ -252,7 +246,6 @@ void GrantsFundingGraphDash::printPieButton(){
 
 
     QPrinter printer;
-    //printer.setOutputFileName("/Users/Anoop/Filenamecena");
     QPainter painter;
     QPrintDialog *dialog = new QPrintDialog(&printer);
     dialog->setWindowTitle("Print Pie Chart");
@@ -262,9 +255,6 @@ void GrantsFundingGraphDash::printPieButton(){
     painter.scale(0.5,0.5);
     pieWindow->render(&painter);
     painter.end();
-
-
-
 
 }
 
